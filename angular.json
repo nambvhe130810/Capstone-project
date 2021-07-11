@@ -119,6 +119,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "CapstoneProject"
+    }
+  },
+  "defaultProject": "CapstoneProject",
+  "cli": {
+    "analytics": false
+  }
 }
