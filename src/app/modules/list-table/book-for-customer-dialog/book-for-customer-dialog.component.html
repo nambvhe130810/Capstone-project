@@ -1,0 +1,70 @@
+<form >
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h5>Thông tin khách hàng</h5>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-md-12">
+                <div class="modal-body">
+                    <div class="form-group row required">
+                        <label class="col-md-4 col-form-label" for="phone">
+                            SĐT: 
+                        </label>
+                        <div class="col-md-8">
+                            <input type="number" class=" form-control" 
+                                name="phone" id="phone" [(ngModel)]="data.phone" required />
+                        </div>
+                    </div>
+                    <div class="form-group row required">
+                        <label class="col-md-4 col-form-label" for="name">
+                            Tên: 
+                        </label>
+                        <div class="col-md-8">
+                            <input type="text" class=" form-control" 
+                                name="name" id="name" [(ngModel)]="data.name"required />
+                        </div>
+                    </div>
+                    <div class="form-group row required">
+                        <label class="col-md-4 col-form-label" for="time">
+                            Thời gian bắt đầu: 
+                        </label>
+                        <div class="col-md-8">
+                            <!-- <input type="time" class=" form-control" 
+                                name="name" id="time" [(ngModel)]="data.time" required /> -->
+                            <mat-form-field>
+                                <input matInput type="datetime-local" class=" form-control" name="name" id="time" [(ngModel)]="data.time" placeholder="start date">
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="form-group row required">
+                        <label class="col-md-4 col-form-label" for="quantity">
+                            Số người: 
+                        </label>
+                        <div class="col-md-8">
+                            <input type="number" class=" form-control" 
+                                name="name" id="quantity" [(ngModel)]="data.numberOfPeople" required />
+                        </div>
+                    </div>
+                    <div class="form-group row required">
+                        <label class="col-md-4 col-form-label" for="quantity">
+                            Bàn: 
+                        </label>
+                        <div class="col-md-8">
+                            <div class="row">
+                                <div class="col-md-3" *ngFor="let table of tables">
+                                    <mat-checkbox class="example-margin" [disabled]="!table.status" [checked]="table.isChecked" (change)="toggle(table)" name="status">{{table.name}}</mat-checkbox>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="mat-dialog-actions row justify-content-between px-3">
+        <button class="btn btn-default cancel-banks" mat-raised-button mat-dialog-close (click)="onNoClick()">Hủy đặt</button>
+        <button mat-raised-button color="primary" class="saving-btn" mat-button (click)="Save()" cdkFocusInitial>Đặt bàn</button>
+    </div>
+</form>

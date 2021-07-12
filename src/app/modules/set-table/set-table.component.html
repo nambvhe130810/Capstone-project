@@ -1,0 +1,64 @@
+<div class="container">
+    <div class="row mt-2">
+        <div class="col-md-12 text-center">
+            <h3>Chọn bàn</h3>
+        </div>
+    </div>
+    <div class="row mt-3">
+        <div class="col-md-12">
+            <div class="modal-body">
+                <div class="form-group row required">
+                    <label class="col-md-4 col-form-label" for="phone">
+                        SĐT: 
+                    </label>
+                    <div class="col-md-8">
+                        <input type="text" class=" form-control" 
+                            name="phone" id="phone" [value]="processOrderDetail?.phone" disabled required />
+                    </div>
+                </div>
+                <div class="form-group row required">
+                    <label class="col-md-4 col-form-label" for="name">
+                        Tên: 
+                    </label>
+                    <div class="col-md-8">
+                        <input type="text" class=" form-control" 
+                            name="name" id="name" [value]="processOrderDetail?.name" disabled required />
+                    </div>
+                </div>
+                <div class="form-group row required">
+                    <label class="col-md-4 col-form-label" for="time">
+                        Thời gian bắt đầu: 
+                    </label>
+                    <div class="col-md-8">
+                        <input type="text" class=" form-control" 
+                            name="name" id="time" [value]="processOrderDetail?.date" disabled required />
+                    </div>
+                </div>
+                <div class="form-group row required">
+                    <label class="col-md-4 col-form-label" for="quantity">
+                        Số người: 
+                    </label>
+                    <div class="col-md-8">
+                        <input type="number" class=" form-control" 
+                            name="name" id="quantity" [value]="processOrderDetail?.numberOfPeople" disabled required />
+                    </div>
+                </div>
+                <div class="form-group row required">
+                    <label class="col-md-4 col-form-label" for="quantity">
+                        Bàn: 
+                    </label>
+                    <div class="col-md-8">
+                        <div class="row px-3" >
+                            <div class="col-md-3" *ngFor="let table of tables">
+                                <mat-checkbox class="example-margin" [disabled]="!table.status" [checked]="table.isChecked" (change)="toggle(table)" name="status">{{table.name}}</mat-checkbox>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <button mat-raised-button color="primary" (click)="bookOrder()">Xác nhận</button>
+    </div>
+</div>
