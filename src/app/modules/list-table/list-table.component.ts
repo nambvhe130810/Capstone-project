@@ -38,10 +38,11 @@ export class ListTableComponent implements OnInit {
     let item = {} as any;
     item.id = new Date().getTime().toString();
     item.status = false;
+    item.isPaid = false;
     this.openBookingForm(item);
   }
   openBookingForm(item) {
-    let obj = { id: item.id, phone: item.phone, name: item.name, numberOfPeople: item.numberOfPeople, tableId: item.tableId, time: item.time, status: item.status };
+    let obj = { id: item.id, phone: item.phone, name: item.name, numberOfPeople: item.numberOfPeople, tableId: item.tableId, time: item.time, status: item.status, isPaid: false };
     const dialogRef = this.dialog.open(BookForCustomerDialogComponent, {
       width: '750px',
       data: obj

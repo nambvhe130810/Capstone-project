@@ -40,7 +40,6 @@ export class BookForCustomerDialogComponent implements OnInit {
       }
       return item;
     })
-    console.log("event: ", table);
     this.data.tableId = table.id;
   }
   Save() {

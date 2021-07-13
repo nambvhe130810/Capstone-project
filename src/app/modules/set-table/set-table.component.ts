@@ -38,7 +38,6 @@ export class SetTableComponent implements OnInit {
       this.activatedRoute.queryParams.subscribe(params => {
         this.processOrderDetail = this.processOrders.find(item => item.id == params.id);
         this.processOrderDetail.tableId = '';
-        console.log("detail process order: ", this.processOrderDetail);
       });
     });
   }
@@ -65,13 +64,21 @@ export class SetTableComponent implements OnInit {
     this.processOrderDetail.tableId = table.id;
   }
   bookOrder() {
-    console.log("this.processorderdetail: ", this.processOrderDetail);
-    console.log("this.tables: ", this.tables);
     try {
       let table = this.tables.find(item => item.id == this.processOrderDetail.tableId);
       table.status = false;
       this.processOrderDetail.isVerify = true;
-      this.orderService.create(this.processOrderDetail).then(() => {
+      let obj = { 
+        id: new Date().getTime().toString(), 
+        phone: this.processOrderDetail.phone, 
+        name: this.processOrderDetail.name, 
+        numberOfPeople: this.processOrderDetail.numberOfPeople, 
+        tableId: this.processOrderDetail.tableId, 
+        time: this.processOrderDetail.date, 
+        status: false, 
+        isPaid: false 
+      };
+      this.orderService.create(obj).then(() => {
         this.tablesService.update(table.id, table);
         this.processOrderService.update(this.processOrderDetail.id, this.processOrderDetail);
         this.toastr.success('Đặt bàn cho khách thành công', 'Thông báo');

@@ -31,7 +31,6 @@ export class BookingRequestDialogComponent implements OnInit {
       )
     ).subscribe(data => {
       this.processOrders = data;
-      console.log("processOrders: ", this.processOrders);
     });
   }
   chooseTable(id) {
