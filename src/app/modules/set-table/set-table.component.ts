@@ -15,6 +15,7 @@ export class SetTableComponent implements OnInit {
   processOrders = [];
   processOrderDetail: any;
   tables = [];
+  tableSelected : string;
   constructor(private activatedRoute: ActivatedRoute,
     private processOrderService: ProcessOrderService,
     private tablesService: TablesService,
@@ -37,7 +38,6 @@ export class SetTableComponent implements OnInit {
       this.processOrders = data;
       this.activatedRoute.queryParams.subscribe(params => {
         this.processOrderDetail = this.processOrders.find(item => item.id == params.id);
-        this.processOrderDetail.tableId = '';
       });
     });
   }
@@ -61,21 +61,21 @@ export class SetTableComponent implements OnInit {
       }
       return item;
     })
-    this.processOrderDetail.tableId = table.id;
+    this.tableSelected = table.id;
   }
   bookOrder() {
     try {
-      let table = this.tables.find(item => item.id == this.processOrderDetail.tableId);
+      let table = this.tables.find(item => item.id == this.tableSelected);
       table.status = false;
       this.processOrderDetail.isVerify = true;
+      this.processOrderDetail.status = true;
       let obj = { 
         id: new Date().getTime().toString(), 
         phone: this.processOrderDetail.phone, 
         name: this.processOrderDetail.name, 
         numberOfPeople: this.processOrderDetail.numberOfPeople, 
-        tableId: this.processOrderDetail.tableId, 
+        tableId: this.tableSelected, 
         time: this.processOrderDetail.date, 
-        status: false, 
         isPaid: false 
       };
       this.orderService.create(obj).then(() => {
