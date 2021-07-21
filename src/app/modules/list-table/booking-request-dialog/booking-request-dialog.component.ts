@@ -12,6 +12,8 @@ import { ProcessOrderService } from '../../../services/process-order.service';
 })
 export class BookingRequestDialogComponent implements OnInit {
   processOrders = [];
+  processOrderDetail: any;
+  
   constructor(public dialogRef: MatDialogRef<BookingRequestDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private processOrderService: ProcessOrderService,
@@ -39,5 +41,14 @@ export class BookingRequestDialogComponent implements OnInit {
       this.dialogRef.close();
     });
 
+  }
+  rejectTable(id){
+    try {
+        this.processOrderDetail = this.processOrders.find(item => item.id ==id);
+       this.processOrderDetail.status = 'rejected';
+       console.log("processOrderDetails" , this.processOrderDetail);
+        this.processOrderService.update(this.processOrderDetail.id, this.processOrderDetail);
+    } catch(err) {
+    }
   }
 }

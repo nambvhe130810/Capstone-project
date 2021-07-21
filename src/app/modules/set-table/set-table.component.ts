@@ -19,7 +19,6 @@ export class SetTableComponent implements OnInit {
   constructor(private activatedRoute: ActivatedRoute,
     private processOrderService: ProcessOrderService,
     private tablesService: TablesService,
-    private orderService: OrderService,
     private toastr: ToastrService,
     ) { }
 
@@ -38,6 +37,7 @@ export class SetTableComponent implements OnInit {
       this.processOrders = data;
       this.activatedRoute.queryParams.subscribe(params => {
         this.processOrderDetail = this.processOrders.find(item => item.id == params.id);
+        this.processOrderDetail.tableId = '';
       });
     });
   }
@@ -67,22 +67,11 @@ export class SetTableComponent implements OnInit {
     try {
       let table = this.tables.find(item => item.id == this.tableSelected);
       table.status = false;
-      this.processOrderDetail.isVerify = true;
-      this.processOrderDetail.status = true;
-      let obj = { 
-        id: new Date().getTime().toString(), 
-        phone: this.processOrderDetail.phone, 
-        name: this.processOrderDetail.name, 
-        numberOfPeople: this.processOrderDetail.numberOfPeople, 
-        tableId: this.tableSelected, 
-        time: this.processOrderDetail.date, 
-        isPaid: false 
-      };
-      this.orderService.create(obj).then(() => {
+      this.processOrderDetail.tableId = this.tableSelected;
+      this.processOrderDetail.status = 'confirmted';
         this.tablesService.update(table.id, table);
         this.processOrderService.update(this.processOrderDetail.id, this.processOrderDetail);
         this.toastr.success('Đặt bàn cho khách thành công', 'Thông báo');
-    })
     } catch(err) {
       this.toastr.error('Đặt bàn cho khách không thành công', 'Lỗi');
     }

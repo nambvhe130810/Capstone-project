@@ -1,6 +1,6 @@
 <div class="container">
     <div *ngFor="let order of processOrders">
-        <div class="row book-request"  *ngIf="!order.isVerify">
+        <div class="row book-request"  *ngIf="order.status=='new'">
             <div class="col-md-8">
                 <h5>{{order.name}} đã yêu cầu đặt bàn.</h5>
                 <p style="margin-bottom: 8px;">Số lượng người: {{order.numberOfPeople}}</p>
@@ -8,7 +8,7 @@
             </div>
             <div class="col-md-4">
                 <button mat-raised-button color="success" class="mr-3" (click)="chooseTable(order.id)">Xếp bàn</button>
-                <button mat-raised-button color="warn">Từ chối</button>
+                <button mat-raised-button color="warn" class="mr-3" (click)="rejectTable(order.id)" >Từ chối</button>
             </div>
         </div>
     </div>
