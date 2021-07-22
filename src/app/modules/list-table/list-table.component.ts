@@ -21,9 +21,9 @@ export class ListTableComponent implements OnInit {
     ) { }
 
   ngOnInit(): void {
-    this.getAllTables();
+    this.getAllTables(1);
   }
-  getAllTables() {
+  getAllTables(floor) {
     this.tablesService.getAll().snapshotChanges().pipe(
       map(changes =>
         changes.map(c =>
@@ -31,7 +31,7 @@ export class ListTableComponent implements OnInit {
         )
       )
     ).subscribe(data => {
-      this.tables = data;
+      this.tables = data.filter(item=>item.floor==floor);
     });
   }
   bookTableForCustomer() {

@@ -22,4 +22,7 @@ export abstract class BaseApiService {
   update(key, value): Promise<any> {
     return this.db.list(this.collectionName()).update(key, value);
   }
+  set(key, value):Promise<any>{
+    return this.db.list(this.collectionName()).set(key, value);
+  }
 }
