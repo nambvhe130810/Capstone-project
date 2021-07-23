@@ -50,7 +50,7 @@
                     <div class="col-md-8">
                         <div class="row px-3" >
                             <div class="col-md-3" *ngFor="let table of tables">
-                                <mat-checkbox class="example-margin" [disabled]="!table.status" [checked]="table.isChecked" (change)="toggle(table)" name="status">{{table.name}}</mat-checkbox>
+                                <mat-checkbox class="example-margin" [disabled]="table.status!='free' " (change)="toggle(table)" name="status">{{table.name}}</mat-checkbox>
                             </div>
                         </div>
                     </div>

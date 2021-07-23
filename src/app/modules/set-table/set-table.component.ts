@@ -54,7 +54,6 @@ export class SetTableComponent implements OnInit {
     });
   }
   toggle(table) {
-    table.isChecked = !table.isChecked;
     this.tables = this.tables.map(item => {
       if(item.id != table.id) {
         item.isChecked = false;
@@ -66,7 +65,7 @@ export class SetTableComponent implements OnInit {
   bookOrder() {
     try {
       let table = this.tables.find(item => item.id == this.tableSelected);
-      table.status = false;
+      table.status = 'busy';
       this.processOrderDetail.tableId = this.tableSelected;
       this.processOrderDetail.status = 'confirmted';
         this.tablesService.update(table.id, table);

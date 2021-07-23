@@ -1,3 +1,4 @@
+import { DatePipe, formatDate } from '@angular/common';
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ToastrService } from 'ngx-toastr';
@@ -14,6 +15,8 @@ export class BookForCustomerDialogComponent implements OnInit {
   tables = [];
   myId = '';
   selectedTable = '';
+  formatdate ='yyyyMMdd_HHmm'
+  pipe = new DatePipe('en-US');
   constructor(public dialogRef: MatDialogRef<BookForCustomerDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private tablesService: TablesService,
@@ -40,24 +43,26 @@ export class BookForCustomerDialogComponent implements OnInit {
     });
   }
   toggle(table) {
-    table.isChecked = !table.isChecked;
-    this.tables = this.tables.map(item => {
-      if (item.id != table.id) {
-        item.isChecked = false;
-      }
-      return item;
-    })
     this.selectedTable = table.id;
   }
   Save() {
     try {
+      let table = this.tables.find(item => item.id == this.selectedTable);
+      table.status = 'busy';
       this.dialogRef.close(this.data);
       this.myId = uuid.v4();
       this.data.tableId = this.selectedTable;
       this.data.id = this.myId;
-      console.log("data", this.data)
-      this.processOrderService.set(this.myId,this.data)
+      this.data.status = 'confirmed';
+      this.data.note ='';
+      this.data.userId ='';
+      this.data.phone = "+84" + this.data.phone 
+      const now = Date.now()
+      this.data.date=this.pipe.transform(now, this.formatdate);
+      this.processOrderService.set(this.myId,this.data).then(() => {
+      this.tablesService.update(table.id, table);
       this.toastr.success("Đặt bàn thành công")
+      })
     } catch {
       this.toastr.error("Đặt bàn thất bại")
     }

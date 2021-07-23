@@ -1,16 +1,19 @@
 <div class="container">
     <div class="row mt-2">
         <div class="col-md-6 text-left">
-            <button mat-stroked-button color="primary" class="book-btn" (click)="bookTableForCustomer()">Đặt bàn cho khách</button>
+            <button mat-stroked-button color="primary" class="book-btn" (click)="bookTableForCustomer()">Đặt bàn cho
+                khách</button>
         </div>
         <div class="col-md-6 text-right">
-            <mat-icon style="font-size: 30px; cursor: pointer;" (click)="openBookingRequestList()">notification_important</mat-icon>
+            <mat-icon style="font-size: 30px; cursor: pointer;" (click)="openBookingRequestList()">
+                notification_important</mat-icon>
         </div>
     </div>
     <div class="row mt-5">
         <div class="col-md-4 my-3" *ngFor="let table of tables">
-            <button mat-raised-button color="primary" *ngIf="table.status">{{table.name}}</button>
-            <button mat-raised-button color="warn" *ngIf="!table.status">{{table.name}}</button>
+            <button mat-raised-button color="primary" *ngIf="table.status=='free'">{{table.name}}</button>
+            <button mat-raised-button color="warn" *ngIf="table.status=='busy'">{{table.name}}</button>
+            <button mat-raised-button color="accent" *ngIf="table.status=='waitBill'" (click) ="openBill(table.id)">{{table.name}}</button>
         </div>
     </div>
 </div>
