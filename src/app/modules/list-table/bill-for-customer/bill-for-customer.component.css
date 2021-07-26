@@ -1,0 +1,6 @@
+.book-request {
+    margin-bottom: 13px;
+}
+::ng-deep .mat-dialog-container {
+    padding-bottom: 0;
+}

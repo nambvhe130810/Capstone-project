@@ -3,10 +3,12 @@ import { MatDialog } from '@angular/material/dialog';
 import { BookForCustomerDialogComponent } from './book-for-customer-dialog/book-for-customer-dialog.component';
 import { BookingRequestDialogComponent } from './booking-request-dialog/booking-request-dialog.component';
 import { TablesService } from '../../services/tables.service';
+import { FloorService } from '../../services/floor.service';
 import { map } from 'rxjs/operators';
 import { OrderService } from '../../services/order.service';
 import { BillService } from '../../services/bill.service';
 import { ToastrService } from 'ngx-toastr';
+import { BillForCustomerComponent } from './bill-for-customer/bill-for-customer.component';
 
 @Component({
   selector: 'app-list-table',
@@ -15,17 +17,21 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class ListTableComponent implements OnInit {
   tables = [];
-  bill = [];
+  bills = [];
+  floors = [];
+  tablesInFloors =[]
+  billSelected: any;
   constructor(public dialog: MatDialog,
     private tablesService: TablesService,
-    private orderService: OrderService,
     private billService: BillService,
     private toastr: ToastrService,
+    private floorService: FloorService
   ) { }
 
   ngOnInit(): void {
-    this.getAllTables(1);
-    this.getAllBill()
+    this.getAllTablesByFloorId("c6e2aa41-ad46-45f5-889a-dc71ade4bd26");
+    this.getAllBill();
+    this.getAllFloor();
   }
   getAllTables(floor) {
     this.tablesService.getAll().snapshotChanges().pipe(
@@ -38,6 +44,28 @@ export class ListTableComponent implements OnInit {
       this.tables = data.filter(item => item.floor == floor);
     });
   }
+  getAllTablesByFloorId(floorId) {
+    this.tablesService.getAll().snapshotChanges().pipe(
+      map(changes =>
+        changes.map(c =>
+          ({ key: c.payload.key, ...c.payload.val() })
+        )
+      )
+    ).subscribe(data => {
+      this.tables = data.filter(item => item.floorId == floorId);
+    });
+  }
+  getAllFloor() {
+    this.floorService.getAll().snapshotChanges().pipe(
+      map(changes =>
+        changes.map(c =>
+          ({ key: c.payload.key, ...c.payload.val() })
+        )
+      )
+    ).subscribe(data => {
+      this.floors = data;
+    });
+  }
   getAllBill() {
     this.billService.getAll().snapshotChanges().pipe(
       map(changes =>
@@ -46,7 +74,7 @@ export class ListTableComponent implements OnInit {
         )
       )
     ).subscribe(data => {
-      this.bill = data;
+      this.bills = data;
     });
   }
   bookTableForCustomer() {
@@ -74,8 +102,18 @@ export class ListTableComponent implements OnInit {
       }
     });
   }
-  openBill(id) {
-    console.log("this bill", this.bill)
-    console.log("this bill", this.bill.find(item => item.id == id))
+  openBill(id, tableName) {
+    this.billSelected = this.bills.find(item => item.id == id)
+    console.log("this bill", this.billSelected)
+    let obj = { totalMoney: this.billSelected.totalMoney, tableName: tableName, id: this.billSelected.id };
+    const dialogRef = this.dialog.open(BillForCustomerComponent, {
+      width: '750px',
+      data: this.billSelected
+    });
+
+  }
+  onSelectedFloor(floor){
+    console.log("floor",floor)
+    this.getAllTablesByFloorId(floor);
   }
 }

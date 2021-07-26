@@ -48,7 +48,7 @@ export class BookForCustomerDialogComponent implements OnInit {
   Save() {
     try {
       let table = this.tables.find(item => item.id == this.selectedTable);
-      table.status = 'busy';
+      table.status = false;
       this.dialogRef.close(this.data);
       this.myId = uuid.v4();
       this.data.tableId = this.selectedTable;

@@ -11,10 +11,12 @@ import { AppRoutingModule } from './app-routing.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
+import { BillForCustomerComponent } from './modules/list-table/bill-for-customer/bill-for-customer.component';
 
 @NgModule({
   declarations: [
     AppComponent,
+    BillForCustomerComponent,
     
   ],
   imports: [
