@@ -1,0 +1,28 @@
+.col-fix-left {
+    max-width: 49%;
+    margin-left: 15px !important;
+}
+
+.col-fix-right {
+    max-width: 49%;
+}
+
+.long-input {
+    height: 100px;
+}
+
+.medium-input {
+    height: 50px;
+}
+
+#profileImage {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background: #512DA8;
+    font-size: 35px;
+    color: #fff;
+    text-align: center;
+    line-height: 100px;
+    margin: 20px 0;
+  }

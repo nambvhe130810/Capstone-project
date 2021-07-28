@@ -11,22 +11,28 @@ import { AppRoutingModule } from './app-routing.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
-import { BillForCustomerComponent } from './modules/list-table/bill-for-customer/bill-for-customer.component';
+import { UserManagementComponent } from './modules/user-management/user-management.component';
+import { PopupRegisterComponent } from './modules/user-management/popup-register/popup-register.component';
+import { NgSelectModule } from '@ng-select/ng-select';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
     AppComponent,
-    BillForCustomerComponent,
+    UserManagementComponent,
+    PopupRegisterComponent,
     
   ],
   imports: [
     BrowserModule,
+    HttpClientModule,
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireDatabaseModule,
     DefaultModule,
+    NgSelectModule,
     BrowserAnimationsModule
   ],
   providers: [],

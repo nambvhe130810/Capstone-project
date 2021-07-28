@@ -67,7 +67,7 @@ export class SetTableComponent implements OnInit {
       let table = this.tables.find(item => item.id == this.tableSelected);
       table.status = false;
       this.processOrderDetail.tableId = this.tableSelected;
-      this.processOrderDetail.status = 'confirmted';
+      this.processOrderDetail.status = 'confirmed';
         this.tablesService.update(table.id, table);
         this.processOrderService.update(this.processOrderDetail.id, this.processOrderDetail);
         this.toastr.success('Đặt bàn cho khách thành công', 'Thông báo');

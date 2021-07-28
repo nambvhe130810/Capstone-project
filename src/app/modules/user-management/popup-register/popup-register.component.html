@@ -1,0 +1,73 @@
+<div>
+    <h5 class="mb-0">Thêm mới người dùng</h5>
+    <hr>
+</div>
+<div>
+</div>
+<div class="col-md-12 mt-2">
+    <!-- <div *ngIf="!isShowOtp">
+        <form [formGroup]="registerForm">
+            <label>Số điện thoại</label>
+            <span class="text-danger">(*)</span>
+            <br>
+            <div class="d-flex justify-content-center align-items-center">
+                <span style="font-size: 18px;font-weight: 500;padding: 6px;padding-left: 0!important;">+84</span>
+                <input class="form-control w-100" placeholder="Nhập số điện thoại" formControlName="phone">
+            </div>
+            <div
+                *ngIf="registerForm.get('phone').invalid && (registerForm.get('phone').dirty || registerForm.get('phone').touched)">
+                <small class="form-text text-danger" *ngIf="registerForm.get('phone').errors.required">
+                    Số điện thoại không được bỏ trống
+                </small>
+                <small class="form-text text-danger" *ngIf="registerForm.get('phone').errors.pattern">
+                    Số điện thoại chỉ được nhập số
+                </small>
+            </div>
+        </form>
+    </div> -->
+    <!-- <div *ngIf="isShowOtp && !isShowRegister">
+        <form [formGroup]="otpForm">
+            <label>Mã OTP</label>
+            <span class="text-danger">(*)</span>
+            <br>
+            <input class="form-control w-100" placeholder="Nhập số mã OTP" formControlName="otp">
+            <div *ngIf="otpForm.get('otp').invalid && (otpForm.get('otp').dirty || otpForm.get('otp').touched)">
+                <small class="form-text text-danger" *ngIf="otpForm.get('otp').errors.required">
+                    Mã OTP không được bỏ trống
+                </small>
+                <small class="form-text text-danger" *ngIf="otpForm.get('otp').errors.pattern">
+                    Mã OTP chỉ được nhập số
+                </small>
+            </div>
+        </form>
+    </div> -->
+    <div *ngIf="isShowRegister" class="form-group card-body" (ngSubmit)="register()">
+        <label>Họ và tên</label><br>
+        <input class="form-control" placeholder="Nhập họ và tên" [(ngModel)]="registerInfo.name"><br>
+        <label>Địa chỉ</label><br>
+        <input class="form-control" placeholder="Nhập địa chỉ" [(ngModel)]="registerInfo.address"><br>
+        <label>Số điện thoại</label><br>
+        <input class="form-control w-100" placeholder="Nhập số điện thoại" [(ngModel)]="registerInfo.phone">
+        <br>
+        <div>
+            <label for="">Vai trò</label>
+            <!-- <span class="text-danger">(*)</span> -->
+            <ng-select appearance="outline" [items]="roleList" bindLabel="name"
+                bindValue="code" [(ngModel)]="registerInfo.role">
+            </ng-select>
+        </div>
+    </div>
+</div>
+<mat-dialog-actions align="end" class="p-0 mt-2">
+    <!-- <button *ngIf="!isShowOtp" [disabled]="!registerForm.valid" class="btn btn-primary" type="submit" (click)="getOtp()"
+        style="height: 42px;">Lấy mã
+        OTP</button>
+    <button *ngIf="isShowOtp && !isShowRegister" class="btn btn-primary mr-2" type="submit" (click)="back()"
+        style="height: 42px;">Quay lại</button>
+    <button *ngIf="isShowOtp && !isShowRegister" [disabled]="!otpForm.valid" class="btn btn-primary" type="submit"
+        (click)="checkOTP()" style="height: 42px;">Xác thực mã OTP</button> -->
+    <button *ngIf="isShowRegister" class="btn btn-primary mr-2" type="submit" (click)="register()" style="height: 42px;">Đăng
+        ký</button>
+    <button *ngIf="isShowRegister" mat-button [mat-dialog-close]="true" class="btn btn-danger-primary"
+        style="height: 42px;">Hủy</button>
+</mat-dialog-actions>
