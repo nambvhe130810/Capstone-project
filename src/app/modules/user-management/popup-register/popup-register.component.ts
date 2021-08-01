@@ -54,7 +54,8 @@ export class PopupRegisterComponent implements OnInit {
           this.dialogRef.close();
         },
         error => {
-          this.toastr.success("Đăng ký thất bại")
+          this.toastr.error("Đăng ký thất bại")
+          this.dialogRef.close();
         }
       )
 

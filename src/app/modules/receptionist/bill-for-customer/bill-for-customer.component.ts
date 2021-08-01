@@ -4,7 +4,6 @@ import { ToastrService } from 'ngx-toastr';
 import { map } from 'rxjs/operators';
 import { TablesService } from 'src/app/services/tables.service';
 import { ProcessOrderService } from 'src/app/services/process-order.service';
-import { BillService } from 'src/app/services/bill.service';
 import { BillsService } from 'src/app/services/bills.service';
 import * as uuid from 'uuid';
 import { DatePipe } from '@angular/common';
@@ -25,7 +24,6 @@ export class BillForCustomerComponent implements OnInit {
     private tablesService: TablesService,
     private toastr: ToastrService,
     private processOrderService: ProcessOrderService,
-    private billService: BillService,
     private billsService:BillsService,
   ) { }
 
@@ -54,7 +52,9 @@ export class BillForCustomerComponent implements OnInit {
           ({ key: c.payload.key, ...c.payload.val() })
         )
       )
-    ).subscribe(data => {
+    ).subscribe(data => { 
+      console.log("processOrderId = ", this.data.processOrderId)
+      console.log("listProcess = ", data)
       this.processOrderDetail = data.find(item => item.id == this.data.processOrderId)
     });
   }
@@ -64,12 +64,12 @@ export class BillForCustomerComponent implements OnInit {
       let table = this.tables.find(item => item.id == id);
       console.log("table", table)
       table.isReadyToPay = false;
-      this.toastr.success("Thanh toán thành công")
-      this.tablesService.update(id, table)
+      // this.tablesService.update(id, table)
       const now = Date.now()
       let time=this.pipe.transform(now, this.formatdate);
       let obj ={id:uuid.v4(),name:this.processOrderDetail.name,totalMoney:this.data.totalMoney,time:time}
-      this.billsService.set(obj.id,obj)
+      // this.billsService.set(obj.id,obj)
+      this.toastr.success("Thanh toán thành công")
       this.dialogRef.close()
     } catch {
       this.toastr.error("Có lỗi khi thanh toán vui lòng thử lại")

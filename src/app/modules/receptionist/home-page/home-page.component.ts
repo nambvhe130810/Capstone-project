@@ -1,21 +1,20 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { BookForCustomerDialogComponent } from './book-for-customer-dialog/book-for-customer-dialog.component';
-import { BookingRequestDialogComponent } from './booking-request-dialog/booking-request-dialog.component';
-import { TablesService } from '../../services/tables.service';
-import { FloorService } from '../../services/floor.service';
+import { BookForCustomerDialogComponent } from '../book-for-customer-dialog/book-for-customer-dialog.component';
+import { BookingRequestDialogComponent } from '../booking-request-dialog/booking-request-dialog.component';
+import { TablesService } from '../../../services/tables.service';
+import { FloorService } from '../../../services/floor.service';
 import { map } from 'rxjs/operators';
-import { OrderService } from '../../services/order.service';
-import { BillService } from '../../services/bill.service';
+import { TableBillService } from '../../../services/table-service';
 import { ToastrService } from 'ngx-toastr';
-import { BillForCustomerComponent } from './bill-for-customer/bill-for-customer.component';
+import { BillForCustomerComponent } from '../bill-for-customer/bill-for-customer.component';
 
 @Component({
-  selector: 'app-list-table',
-  templateUrl: './list-table.component.html',
-  styleUrls: ['./list-table.component.css']
+  selector: 'app-home-page',
+  templateUrl: './home-page.component.html',
+  styleUrls: ['./home-page.component.css']
 })
-export class ListTableComponent implements OnInit {
+export class HomePageComponent implements OnInit {
   tables = [];
   bills = [];
   floors = [];
@@ -23,7 +22,7 @@ export class ListTableComponent implements OnInit {
   billSelected: any;
   constructor(public dialog: MatDialog,
     private tablesService: TablesService,
-    private billService: BillService,
+    private billService: TableBillService,
     private toastr: ToastrService,
     private floorService: FloorService
   ) { }
@@ -104,6 +103,7 @@ export class ListTableComponent implements OnInit {
   }
   openBill(id, tableName) {
     this.billSelected = this.bills.find(item => item.id == id)
+    
     console.log("this bill", this.billSelected)
     let obj = { totalMoney: this.billSelected.totalMoney, tableName: tableName, id: this.billSelected.id };
     const dialogRef = this.dialog.open(BillForCustomerComponent, {

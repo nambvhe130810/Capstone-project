@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DefaultComponent } from './default.component';
 import { RouterModule } from '@angular/router';
-import { ListTableComponent } from 'src/app/modules/list-table/list-table.component';
+import { HomePageComponent } from 'src/app/modules/receptionist/home-page/home-page.component';
 import { FormsModule } from '@angular/forms';
 
 //import angular material
@@ -41,15 +41,15 @@ import { MatTooltipModule } from '@angular/material/tooltip'
 import { MatTreeModule } from '@angular/material/tree'
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
-import { BookForCustomerDialogComponent } from 'src/app/modules/list-table/book-for-customer-dialog/book-for-customer-dialog.component';
-import { BookingRequestDialogComponent } from 'src/app/modules/list-table/booking-request-dialog/booking-request-dialog.component';
-import { SetTableComponent } from 'src/app/modules/set-table/set-table.component';
+import { BookForCustomerDialogComponent } from 'src/app/modules/receptionist/book-for-customer-dialog/book-for-customer-dialog.component';
+import { BookingRequestDialogComponent } from 'src/app/modules/receptionist/booking-request-dialog/booking-request-dialog.component';
+import { SetTableComponent } from 'src/app/modules/receptionist/set-table/set-table.component';
 import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
   declarations: [
     DefaultComponent,
-    ListTableComponent,
+    HomePageComponent,
     BookForCustomerDialogComponent,
     BookingRequestDialogComponent,
     SetTableComponent,
