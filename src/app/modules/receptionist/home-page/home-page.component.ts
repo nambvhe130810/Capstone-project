@@ -5,7 +5,7 @@ import { BookingRequestDialogComponent } from '../booking-request-dialog/booking
 import { TablesService } from '../../../services/tables.service';
 import { FloorService } from '../../../services/floor.service';
 import { map } from 'rxjs/operators';
-import { TableBillService } from '../../../services/table-service';
+import { TableBillService } from '../../../services/table-bill.service';
 import { ToastrService } from 'ngx-toastr';
 import { BillForCustomerComponent } from '../bill-for-customer/bill-for-customer.component';
 
@@ -18,8 +18,13 @@ export class HomePageComponent implements OnInit {
   tables = [];
   bills = [];
   floors = [];
-  tablesInFloors =[]
+  tablesInFloors = []
   billSelected: any;
+  tableFree: any;
+  tableFreeByFloor: any;
+  allTable: any;
+  allTableByFloor: any;
+  floor = 1;
   constructor(public dialog: MatDialog,
     private tablesService: TablesService,
     private billService: TableBillService,
@@ -32,17 +37,6 @@ export class HomePageComponent implements OnInit {
     this.getAllBill();
     this.getAllFloor();
   }
-  getAllTables(floor) {
-    this.tablesService.getAll().snapshotChanges().pipe(
-      map(changes =>
-        changes.map(c =>
-          ({ key: c.payload.key, ...c.payload.val() })
-        )
-      )
-    ).subscribe(data => {
-      this.tables = data.filter(item => item.floor == floor);
-    });
-  }
   getAllTablesByFloorId(floorId) {
     this.tablesService.getAll().snapshotChanges().pipe(
       map(changes =>
@@ -51,7 +45,12 @@ export class HomePageComponent implements OnInit {
         )
       )
     ).subscribe(data => {
+      this.allTable = data.length
+      this.tableFree = data.filter(item => item.status).length
       this.tables = data.filter(item => item.floorId == floorId);
+      this.allTableByFloor = this.tables.length
+      this.tableFreeByFloor = this.tables.filter(item => item.status).length
+      console.log("free table", this.tableFree, this.tableFreeByFloor)
     });
   }
   getAllFloor() {
@@ -103,7 +102,7 @@ export class HomePageComponent implements OnInit {
   }
   openBill(id, tableName) {
     this.billSelected = this.bills.find(item => item.id == id)
-    
+
     console.log("this bill", this.billSelected)
     let obj = { totalMoney: this.billSelected.totalMoney, tableName: tableName, id: this.billSelected.id };
     const dialogRef = this.dialog.open(BillForCustomerComponent, {
@@ -112,8 +111,8 @@ export class HomePageComponent implements OnInit {
     });
 
   }
-  onSelectedFloor(floor){
-    console.log("floor",floor)
+  onSelectedFloor(floor) {
+    this.floor = this.floors.find(item => item.id == floor).number
     this.getAllTablesByFloorId(floor);
   }
 }

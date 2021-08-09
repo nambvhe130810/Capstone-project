@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { TableBillService } from './table-bill.service';
+import { WindowService } from './window.service';
 
-describe('BillService', () => {
-  let service: TableBillService;
+describe('WindowService', () => {
+  let service: WindowService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(TableBillService);
+    service = TestBed.inject(WindowService);
   });
 
   it('should be created', () => {

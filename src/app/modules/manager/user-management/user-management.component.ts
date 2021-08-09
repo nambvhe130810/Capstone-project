@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
+import { map } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { UserService } from 'src/app/services/user.service';
 import { PopupRegisterComponent } from './popup-register/popup-register.component';
@@ -12,7 +13,7 @@ import { PopupRegisterComponent } from './popup-register/popup-register.componen
 })
 export class UserManagementComponent implements OnInit {
   user: any;
-  listUser: Array<any> = [];
+  users = [];
   searchForm: any;
   isHost = false;
   constructor(
@@ -25,7 +26,18 @@ export class UserManagementComponent implements OnInit {
     this.searchForm = new FormGroup({
       name: new FormControl("", null),
     });
-    this.getUsers();
+    this.getAllUsers();
+  }
+  getAllUsers() {
+    this.userService.getAll().snapshotChanges().pipe(
+      map(changes =>
+        changes.map(c =>
+          ({ key: c.payload.key, ...c.payload.val() })
+        )
+      )
+    ).subscribe(data => {
+      this.users = data;
+    });
   }
 
   getUsers() {
@@ -35,7 +47,7 @@ export class UserManagementComponent implements OnInit {
 
     this.userService.getAllUser(param).subscribe(res => {
       if (res) {
-        this.listUser = res;
+        this.users = res;
       }
     })
   }

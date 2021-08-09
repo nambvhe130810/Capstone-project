@@ -1,0 +1,10 @@
+.a {
+    height: 100vh;
+    background-image:url("https://www.freepik.com/free-vector/flat-geometric-background_13900618.htm#page=1&query=background&position=0");
+    background-size: cover;
+    
+}
+.translate {
+    top: 50%;
+    transform: translate(0, -50%);
+}

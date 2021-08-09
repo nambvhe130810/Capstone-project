@@ -2,8 +2,10 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { map } from 'rxjs/internal/operators/map';
-import { ProcessOrderService } from '../../../services/process-order.service';
-
+import { OrderService } from '../../../services/order.service';
+import { RejectRequestComponent } from '../reject-request/reject-request.component';
+import { MatDialog } from '@angular/material/dialog';
+import * as moment from 'moment'
 
 @Component({
   selector: 'app-booking-request-dialog',
@@ -13,42 +15,50 @@ import { ProcessOrderService } from '../../../services/process-order.service';
 export class BookingRequestDialogComponent implements OnInit {
   processOrders = [];
   processOrderDetail: any;
-  
+
   constructor(public dialogRef: MatDialogRef<BookingRequestDialogComponent>,
+    public dialog: MatDialog,
     @Inject(MAT_DIALOG_DATA) public data: any,
-    private processOrderService: ProcessOrderService,
+    private orderService: OrderService,
     private router: Router,
     private route: ActivatedRoute,
-    ) { }
+  ) { }
 
   ngOnInit(): void {
     this.getAllProcessOrder();
   }
   getAllProcessOrder() {
-    this.processOrderService.getAll().snapshotChanges().pipe(
+    this.orderService.getAll().snapshotChanges().pipe(
       map(changes =>
         changes.map(c =>
           ({ key: c.payload.key, ...c.payload.val() })
         )
       )
     ).subscribe(data => {
-      this.processOrders = data;
+      this.processOrders = data;     
     });
   }
+  parstring(dateString){
+    var momentVariable = moment(dateString, 'yyyyMMdd_HHmm');
+    console.log("moment", momentVariable)
+    console.log("time" ,momentVariable.format('dd/MM/yyyy HH:mm'))
+    return momentVariable.format('dd/MM/yyyy HH:mm');
+  }
   chooseTable(id) {
-
-    this.router.navigate(['/set-table'],{ relativeTo: this.route, queryParams: { id: id }, replaceUrl: true }).then(val => {
+    this.router.navigate(['/set-table'], { relativeTo: this.route, queryParams: { id: id }, replaceUrl: true }).then(val => {
       this.dialogRef.close();
     });
 
   }
-  rejectTable(id){
+  rejectTable(id) {
     try {
-        this.processOrderDetail = this.processOrders.find(item => item.id ==id);
-       this.processOrderDetail.status = 'rejected';
-       console.log("processOrderDetails" , this.processOrderDetail);
-        this.processOrderService.update(this.processOrderDetail.id, this.processOrderDetail);
-    } catch(err) {
+      this.processOrderDetail = this.processOrders.find(item => item.id == id);
+      const dialogRef = this.dialog.open(RejectRequestComponent, {
+        width: '750px',
+        data: this.processOrderDetail
+      });
+
+    } catch (err) {
     }
   }
 }

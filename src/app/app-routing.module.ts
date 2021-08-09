@@ -4,10 +4,12 @@ import { RouterModule, Routes } from '@angular/router';
 import { DefaultComponent } from './layouts/default/default.component';
 import { HomePageComponent } from './modules/receptionist/home-page/home-page.component';
 import { SetTableComponent } from './modules/receptionist/set-table/set-table.component';
-import { UserManagementComponent } from './modules/user-management/user-management.component';
-
+import { UserManagementComponent } from './modules/manager/user-management/user-management.component';
+import { QuestionManagementComponent } from './modules/manager/question-management/question-management.component';
+import { AuthGuardService as AuthGuard } from 'src/app/services/auth-guard.service';
+import { LoginComponent } from './modules/login/login.component';
 const routes: Routes = [
-  { path: '', redirectTo: 'list-table', pathMatch: 'full' },
+  { path: '', redirectTo: 'login', pathMatch: 'full'},
   {
     path: '',
     component: DefaultComponent,
@@ -16,6 +18,9 @@ const routes: Routes = [
       { path: 'set-table', component: SetTableComponent },
       { path: 'set-table/:id', component: SetTableComponent },
       { path: 'user', component: UserManagementComponent },
+      { path: 'question', component: QuestionManagementComponent },
+      { path: 'login', component: LoginComponent },
+
     ]
   },
   

@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { ProcessOrderService } from './process-order.service';
+import { AuthGuardService } from './auth-guard.service';
 
-describe('ProcessOrderService', () => {
-  let service: ProcessOrderService;
+describe('AuthGuardService', () => {
+  let service: AuthGuardService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(ProcessOrderService);
+    service = TestBed.inject(AuthGuardService);
   });
 
   it('should be created', () => {

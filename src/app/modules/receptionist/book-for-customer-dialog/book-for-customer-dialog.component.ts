@@ -3,9 +3,11 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ToastrService } from 'ngx-toastr';
 import { map } from 'rxjs/operators';
-import { ProcessOrderService } from 'src/app/services/process-order.service';
+import { OrderService } from 'src/app/services/order.service';
 import { TablesService } from 'src/app/services/tables.service';
 import * as uuid from 'uuid';
+import { UserService } from 'src/app/services/user.service';
+
 @Component({
   selector: 'app-book-for-customer-dialog',
   templateUrl: './book-for-customer-dialog.component.html',
@@ -13,20 +15,24 @@ import * as uuid from 'uuid';
 })
 export class BookForCustomerDialogComponent implements OnInit {
   tables = [];
+  users = []
   myId = '';
-  selectedTable = '';
-  formatdate ='yyyyMMdd_HHmm'
+  tableSelected = '';
+  formatdate = 'yyyyMMdd_HHmm'
   pipe = new DatePipe('en-US');
+  waiterId: any;
   constructor(public dialogRef: MatDialogRef<BookForCustomerDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private tablesService: TablesService,
-    private processOrderService: ProcessOrderService,
+    private orderService: OrderService,
+    private userService: UserService,
     private toastr: ToastrService,
 
   ) { }
 
   ngOnInit(): void {
     this.getAllTables();
+    this.getAllWaiters()
   }
   onNoClick(): void {
     this.dialogRef.close();
@@ -43,25 +49,55 @@ export class BookForCustomerDialogComponent implements OnInit {
     });
   }
   toggle(table) {
-    this.selectedTable = table.id;
+    table.isChecked = !table.isChecked;
+    this.tables = this.tables.map(item => {
+      if (item.id != table.id) {
+        item.isChecked = false;
+      }
+      return item;
+    })
+    this.tableSelected = table.id;
+  }
+  getAllWaiters() {
+    this.userService.getAll().snapshotChanges().pipe(
+      map(changes =>
+        changes.map(c =>
+          ({ key: c.payload.key, ...c.payload.val() })
+        )
+      )
+    ).subscribe(data => {
+      this.users = data.map(item => { item.isChecked = false; return item; });
+    });
+    console.log("this user", this.users)
+  }
+  toggleWaiter(waiter) {
+    waiter.isChecked = !waiter.isChecked;
+    this.users = this.users.map(item => {
+      if (item.id != waiter.id) {
+        item.isChecked = false;
+      }
+      return item;
+    })
+    this.waiterId = waiter.id;
   }
   Save() {
     try {
-      let table = this.tables.find(item => item.id == this.selectedTable);
+      let table = this.tables.find(item => item.id == this.tableSelected);
       table.status = false;
       this.dialogRef.close(this.data);
       this.myId = uuid.v4();
-      this.data.tableId = this.selectedTable;
+      this.data.tableId = this.tableSelected;
       this.data.id = this.myId;
       this.data.status = 'confirmed';
-      this.data.note ='';
-      this.data.userId ='';
-      this.data.phone = "+84" + this.data.phone 
+      this.data.note = '';
+      this.data.userId = '';
+      this.data.phone = "+84" + this.data.phone
+      this.data.waiterId = this.waiterId
       const now = Date.now()
-      this.data.date=this.pipe.transform(now, this.formatdate);
-      this.processOrderService.set(this.myId,this.data).then(() => {
-      this.tablesService.update(table.id, table);
-      this.toastr.success("Đặt bàn thành công")
+      this.data.date = this.pipe.transform(now, this.formatdate);
+      this.orderService.set(this.myId, this.data).then(() => {
+        this.tablesService.update(table.id, table);
+        this.toastr.success("Đặt bàn thành công")
       })
     } catch {
       this.toastr.error("Đặt bàn thất bại")

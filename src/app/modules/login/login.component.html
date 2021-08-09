@@ -1,0 +1,53 @@
+<!-- <div [hidden]="user">
+  <h1 class="m-3">Log In with Your Phone/Mobile Number</h1>
+  <label for="phone" class="m-3">Phone/Mobile Number</label>
+  <input type="text" [(ngModel)]="phoneNumber.area" class="input m-2" placeholder="Mã vùng">
+  <input type="text" [(ngModel)]="phoneNumber.line" class="input m-2" placeholder="Số điện thoại">
+  <div class="m-3" id="recaptcha-container"></div>
+  <button class="m-3 btn-primary" (click)="sendLoginCode()">SMS Text Login Code</button>
+  <div *ngIf="windowRef.confirmationResult">
+    <hr>
+    <label class="m-3" for="code">Enter your Verification Code Here</label><br>
+    <input class="m-3" type="text" name="code" [(ngModel)]="verificationCode">
+    <button class="m-3 btn-primary" (click)="verifyLoginCode()">Verify</button>
+  </div>
+</div>
+<div *ngIf="user">
+  You have successfully logged in with your phone/mobile number! Your userId: {{ user?.uid }}
+</div> -->
+
+
+<div class = "a">
+    <div class = "translate card col-md-4 container">
+        <div class = "card-header">
+            <h4>Đăng nhập</h4>
+            <!-- <hr> -->
+        </div>
+        
+        <div class = "form-group card-body">
+            <label>Số điện thoại</label><br>
+            <div class="row">
+              <input class = "form-control col-md-3 mr-3 ml-3" type="text" [(ngModel)]="phoneNumber.area" placeholder="Mã vùng" disabled>
+              <input class = "form-control col-md-8" placeholder="Nhập số điện thoại" [(ngModel)]="phoneNumber.line" [disabled]="isSentOtp">
+            </div>
+            <br>
+            <div class="m-3" id="recaptcha-container"></div>
+            <button class="btn btn-primary col-md-12" (click)="sendLoginCode()" *ngIf="!isSentOtp">Gửi mã OTP</button>
+            <div *ngIf="windowRef.confirmationResult && isSentOtp">
+              <hr>
+              <label class="m-2" for="code">Nhập mã OTP</label><br>
+              <input class = "form-control col-lg-3" class="form-control" type="text" name="code" placeholder="Nhập mã OTP" [(ngModel)]="verificationCode">
+              <div class="row">
+                <button class="btn btn-outline-primary col-md-5 mt-3" (click)="back()">Quay lại</button>
+                <button class="btn btn-primary col-md-5 offset-md-2 mt-3" (click)="verifyLoginCode()">Đăng nhập</button>
+              </div>
+            </div>
+            <!-- <button class= "btn btn-primary col-md-12" type = "submit" (click) = "login(student)">Đăng nhập</button> -->
+        </div>
+        
+    </div>
+  </div>
+    
+  
+  
+  

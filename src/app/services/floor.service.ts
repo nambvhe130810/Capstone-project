@@ -11,6 +11,6 @@ export class FloorService extends BaseApiService{
     super(db);
   }
   collectionName() {
-    return 'Floor'
+    return 'Floors'
   }
 }

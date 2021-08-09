@@ -11,6 +11,6 @@ export class TableBillService extends BaseApiService{
     super(db);
   }
   collectionName() {
-    return 'TableBill'
+    return 'TableBills'
   }
 }

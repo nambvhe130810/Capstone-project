@@ -1,4 +1,7 @@
 <div class="container">
+    <div>
+        Số bàn trống nhà hàng: Trống {{tableFree}}/{{allTable}} bàn &gt;  Tầng {{floor}}:Trống {{tableFreeByFloor}}/{{allTableByFloor}} bàn
+    </div>
     <div class="row mt-2">      
         <div class="col-md-6 text-left">
             <button mat-stroked-button color="primary" class="book-btn" (click)="bookTableForCustomer()">Đặt bàn cho
@@ -11,7 +14,7 @@
     </div>
     <div>
         <select class="browser-default custom-select" (change)="onSelectedFloor($event.target.value)">
-            <option *ngFor ="let floor of floors" [value]="floor.id">{{floor.number}}</option>
+            <option *ngFor ="let floor of floors" [value]="floor.id">Tầng: {{floor.number}}</option>
           </select>
     </div>  
     <div class="row mt-5">

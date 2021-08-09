@@ -5,11 +5,11 @@ import { BaseApiService } from './base-api.service';
 @Injectable({
   providedIn: 'root'
 })
-export class OrderDetailService extends BaseApiService{
+export class FoodService extends BaseApiService{
   constructor( db: AngularFireDatabase ) { 
    super(db);
  }
  collectionName() {
-   return 'OderDetails'
+   return 'Tables'
  }
 }

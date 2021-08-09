@@ -8,7 +8,7 @@ import { AngularFireDatabase, AngularFireList } from '@angular/fire/database';
 export class BuffetService {
   items: AngularFireList<any> = null;
   constructor(private db: AngularFireDatabase) { 
-    this.items = db.list('Buffet');
+    this.items = db.list('Buffets');
   }
   getAll(): AngularFireList<any> {
     return this.items;

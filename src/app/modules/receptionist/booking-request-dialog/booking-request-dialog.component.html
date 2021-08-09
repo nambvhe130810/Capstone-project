@@ -4,7 +4,9 @@
             <div class="col-md-8">
                 <h5>{{order.name}} đã yêu cầu đặt bàn.</h5>
                 <p style="margin-bottom: 8px;">Số lượng người: {{order.numberOfPeople}}</p>
-                <p class="d-flex align-content-center"><span><mat-icon style="font-size: 18px;"> phone</mat-icon></span><span class="mr-3">{{order.phone}}</span><span>{{order.date}}</span></p>
+                <p class="d-flex align-content-center"><span><mat-icon style="font-size: 18px;"> phone</mat-icon></span><span class="mr-3">{{order.phone}}</span></p>
+                <p class="d-flex align-content-center" > Thời gian: {{order.date}}</p>
+                <p>Note: {{order.note}}</p>
             </div>
             <div class="col-md-4">
                 <button mat-raised-button color="success" class="mr-3" (click)="chooseTable(order.id)">Xếp bàn</button>

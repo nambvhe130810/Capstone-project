@@ -3,7 +3,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ToastrService } from 'ngx-toastr';
 import { map } from 'rxjs/operators';
 import { TablesService } from 'src/app/services/tables.service';
-import { ProcessOrderService } from 'src/app/services/process-order.service';
+import { OrderService } from 'src/app/services/order.service';
 import { BillsService } from 'src/app/services/bills.service';
 import * as uuid from 'uuid';
 import { DatePipe } from '@angular/common';
@@ -23,7 +23,7 @@ export class BillForCustomerComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: any,
     private tablesService: TablesService,
     private toastr: ToastrService,
-    private processOrderService: ProcessOrderService,
+    private orderService: OrderService,
     private billsService:BillsService,
   ) { }
 
@@ -46,7 +46,7 @@ export class BillForCustomerComponent implements OnInit {
     });
   }
   getProcessOrderDetail() {
-    this.processOrderService.getAll().snapshotChanges().pipe(
+    this.orderService.getAll().snapshotChanges().pipe(
       map(changes =>
         changes.map(c =>
           ({ key: c.payload.key, ...c.payload.val() })
@@ -64,11 +64,11 @@ export class BillForCustomerComponent implements OnInit {
       let table = this.tables.find(item => item.id == id);
       console.log("table", table)
       table.isReadyToPay = false;
-      // this.tablesService.update(id, table)
+      this.tablesService.update(id, table)
       const now = Date.now()
       let time=this.pipe.transform(now, this.formatdate);
       let obj ={id:uuid.v4(),name:this.processOrderDetail.name,totalMoney:this.data.totalMoney,time:time}
-      // this.billsService.set(obj.id,obj)
+      this.billsService.set(obj.id,obj)
       this.toastr.success("Thanh toán thành công")
       this.dialogRef.close()
     } catch {
