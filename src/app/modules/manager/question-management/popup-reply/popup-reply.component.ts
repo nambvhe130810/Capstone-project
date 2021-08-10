@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { CommunicationsService } from 'src/app/services/communications.service';
 
 @Component({
@@ -20,17 +20,22 @@ export class PopupReplyComponent implements OnInit {
   }
 
   reply() {
-    let body = {
-      "message": this.data?.message,
-      "messageId": this.data?.id,
-      "messageReply": this.answer,
-      "type": this.data?.type,
-      "userId": this.data?.userId
-    }
+    let body = this.data;
+    //  {
+    //   "message": this.data?.message,
+    //   "messageId": this.data?.id,
+    //   "messageReply": this.answer,
+    //   "type": this.data?.type,
+    //   "userId": this.data?.userId
+    // }
 
-    this.communicationService.reply(body).subscribe(res => {
-      this.dialogRef.close();
-    })
+
+    body.isReply=true;
+    body.messageReply = this.answer;
+
+    this.communicationService.setBySource(this.data.id,body, '/' + this.data.type).then(() => {
+        this.dialogRef.close();
+      });
   }
 
 }

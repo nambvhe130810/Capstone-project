@@ -15,10 +15,11 @@
                       <tr *ngFor="let item of listQuestionWaiter; let i = index">
                         <th scope="row" style="width: 25px;text-align: center;">{{i+1}}</th>
                         <td>{{item.message}}</td>
-                        <td style="width: 90px">
+                        <td style="width: 70px">
                             <div class="d-flex justify-content-center">
-                              <button title="Trả lời" style="border: none;" (click)="openModalReply(item,'Waiter')">Trả lời</button>
-
+                                <button title="Trả lời" style="background: transparent; border: none;" (click)="openModalReply(item,'waiter')"><i
+                                        style="font-size: 20px; color: #01904a;"
+                                        class="fas fa-comment-dots"></i></button>
                             </div>
                         </td>
                       </tr>
@@ -41,11 +42,12 @@
                       <tr *ngFor="let item of listQuestionKitchen; let i = index">
                         <th scope="row" style="width: 25px;text-align: center;">{{i+1}}</th>
                         <td>{{item.message}}</td>
-                        <td style="width: 90px">
-                          <div class="d-flex justify-content-center">
-                            <button title="Trả lời" style="border: none;" (click)="openModalReply(item,'Chef')">Trả lời</button>
-
-                          </div>
+                        <td style="width: 70px">
+                            <div class="d-flex justify-content-center">
+                                <button title="Trả lời" style="background: transparent; border: none;" (click)="openModalReply(item,'chef')"><i
+                                        style="font-size: 20px; color: #01904a;"
+                                        class="fas fa-comment-dots"></i></button>
+                            </div>
                         </td>
                       </tr>
                     </tbody>
@@ -67,11 +69,12 @@
                       <tr *ngFor="let item of listQuestionCustomer; let i = index">
                         <th scope="row" style="width: 25px;text-align: center;">{{i+1}}</th>
                         <td>{{item.message}}</td>
-                        <td style="width: 90px">
-                          <div class="d-flex justify-content-center">
-                            <button title="Trả lời" style="border: none;" (click)="openModalReply(item,'Customer')">Trả lời</button>
-
-                          </div>
+                        <td style="width: 70px">
+                            <div class="d-flex justify-content-center">
+                                <button title="Trả lời" style="background: transparent; border: none;" (click)="openModalReply(item,'customer')"><i
+                                        style="font-size: 20px; color: #01904a;"
+                                        class="fas fa-comment-dots"></i></button>
+                            </div>
                         </td>
                       </tr>
                     </tbody>
@@ -93,11 +96,12 @@
                       <tr *ngFor="let item of listQuestionReceptionist; let i = index">
                         <th scope="row" style="width: 25px;text-align: center;">{{i+1}}</th>
                         <td>{{item.message}}</td>
-                        <td style="width: 90px">
-                          <div class="d-flex justify-content-center">
-                            <button title="Trả lời" style="border: none;" (click)="openModalReply(item,'Receptionist')">Trả lời</button>
-
-                          </div>
+                        <td style="width: 70px">
+                            <div class="d-flex justify-content-center">
+                                <button title="Trả lời" style="background: transparent; border: none;" (click)="openModalReply(item,'receptionist')"><i
+                                        style="font-size: 20px; color: #01904a;"
+                                        class="fas fa-comment-dots"></i></button>
+                            </div>
                         </td>
                       </tr>
                     </tbody>

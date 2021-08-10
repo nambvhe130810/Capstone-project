@@ -22,24 +22,103 @@ export class QuestionManagementComponent implements OnInit {
   listQuestionKitchen = []
   listQuestionCustomer = []
   listQuestionReceptionist = []
+
+  dataFakeWaiter = [
+    {
+      "id": "1",
+      "isSeen": false,
+      "message": "Em xin mẫu đơn nghỉ việc.",
+      "userId": "1"
+    },
+    {
+      "id": "4",
+      "isSeen": false,
+      "message": "Khách quá đông, không phục vụ kịp",
+      "userId": "1"
+    },
+    {
+      "id": "2",
+      "isSeen": false,
+      "message": "Bàn số 30 đã ngồi quá hơn 3 tiếng",
+      "userId": "1"
+    },
+    {
+      "id": "3",
+      "isSeen": false,
+      "message": "Có chuột ở trong kho",
+      "userId": "1"
+    },
+  ];
+  dataFakeKitchen = [
+    {
+      "id": "1",
+      "isSeen": false,
+      "message": "Chảo không còn chống dính.",
+      "userId": "1"
+    },
+    {
+      "id": "2",
+      "isSeen": false,
+      "message": "Toàn bộ muối đã hết hạn",
+      "userId": "1"
+    },
+    {
+      "id": "3",
+      "isSeen": false,
+      "message": "Cần thêm nhân viên nấu món Pháp",
+      "userId": "1"
+    },
+  ];
+  dataFakeCustomer = [
+    {
+      "id": "1",
+      "isSeen": false,
+      "message": "Nhân viên Nguyễn A phục vụ kém",
+      "userId": "1"
+    },
+    {
+      "id": "2",
+      "isSeen": false,
+      "message": "Món Pháp quá mặn",
+      "userId": "1"
+    },
+  ];
+  dataFakeReceptionist = [
+    {
+      "id": "1",
+      "isSeen": false,
+      "message": "Máy in hóa đơn hỏng",
+      "userId": "1"
+    },
+    {
+      "id": "1",
+      "isSeen": false,
+      "message": "Khách yêu cầu thanh toán bằng tài khoản nước ngoài",
+      "userId": "1"
+    },
+  ];
   constructor(
     private dialog: MatDialog,
     private communicationService: CommunicationsService
   ) { }
 
   ngOnInit(): void {
-    this. getListQuestion('Chef');
-    this. getListQuestion('Customer');
-    this. getListQuestion('Receptionist');
-    this. getListQuestion('Waiter');
+    this. getListQuestion('chef');
+    this. getListQuestion('customer');
+    this. getListQuestion('receptionist');
+    this. getListQuestion('waiter');
   }
 
   getListQuestion(type) {
     let isHaveData = false;
-    this.communicationService.getListQuestion(type).subscribe(res => {
-        isHaveData = true;
-        this.handleData(res, type);
+    this.communicationService.getBySource('/'+type).subscribe(res => {
+      isHaveData = true;
+      this.handleData(res, type);
     });
+    // this.communicationService.getListQuestion(type).subscribe(res => {
+    //     isHaveData = true;
+    //     this.handleData(res, type);
+    // });
     if (!isHaveData) {
       this.handleData(null, type)
     }
@@ -47,16 +126,16 @@ export class QuestionManagementComponent implements OnInit {
 
   handleData(data, type) {
     if (data) {
-      if (type == 'Chef') {
+      if (type == 'chef') {
         this.listQuestionKitchen = data;
       }
-      if (type == 'Customer') {
+      if (type == 'customer') {
         this.listQuestionCustomer = data;
       }
-      if (type == 'Waiter') {
+      if (type == 'waiter') {
         this.listQuestionWaiter = data;
       }
-      if (type == 'Receptionist') {
+      if (type == 'receptionist') {
         this.listQuestionReceptionist = data;
       }
     }
@@ -70,10 +149,10 @@ export class QuestionManagementComponent implements OnInit {
       data: item
     });
     dialogRef.afterClosed().subscribe(result => {
-      this. getListQuestion('Chef');
-      this. getListQuestion('Customer');
-      this. getListQuestion('Receptionist');
-      this. getListQuestion('Waiter');
+      this. getListQuestion('chef');
+      this. getListQuestion('customer');
+      this. getListQuestion('receptionist');
+      this. getListQuestion('waiter');
     });
   }
 }

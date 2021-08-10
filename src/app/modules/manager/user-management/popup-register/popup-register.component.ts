@@ -1,7 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { ToastrService } from 'ngx-toastr';
 import { RegisterInfo } from 'src/app/models/registerInfo';
 import { UserService } from 'src/app/services/user.service';
 
@@ -12,14 +11,14 @@ import { UserService } from 'src/app/services/user.service';
 })
 export class PopupRegisterComponent implements OnInit {
 
-  roleList = [
-    { code: 'chef', name: 'Đầu bếp' },
-    { code: 'customer', name: 'Khách hàng' },
-    { code: 'manager', name: 'Quản lý' },
-    { code: 'receptionist', name: 'Thu ngân' },
-    { code: 'waiter', name: 'Bồi bàn' },
+  roleList = [ 
+    {code: 'chef', name: 'Đầu bếp'},
+    {code: 'customer', name: 'Khách hàng'},
+    {code: 'manager', name: 'Quản lý'},
+    {code: 'receptionist', name: 'Thu ngân'},
+    {code: 'waiter', name: 'Bồi bàn'},
   ]
-  registerInfo: RegisterInfo;
+  registerInfo:RegisterInfo;
   confirmPassword = '';
   isConfirmedPassword = false;
   sessionInfo: any;
@@ -31,34 +30,33 @@ export class PopupRegisterComponent implements OnInit {
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     public dialogRef: MatDialogRef<PopupRegisterComponent>,
-    public userService: UserService,
-    private toastr: ToastrService,
+    public userService: UserService
   ) { }
 
   ngOnInit(): void {
     this.registerInfo = new RegisterInfo();
     this.registerInfo.role = 'chef'
     this.registerForm = new FormGroup({
-      phone: new FormControl(null, [Validators.required, Validators.pattern("^[0-9]*$")]),
+      phone: new FormControl(null, [Validators.required,Validators.pattern("^[0-9]*$")]),
     });
     this.otpForm = new FormGroup({
-      otp: new FormControl(null, [Validators.required, Validators.pattern("^[0-9]*$")]),
+      otp: new FormControl(null, [Validators.required,Validators.pattern("^[0-9]*$")]),
     });
   }
   register() {
     if (this.registerInfo) {
       this.registerInfo.phone = '+84' + this.registerInfo.phone;
-      this.userService.registerUser(this.registerInfo).subscribe(
-        res => {
-          this.toastr.success("Đăng ký thành công")
-          this.dialogRef.close();
-        },
-        error => {
-          this.toastr.error("Đăng ký thất bại")
-          this.dialogRef.close();
-        }
-      )
-
+      this.userService.create(this.registerInfo).then(() => {
+        this.dialogRef.close();
+      });
+        // this.userService.registerUser(this.registerInfo).subscribe(
+        //   res => {
+        //       this.dialogRef.close();
+        //   },
+        //   error => {
+        //   }
+        // )
+      
     }
   }
 

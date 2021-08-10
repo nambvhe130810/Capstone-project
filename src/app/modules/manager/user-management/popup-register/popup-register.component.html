@@ -47,12 +47,12 @@
         <label>Địa chỉ</label><br>
         <input class="form-control" placeholder="Nhập địa chỉ" [(ngModel)]="registerInfo.address"><br>
         <label>Số điện thoại</label><br>
-        <input class="form-control w-100" type="number" placeholder="Nhập số điện thoại" [(ngModel)]="registerInfo.phone">
+        <input class="form-control w-100" placeholder="Nhập số điện thoại" [(ngModel)]="registerInfo.phone">
         <br>
         <div>
             <label for="">Vai trò</label>
             <!-- <span class="text-danger">(*)</span> -->
-            <ng-select appearance="outline" [items]="roleList" bindLabel="name"
+            <ng-select placeholder="Chọn vai trò" appearance="outline" [items]="roleList" bindLabel="name"
                 bindValue="code" [(ngModel)]="registerInfo.role">
             </ng-select>
         </div>

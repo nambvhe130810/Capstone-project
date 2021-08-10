@@ -1,3 +1,4 @@
+
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
@@ -20,6 +21,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { RejectRequestComponent } from './modules/receptionist/reject-request/reject-request.component';
 import { LoginComponent } from './modules/login/login.component';
 import { AngularFireAuthModule } from '@angular/fire/auth';
+import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
   declarations: [
@@ -43,7 +45,8 @@ import { AngularFireAuthModule } from '@angular/fire/auth';
     AngularFireAuthModule,
     DefaultModule,
     NgSelectModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    MatDialogModule
   ],
   providers: [],
   bootstrap: [AppComponent]

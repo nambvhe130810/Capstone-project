@@ -32,8 +32,8 @@
                         <!-- <th style="background: #beb6b6; text-align: center;" scope="col">Thao tác</th> -->
                     </tr>
                 </thead>
-                <tbody *ngIf="users.length > 0">
-                    <tr *ngFor="let item of users; index as i">
+                <tbody *ngIf="listUser.length > 0">
+                    <tr *ngFor="let item of listUser; index as i">
                         <td style="text-align: center;" scope="row">{{i+1}}</td>
                         <td style="text-align: center;">{{item?.name}}</td>
                         <td style="text-align: center;">{{item?.address}}</td>

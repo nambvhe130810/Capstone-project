@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { map } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { UserService } from 'src/app/services/user.service';
+
 import { PopupRegisterComponent } from './popup-register/popup-register.component';
 
 @Component({
@@ -13,7 +13,7 @@ import { PopupRegisterComponent } from './popup-register/popup-register.componen
 })
 export class UserManagementComponent implements OnInit {
   user: any;
-  users = [];
+  listUser: Array<any> = [];
   searchForm: any;
   isHost = false;
   constructor(
@@ -26,18 +26,7 @@ export class UserManagementComponent implements OnInit {
     this.searchForm = new FormGroup({
       name: new FormControl("", null),
     });
-    this.getAllUsers();
-  }
-  getAllUsers() {
-    this.userService.getAll().snapshotChanges().pipe(
-      map(changes =>
-        changes.map(c =>
-          ({ key: c.payload.key, ...c.payload.val() })
-        )
-      )
-    ).subscribe(data => {
-      this.users = data;
-    });
+    this.getUsers();
   }
 
   getUsers() {
@@ -45,11 +34,18 @@ export class UserManagementComponent implements OnInit {
       searchValue: this.searchForm.value.name,
     }
 
-    this.userService.getAllUser(param).subscribe(res => {
-      if (res) {
-        this.users = res;
+    this.userService.getAll().valueChanges().subscribe(res => {
+      if (this.searchForm.value.name) {
+        this.listUser = res.filter(item => item.name.toLowerCase().indexOf(this.searchForm.value.name.toLowerCase()) > -1 );
+      } else {
+        this.listUser = res;
       }
-    })
+    });
+    // this.userService.getAllUser(param).subscribe(res => {
+    //   if (res) {
+    //     this.listUser = res;
+    //   }
+    // })
   }
 
   openModalRegister() {

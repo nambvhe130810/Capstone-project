@@ -2,12 +2,12 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { DefaultComponent } from './layouts/default/default.component';
+import { LoginComponent } from './modules/login/login.component';
+import { QuestionManagementComponent } from './modules/manager/question-management/question-management.component';
+import { UserManagementComponent } from './modules/manager/user-management/user-management.component';
 import { HomePageComponent } from './modules/receptionist/home-page/home-page.component';
 import { SetTableComponent } from './modules/receptionist/set-table/set-table.component';
-import { UserManagementComponent } from './modules/manager/user-management/user-management.component';
-import { QuestionManagementComponent } from './modules/manager/question-management/question-management.component';
-import { AuthGuardService as AuthGuard } from 'src/app/services/auth-guard.service';
-import { LoginComponent } from './modules/login/login.component';
+
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full'},
   {
@@ -23,7 +23,7 @@ const routes: Routes = [
 
     ]
   },
-  
+
 ]
 @NgModule({
   declarations: [],
