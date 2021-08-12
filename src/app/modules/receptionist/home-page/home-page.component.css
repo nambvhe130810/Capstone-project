@@ -9,3 +9,45 @@ button {
 .book-btn {
     height: 40px;
 }
+.container {
+    border: 1px solid black;
+    height: 100%;
+}
+.header {
+    border-bottom:  1px solid black;
+    display: flex;
+    width: 100%;
+}
+.table1 {
+    border: 1px solid black;
+    height: 15px;
+    width: 15px;
+    background-color: #3f51b5;
+    margin-left: 5%;
+    margin-right: 5px;
+    margin-top: 3px;
+}
+.table2 {
+    border: 1px solid black;
+    height: 15px;
+    width: 15px;
+    background-color: #f44336;
+    margin-left: 5%;
+    margin-right: 5px;
+    margin-top: 3px;
+}
+.table3 {
+    border: 1px solid black;
+    height: 15px;
+    width: 15px;
+    background-color: #ff4081;
+    margin-left: 5%;
+    margin-right: 5px;
+    margin-top: 3px;
+}
+.icon_user {
+    margin-left: 8%;
+    margin-right: 5px;
+    margin-top: 3px;
+
+}

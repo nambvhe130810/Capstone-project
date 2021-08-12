@@ -5,8 +5,9 @@ import { map } from 'rxjs/operators';
 import { OrderService } from 'src/app/services/order.service';
 import { TablesService } from 'src/app/services/tables.service';
 import { UserService } from 'src/app/services/user.service';
+import { FloorService } from 'src/app/services/floor.service';
 import { Router } from '@angular/router';
-
+import * as moment from 'moment'
 
 @Component({
   selector: 'app-set-table',
@@ -19,19 +20,22 @@ export class SetTableComponent implements OnInit {
   tables = [];
   tableSelected: string;
   users = [];
+  floors = []
   waiterId: any;
   constructor(private activatedRoute: ActivatedRoute,
     private orderService: OrderService,
     private tablesService: TablesService,
     private userService: UserService,
+    private floorService: FloorService,
     private toastr: ToastrService,
     public router: Router,
   ) { }
 
   ngOnInit(): void {
     this.getProcessOrderDetail();
-    this.getAllTables();
-    this.getAllWaiters();
+    this.getAllTablesByFloorId("c6e2aa41-ad46-45f5-889a-dc71ade4bd26");
+    this.getAllWaiters()
+    this.getAllFloor();
   }
   getProcessOrderDetail() {
     this.orderService.getAll().snapshotChanges().pipe(
@@ -49,7 +53,7 @@ export class SetTableComponent implements OnInit {
     });
   }
 
-    getAllTables() {
+  getAllTablesByFloorId(floorId) {
     this.tablesService.getAll().snapshotChanges().pipe(
       map(changes =>
         changes.map(c =>
@@ -57,8 +61,22 @@ export class SetTableComponent implements OnInit {
         )
       )
     ).subscribe(data => {
-      this.tables = data.map(item => {item.isChecked = false ; return item;});
+      this.tables = data.filter(item => item.floorId == floorId);
     });
+  }
+  getAllFloor() {
+    this.floorService.getAll().snapshotChanges().pipe(
+      map(changes =>
+        changes.map(c =>
+          ({ key: c.payload.key, ...c.payload.val() })
+        )
+      )
+    ).subscribe(data => {
+      this.floors = data;
+    });
+  }
+  onSelectedFloor(floor) {
+    this.getAllTablesByFloorId(floor);
   }
   toggle(table) {
     table.isChecked = !table.isChecked;
@@ -70,6 +88,11 @@ export class SetTableComponent implements OnInit {
     })
     this.tableSelected = table.id;
   }
+  
+  parstring(dateString){
+    return moment(dateString,'YYYYMMDD_HHmm').format('HH:mm DD/MM/YYYY');
+  }
+
   getAllWaiters() {
     this.userService.getAll().snapshotChanges().pipe(
       map(changes =>

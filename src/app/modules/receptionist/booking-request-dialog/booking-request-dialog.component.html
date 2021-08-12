@@ -5,7 +5,7 @@
                 <h5>{{order.name}} đã yêu cầu đặt bàn.</h5>
                 <p style="margin-bottom: 8px;">Số lượng người: {{order.numberOfPeople}}</p>
                 <p class="d-flex align-content-center"><span><mat-icon style="font-size: 18px;"> phone</mat-icon></span><span class="mr-3">{{order.phone}}</span></p>
-                <p class="d-flex align-content-center" > Thời gian: {{order.date}}</p>
+                <p class="d-flex align-content-center" > Thời gian: {{parstring(order.date)}}</p>
                 <p>Note: {{order.note}}</p>
             </div>
             <div class="col-md-4">

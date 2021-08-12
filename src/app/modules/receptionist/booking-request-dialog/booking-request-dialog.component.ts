@@ -39,10 +39,7 @@ export class BookingRequestDialogComponent implements OnInit {
     });
   }
   parstring(dateString){
-    var momentVariable = moment(dateString, 'yyyyMMdd_HHmm');
-    console.log("moment", momentVariable)
-    console.log("time" ,momentVariable.format('dd/MM/yyyy HH:mm'))
-    return momentVariable.format('dd/MM/yyyy HH:mm');
+    return moment(dateString,'YYYYMMDD_HHmm').format('HH:mm DD/MM/YYYY');
   }
   chooseTable(id) {
     this.router.navigate(['/set-table'], { relativeTo: this.route, queryParams: { id: id }, replaceUrl: true }).then(val => {

@@ -5,6 +5,9 @@ import { map } from 'rxjs/operators';
 import { TablesService } from 'src/app/services/tables.service';
 import { OrderService } from 'src/app/services/order.service';
 import { BillsService } from 'src/app/services/bills.service';
+import { BuffetService} from 'src/app/services/buffet.service';
+import { OrderDetailService} from 'src/app/services/order-detail.service';
+
 import * as uuid from 'uuid';
 import { DatePipe } from '@angular/common';
 
@@ -24,7 +27,9 @@ export class BillForCustomerComponent implements OnInit {
     private tablesService: TablesService,
     private toastr: ToastrService,
     private orderService: OrderService,
+    private orderDetailService: OrderDetailService,
     private billsService:BillsService,
+    private buffetService:BuffetService,
   ) { }
 
   ngOnInit(): void {
@@ -57,7 +62,9 @@ export class BillForCustomerComponent implements OnInit {
       console.log("listProcess = ", data)
       this.processOrderDetail = data.find(item => item.id == this.data.processOrderId)
     });
+    
   }
+  
   accept(id) {
     try {
       console.log("ProcessOrder", this.processOrderDetail)

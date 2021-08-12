@@ -24,7 +24,7 @@ export class HomePageComponent implements OnInit {
   tableFreeByFloor: any;
   allTable: any;
   allTableByFloor: any;
-  floor = 1;
+  floor = "1";
   constructor(public dialog: MatDialog,
     private tablesService: TablesService,
     private billService: TableBillService,
@@ -112,7 +112,7 @@ export class HomePageComponent implements OnInit {
 
   }
   onSelectedFloor(floor) {
-    this.floor = this.floors.find(item => item.id == floor).number
+    this.floor = this.floors.find(item => item.id == floor).name
     this.getAllTablesByFloorId(floor);
   }
 }

@@ -1,6 +1,10 @@
 <div class="container">
-    <div>
-        Số bàn trống nhà hàng: Trống {{tableFree}}/{{allTable}} bàn &gt;  Tầng {{floor}}:Trống {{tableFreeByFloor}}/{{allTableByFloor}} bàn
+    <div class="header">
+        Số bàn trống nhà hàng: Trống {{tableFree}}/{{allTable}}
+         bàn &gt;  Tầng {{floor}}:Trống {{tableFreeByFloor}}/{{allTableByFloor}} bàn
+         <div class="table1"></div>Bàn trống  <div class="table2"></div>Bàn đang phục vụ 
+         <div class="table3"></div>Bàn sẵn sàng thanh toán
+         <i class="fas fa-user-alt icon_user"></i> Thao
     </div>
     <div class="row mt-2">      
         <div class="col-md-6 text-left">
@@ -14,7 +18,7 @@
     </div>
     <div>
         <select class="browser-default custom-select" (change)="onSelectedFloor($event.target.value)">
-            <option *ngFor ="let floor of floors" [value]="floor.id">Tầng: {{floor.number}}</option>
+            <option *ngFor ="let floor of floors" [value]="floor.id">Tầng: {{floor.name}}</option>
           </select>
     </div>  
     <div class="row mt-5">

@@ -7,6 +7,8 @@ import { OrderService } from 'src/app/services/order.service';
 import { TablesService } from 'src/app/services/tables.service';
 import * as uuid from 'uuid';
 import { UserService } from 'src/app/services/user.service';
+import { FloorService } from 'src/app/services/floor.service';
+
 
 @Component({
   selector: 'app-book-for-customer-dialog',
@@ -16,8 +18,10 @@ import { UserService } from 'src/app/services/user.service';
 export class BookForCustomerDialogComponent implements OnInit {
   tables = [];
   users = []
+  floors =[]
   myId = '';
   tableSelected = '';
+  floor = "Tầng 1"
   formatdate = 'yyyyMMdd_HHmm'
   pipe = new DatePipe('en-US');
   waiterId: any;
@@ -26,18 +30,20 @@ export class BookForCustomerDialogComponent implements OnInit {
     private tablesService: TablesService,
     private orderService: OrderService,
     private userService: UserService,
+    private floorService: FloorService,
     private toastr: ToastrService,
 
   ) { }
 
   ngOnInit(): void {
-    this.getAllTables();
+    this.getAllTablesByFloorId("c6e2aa41-ad46-45f5-889a-dc71ade4bd26");
     this.getAllWaiters()
+    this.getAllFloor();
   }
   onNoClick(): void {
     this.dialogRef.close();
   }
-  getAllTables() {
+  getAllTablesByFloorId(floorId) {
     this.tablesService.getAll().snapshotChanges().pipe(
       map(changes =>
         changes.map(c =>
@@ -45,8 +51,23 @@ export class BookForCustomerDialogComponent implements OnInit {
         )
       )
     ).subscribe(data => {
-      this.tables = data.map(item => { item.isChecked = false; return item; });
+      this.tables = data.filter(item => item.floorId == floorId);
     });
+  }
+  getAllFloor() {
+    this.floorService.getAll().snapshotChanges().pipe(
+      map(changes =>
+        changes.map(c =>
+          ({ key: c.payload.key, ...c.payload.val() })
+        )
+      )
+    ).subscribe(data => {
+      this.floors = data;
+    });
+  }
+  onSelectedFloor(floor) {
+    this.floor = this.floors.find(item => item.id == floor).name
+    this.getAllTablesByFloorId(floor);
   }
   toggle(table) {
     table.isChecked = !table.isChecked;
@@ -88,7 +109,7 @@ export class BookForCustomerDialogComponent implements OnInit {
       this.myId = uuid.v4();
       this.data.tableId = this.tableSelected;
       this.data.id = this.myId;
-      this.data.status = 'confirmed';
+      this.data.status = 'accepted';
       this.data.note = '';
       this.data.userId = '';
       this.data.phone = "+84" + this.data.phone
