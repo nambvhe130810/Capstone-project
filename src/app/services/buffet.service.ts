@@ -1,16 +1,21 @@
 import { Injectable } from '@angular/core';
 import { AngularFireDatabase, AngularFireList } from '@angular/fire/database';
+import { BaseApiService } from './base-api.service';
 
 
 @Injectable({
   providedIn: 'root'
 })
-export class BuffetService {
+export class BuffetService extends BaseApiService  {
   items: AngularFireList<any> = null;
-  constructor(private db: AngularFireDatabase) { 
-    this.items = db.list('Buffets');
+  constructor(db: AngularFireDatabase) { 
+    super(db);
   }
-  getAll(): AngularFireList<any> {
-    return this.items;
+
+  collectionName() {
+    return '/Buffets'
   }
+  // getAll(): AngularFireList<any> {
+  //   return this.items;
+  // }
 }

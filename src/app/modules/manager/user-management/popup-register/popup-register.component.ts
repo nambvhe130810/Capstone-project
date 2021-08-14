@@ -27,6 +27,7 @@ export class PopupRegisterComponent implements OnInit {
   otpForm: any;
   isShowOtp = false;
   isShowRegister = true;
+  isEdit = false;
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     public dialogRef: MatDialogRef<PopupRegisterComponent>,
@@ -42,6 +43,10 @@ export class PopupRegisterComponent implements OnInit {
     this.otpForm = new FormGroup({
       otp: new FormControl(null, [Validators.required,Validators.pattern("^[0-9]*$")]),
     });
+    if (this.data) {
+      this.registerInfo = this.data;
+      this.isEdit = true;
+    }
   }
   register() {
     if (this.registerInfo) {
@@ -57,6 +62,15 @@ export class PopupRegisterComponent implements OnInit {
         //   }
         // )
       
+    }
+  }
+
+  update() {
+    if (this.registerInfo) {
+      this.registerInfo.phone = this.registerInfo.phone;
+      this.userService.update(this.registerInfo.id, this.registerInfo).then(() => {
+        this.dialogRef.close();
+      });
     }
   }
 

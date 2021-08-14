@@ -66,8 +66,9 @@
         style="height: 42px;">Quay lại</button>
     <button *ngIf="isShowOtp && !isShowRegister" [disabled]="!otpForm.valid" class="btn btn-primary" type="submit"
         (click)="checkOTP()" style="height: 42px;">Xác thực mã OTP</button> -->
-    <button *ngIf="isShowRegister" class="btn btn-primary mr-2" type="submit" (click)="register()" style="height: 42px;">Đăng
+    <button *ngIf="isShowRegister && !isEdit" class="btn btn-primary mr-2" type="submit" (click)="register()" style="height: 42px;">Đăng
         ký</button>
+        <button *ngIf="isShowRegister && isEdit" class="btn btn-primary mr-2" type="submit" (click)="update()" style="height: 42px;">Lưu</button>
     <button *ngIf="isShowRegister" mat-button [mat-dialog-close]="true" class="btn btn-danger-primary"
         style="height: 42px;">Hủy</button>
 </mat-dialog-actions>

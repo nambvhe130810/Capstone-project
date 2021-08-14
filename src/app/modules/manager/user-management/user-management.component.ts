@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { UserService } from 'src/app/services/user.service';
 
 import { PopupRegisterComponent } from './popup-register/popup-register.component';
@@ -19,7 +20,8 @@ export class UserManagementComponent implements OnInit {
   constructor(
     public router: Router,
     private dialog: MatDialog,
-    private userService: UserService
+    private userService: UserService,
+    private toastr: ToastrService,
   ) { }
 
   ngOnInit(): void {
@@ -48,13 +50,36 @@ export class UserManagementComponent implements OnInit {
     // })
   }
 
-  openModalRegister() {
-    let dialogRef = this.dialog.open(PopupRegisterComponent, {
-      width: '500px',
-      height: '600px',
-    });
+  delete(e) {
+    if (e) {
+      this.userService.delete(e?.id).then(()=> {
+        this.getUsers();
+        this.toastr.success("Xóa người dùng thành công");
+      })
+    }
+  }
+
+  openModalRegister(isEdit = false, item?) {
+    let dialogRef;
+    if (isEdit) {
+      dialogRef = this.dialog.open(PopupRegisterComponent, {
+        width: '500px',
+        height: '600px',
+        data: item
+      });
+    } else {
+      dialogRef = this.dialog.open(PopupRegisterComponent, {
+        width: '500px',
+        height: '600px',
+      });
+    }
     dialogRef.afterClosed().subscribe(result => {
       this.getUsers();
+      if (isEdit) {
+        this.toastr.success("Cập nhật người dùng thành công");
+      } else {
+        this.toastr.success("Thêm mới người dùng thành công");
+      }
     });
   }
 

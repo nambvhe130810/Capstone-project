@@ -29,7 +29,7 @@
                         <th style="background: #beb6b6; text-align: center;" scope="col">Địa chỉ</th>
                         <th style="background: #beb6b6; text-align: center;" scope="col">Số điện thoại</th>
                         <th style="background: #beb6b6; text-align: center;" scope="col">Vai trò</th>
-                        <!-- <th style="background: #beb6b6; text-align: center;" scope="col">Thao tác</th> -->
+                        <th style="background: #beb6b6; text-align: center;" scope="col">Thao tác</th>
                     </tr>
                 </thead>
                 <tbody *ngIf="listUser.length > 0">
@@ -39,16 +39,16 @@
                         <td style="text-align: center;">{{item?.address}}</td>
                         <td style="text-align: center;">{{item?.phone}}</td>
                         <td style="text-align: center;">{{item?.role}}</td>
-                        <!-- <td>
-                            <div class="d-flex justify-content-center" *ngIf="item?.isAdmin">
-                                <button title="Kích hoạt tài khoản" style="background: transparent; border: none;" *ngIf="item.status === 0 || !item.status" (click)="updateUser(item,1)"><i
+                        <td>
+                            <div class="d-flex justify-content-center">
+                                <button title="Chỉnh sửa tài khoản" style="background: transparent; border: none;cursor: pointer;" (click)="openModalRegister(true,item)"><i
                                         style="font-size: 20px; color: #01904a;"
-                                        class="fas fa-check-circle"></i></button>
-                                <button title="Khóa tài khoản" style="background: transparent; border: none;" *ngIf="item.status === 1" (click)="updateUser(item,0)"><i
+                                        class="fas fa-edit"></i></button>
+                                <button title="Xóa tài khoản" style="background: transparent; border: none;cursor: pointer;" (click)="delete(item)"><i
                                         style="font-size: 20px; color: #ff0000;"
                                         class="fas fa-ban"></i></button>
                             </div>
-                        </td> -->
+                        </td>
                     </tr>
                     
                 </tbody>

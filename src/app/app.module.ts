@@ -22,6 +22,10 @@ import { RejectRequestComponent } from './modules/receptionist/reject-request/re
 import { LoginComponent } from './modules/login/login.component';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { MatDialogModule } from '@angular/material/dialog';
+import { BuffetComponent } from './modules/manager/buffet/buffet.component';
+import { ConfirmDeleteComponent } from './modules/manager/buffet/confirm-delete/confirm-delete.component';
+import { PopupBuffetComponent } from './modules/manager/buffet/popup-buffet/popup-buffet.component';
+import { PopupFoodComponent } from './modules/manager/buffet/popup-food/popup-food.component';
 
 @NgModule({
   declarations: [
@@ -32,6 +36,11 @@ import { MatDialogModule } from '@angular/material/dialog';
     PopupReplyComponent,
     RejectRequestComponent,
     LoginComponent,
+    BuffetComponent,
+    ConfirmDeleteComponent,
+    PopupBuffetComponent,
+    PopupFoodComponent,
+    // AuthComponent,
   ],
   imports: [
     BrowserModule,

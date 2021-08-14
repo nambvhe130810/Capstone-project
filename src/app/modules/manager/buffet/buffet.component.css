@@ -1,0 +1,22 @@
+.b {
+    display: flex;
+
+    top: 50%;
+    transform: translate(0px, 0px);
+}
+.overflow-hide {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.red {
+    color: red;
+}
+.display-none {
+    display: none;
+}
+.end {
+    position: absolute;
+    bottom: 0;
+}
