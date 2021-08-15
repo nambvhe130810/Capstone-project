@@ -11,7 +11,7 @@ export abstract class BaseApiService {
 
   abstract collectionName();
 
-  constructor(private db: AngularFireDatabase) {
+  constructor(protected db: AngularFireDatabase) {
   }
   getAll(): AngularFireList<any> {
     return this.db.list(this.collectionName());
@@ -22,9 +22,16 @@ export abstract class BaseApiService {
   update(key, value): Promise<any> {
     return this.db.list(this.collectionName()).update(key, value);
   }
-  set(key, value):Promise<any>{
+  set(key, value): Promise<any> {
     return this.db.list(this.collectionName()).set(key, value);
   }
+  find(id):any {
+    this.db.object("/"+this.collectionName()+"/" + id).valueChanges().subscribe(details => {
+      console.log("details",details)
+      return details;
+    })
+  }
+
   delete(item):Promise<any> {
     return this.db.list(`${this.collectionName()}`).remove(item);
   }

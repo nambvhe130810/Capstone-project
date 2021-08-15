@@ -25,7 +25,7 @@
         <div class="col-md-4 my-3" *ngFor="let table of tables">
             <button mat-raised-button color="primary" *ngIf="table.status && !table.isReadyToPay">{{table.name}}</button>
             <button mat-raised-button color="warn" *ngIf="!table.status && !table.isReadyToPay">{{table.name}}</button>
-            <button mat-raised-button color="accent" *ngIf="table.isReadyToPay" (click) ="openBill(table.id,table.name)">{{table.name}}</button>
+            <button mat-raised-button color="accent" *ngIf="table.isReadyToPay" (click) ="openBill(table.currentBillId,table.name)">{{table.name}}</button>
         </div>
     </div>
 </div>

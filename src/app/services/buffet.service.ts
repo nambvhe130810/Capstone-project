@@ -6,14 +6,15 @@ import { BaseApiService } from './base-api.service';
 @Injectable({
   providedIn: 'root'
 })
-export class BuffetService extends BaseApiService  {
-  items: AngularFireList<any> = null;
-  constructor(db: AngularFireDatabase) { 
+export class BuffetService extends BaseApiService {
+  constructor(db: AngularFireDatabase) {
     super(db);
   }
-
   collectionName() {
-    return '/Buffets'
+    return 'Buffets'
+  }
+  getAllListDetail(id): AngularFireList<any> {
+    return this.db.list("/"+this.collectionName() + "/" + id + "/list");
   }
   // getAll(): AngularFireList<any> {
   //   return this.items;

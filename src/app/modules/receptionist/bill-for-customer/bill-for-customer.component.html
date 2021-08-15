@@ -1,8 +1,9 @@
 <div class="container">
     <div class="col-md-8">
         <h5>Nhà Hàng SmartOrder</h5>
-        <p style="margin-bottom: 8px;">Tên khách hàng: {{processOrderDetail?.name}}</p>
+        <p style="margin-bottom: 8px;">Tên khách hàng: {{order?.name}}</p>
         <p style="margin-bottom: 8px;">Tổng tiền: {{data.totalMoney}}</p>
+        <p style="margin-bottom: 8px;">Tổng tiền: {{buffet?.name}}</p>
     </div>
     <div class="col-md-4">
         <button mat-raised-button color="success" class="mr-3" (click)="accept(data.id)">Xác Nhận</button>

@@ -5,7 +5,7 @@ import { BookingRequestDialogComponent } from '../booking-request-dialog/booking
 import { TablesService } from '../../../services/tables.service';
 import { FloorService } from '../../../services/floor.service';
 import { map } from 'rxjs/operators';
-import { TableBillService } from '../../../services/table-bill.service';
+import { BillsService } from '../../../services/bills.service';
 import { ToastrService } from 'ngx-toastr';
 import { BillForCustomerComponent } from '../bill-for-customer/bill-for-customer.component';
 
@@ -27,7 +27,7 @@ export class HomePageComponent implements OnInit {
   floor = "1";
   constructor(public dialog: MatDialog,
     private tablesService: TablesService,
-    private billService: TableBillService,
+    private billService: BillsService,
     private toastr: ToastrService,
     private floorService: FloorService
   ) { }
@@ -102,9 +102,9 @@ export class HomePageComponent implements OnInit {
   }
   openBill(id, tableName) {
     this.billSelected = this.bills.find(item => item.id == id)
-
-    console.log("this bill", this.billSelected)
-    let obj = { totalMoney: this.billSelected.totalMoney, tableName: tableName, id: this.billSelected.id };
+    this.billSelected.tableName = tableName
+    this.billSelected.floor = this.floor
+      console.log("this bill", this.billSelected)
     const dialogRef = this.dialog.open(BillForCustomerComponent, {
       width: '750px',
       data: this.billSelected

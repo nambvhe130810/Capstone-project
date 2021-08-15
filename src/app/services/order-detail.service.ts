@@ -10,6 +10,6 @@ export class OrderDetailService extends BaseApiService{
    super(db);
  }
  collectionName() {
-   return 'OderDetails'
+   return 'OrderDetails'
  }
 }
