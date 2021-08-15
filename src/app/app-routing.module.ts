@@ -4,6 +4,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { DefaultComponent } from './layouts/default/default.component';
 import { LoginComponent } from './modules/login/login.component';
 import { BuffetComponent } from './modules/manager/buffet/buffet.component';
+import { FoodManagementComponent } from './modules/manager/food-management/food-management.component';
 import { QuestionManagementComponent } from './modules/manager/question-management/question-management.component';
 import { UserManagementComponent } from './modules/manager/user-management/user-management.component';
 import { HomePageComponent } from './modules/receptionist/home-page/home-page.component';
@@ -21,6 +22,7 @@ const routes: Routes = [
       { path: 'user', component: UserManagementComponent },
       { path: 'question', component: QuestionManagementComponent },
       { path: 'buffet', component: BuffetComponent },
+      { path: 'food', component: FoodManagementComponent },
       { path: 'login', component: LoginComponent },
 
     ]

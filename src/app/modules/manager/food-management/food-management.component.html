@@ -1,5 +1,7 @@
-<h1 mat-dialog-title>Chỉnh sửa buffet</h1>
-<mat-dialog-content>
+<div class="container">
+    <div class="d-flex justify-content-between">
+        <button class="btn btn-primary m-3" (click)="openPopupFood()">Thêm món</button>
+    </div>
     <table class="table">
         <thead>
           <tr>
@@ -7,6 +9,7 @@
             <th scope="col">Ảnh</th>
             <th scope="col">Tên món</th>
             <th style="text-align: center;" scope="col">Calories</th>
+            <th style="text-align: center;" scope="col">Giá tiền</th>
             <th style="text-align: center;" scope="col">Trạng thái</th>
             <th style="text-align: center;" scope="col">Thao tác</th>
           </tr>
@@ -17,22 +20,19 @@
             <th scope="row"><img style="width: 80px;max-height:80px;max-width: 100%;" src={{item?.image}}></th>
             <td>{{item?.name}}</td>
             <td style="text-align: center;">{{item?.calories}}</td>
+            <td style="text-align: center;">{{item?.price}}</td>
             <td style="text-align: center;">{{item?.status ? 'Còn' : 'Hết'}}</td>
             <td>
                 <div class="d-flex justify-content-center">
-                    <button title="Thêm món ăn" style="background: transparent; border: none;cursor: pointer;" *ngIf="!item.exist" (click)="update(item, true)"><i
+                    <button title="Sửa món ăn" style="background: transparent; border: none;cursor: pointer;" *ngIf="item.status" (click)="update(item, true)"><i
                             style="font-size: 20px; color: #01904a;"
-                            class="fas fa-plus-square"></i></button>
-                    <!-- <button title="Xóa món ăn" style="background: transparent; border: none;cursor: pointer;" *ngIf="item.exist" (click)="update(item, false)"><i
+                            class="fas fa-edit"></i></button>
+                    <button title="Xóa món ăn" style="background: transparent; border: none;cursor: pointer;" *ngIf="item.status" (click)="update(item, false)"><i
                             style="font-size: 20px; color: #ff0000;"
-                            class="fas fa-ban"></i></button> -->
+                            class="fas fa-ban"></i></button>
                 </div>
             </td>
           </tr>
         </tbody>
       </table>
-</mat-dialog-content>
-<mat-dialog-actions align="end">
-	<button mat-raised-button color="primary" (click)="save()" tabindex="1">Xác nhận</button>
-	<!-- <button mat-raised-button mat-dialog-close tabindex="-1">Hủy bỏ</button> -->
-</mat-dialog-actions>
+</div>

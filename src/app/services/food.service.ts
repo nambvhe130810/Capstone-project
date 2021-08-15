@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFireDatabase } from '@angular/fire/database';
+
 import { BaseApiService } from './base-api.service';
 
 @Injectable({
@@ -10,6 +11,6 @@ export class FoodService extends BaseApiService{
    super(db);
  }
  collectionName() {
-   return 'Tables'
+   return 'Foods'
  }
 }

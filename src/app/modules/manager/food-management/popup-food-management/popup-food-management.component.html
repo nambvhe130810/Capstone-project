@@ -1,0 +1,26 @@
+<h1 mat-dialog-title>{{isEdit? 'Chỉnh sửa' : 'Thêm mói'}} thực đơn</h1>
+<mat-dialog-content>
+    <form [formGroup]="form">
+
+        <label style="font-weight: bold; margin-top: 30px;" for="name">Tên món: </label>
+        <input placeholder="Nhập tên món" class="form-control w-100" id="name" type="text" formControlName="name">
+        <label style="font-weight: bold; margin-top: 30px;" for="type">Loại: </label>
+        <ng-select placeholder="Chọn loại" appearance="outline" [items]="typeList" bindLabel="name"
+                bindValue="code" formControlName="type">
+            </ng-select>
+        <!-- <input class="form-control w-100" id="type" type="text" formControlName="type"> -->
+        <label style="font-weight: bold; margin-top: 30px;" for="description">Mô tả: </label>
+        <input placeholder="Nhập mô tả" class="form-control w-100" id="description" type="text" formControlName="description">
+        <label style="font-weight: bold; margin-top: 30px;" for="image">Hình ảnh: </label>
+        <input placeholder="Nhập link hình ảnh" class="form-control w-100" id="image" type="text" formControlName="image">
+        <label style="font-weight: bold; margin-top: 30px;" for="calories">Calories: </label>
+        <input placeholder="Nhập calories" class="form-control w-100" id="calories" type="text" formControlName="calories">
+        <label style="font-weight: bold; margin-top: 30px;" for="price">Giá tiền: </label>
+        <input placeholder="Nhập giá tiền" class="form-control w-100" id="price" type="text" formControlName="price">
+      
+      </form>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+	<button mat-raised-button color="primary" (click)="save()" tabindex="1">Xác nhận</button>
+	<button mat-raised-button mat-dialog-close tabindex="-1">Hủy bỏ</button>
+</mat-dialog-actions>

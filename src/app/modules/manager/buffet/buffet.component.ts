@@ -16,6 +16,7 @@ export class BuffetComponent implements OnInit {
   listBuffet = [];
   listBuffetDetail = [];
   isShowDetail = false;
+  chooseId;
   constructor(
     private buffetService: BuffetService,
     private dialog: MatDialog,
@@ -28,6 +29,14 @@ export class BuffetComponent implements OnInit {
   getListBuffet() {
     this.buffetService.getAll().valueChanges().subscribe(res => {
       this.listBuffet = res;
+      this.listBuffet.forEach(e => {
+        if (e.id == this.chooseId && e.status) {
+          this.listBuffetDetail = [];
+          for (var key in e?.foods) {
+            this.listBuffetDetail.push(e.foods[key]);
+          }
+        }
+      })
       console.log(res);
     })
   }
@@ -48,23 +57,31 @@ export class BuffetComponent implements OnInit {
     });
   }
 
-  deleteFood(item) {
+  deleteFood(isAdd,item) {
     let dialogRef = this.dialog.open(ConfirmDeleteComponent, {
       width: '500px',
       height: '200px',
-      data: item
+      data: {data: item, type: isAdd}
     });
     dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        item.status = false;
-        this.buffetService.setBySource(item.id, item,'/foods').then(() => {
-          this.getListBuffet();
+        // item.status = false;
+        this.listBuffet.forEach(e => {
+          if (e.id == this.chooseId && e.status == true) {
+            if (isAdd) {
+              e.foods[item.id].status = true;
+            } else {
+              e.foods[item.id].status = false;
+            }
+            this.buffetService.update(e.id, e).then(() => {
+              this.getListBuffet();
+            })
+          }
         })
-      }
     });
   }
 
   showDetail(e) {
+    this.chooseId = e.id;
     for (var key in e?.foods) {
       this.listBuffetDetail.push(e.foods[key]);
     }
@@ -86,7 +103,11 @@ export class BuffetComponent implements OnInit {
       let dialogRef = this.dialog.open(PopupFoodComponent, {
         width: '1000px',
         height: '600px',
-        data: this.listBuffetDetail
+        data: {data: this.listBuffetDetail, id: this.chooseId}
+      });
+
+      dialogRef.afterClosed().subscribe(result => {
+        this.getListBuffet();
       });
   }
 

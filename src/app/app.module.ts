@@ -26,6 +26,9 @@ import { BuffetComponent } from './modules/manager/buffet/buffet.component';
 import { ConfirmDeleteComponent } from './modules/manager/buffet/confirm-delete/confirm-delete.component';
 import { PopupBuffetComponent } from './modules/manager/buffet/popup-buffet/popup-buffet.component';
 import { PopupFoodComponent } from './modules/manager/buffet/popup-food/popup-food.component';
+import { FoodManagementComponent } from './modules/manager/food-management/food-management.component';
+import { PopupFoodManagementComponent } from './modules/manager/food-management/popup-food-management/popup-food-management.component';
+import { SidebarComponent } from './sidebar/sidebar.component';
 
 @NgModule({
   declarations: [
@@ -40,6 +43,9 @@ import { PopupFoodComponent } from './modules/manager/buffet/popup-food/popup-fo
     ConfirmDeleteComponent,
     PopupBuffetComponent,
     PopupFoodComponent,
+    FoodManagementComponent,
+    PopupFoodManagementComponent,
+    SidebarComponent,
     // AuthComponent,
   ],
   imports: [

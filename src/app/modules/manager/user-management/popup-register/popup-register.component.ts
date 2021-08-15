@@ -3,6 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { RegisterInfo } from 'src/app/models/registerInfo';
 import { UserService } from 'src/app/services/user.service';
+import * as uuid from 'uuid';
 
 @Component({
   selector: 'app-popup-register',
@@ -50,8 +51,9 @@ export class PopupRegisterComponent implements OnInit {
   }
   register() {
     if (this.registerInfo) {
+      this.registerInfo.id = uuid.v4();
       this.registerInfo.phone = '+84' + this.registerInfo.phone;
-      this.userService.create(this.registerInfo).then(() => {
+      this.userService.set(this.registerInfo.id, this.registerInfo).then(() => {
         this.dialogRef.close();
       });
         // this.userService.registerUser(this.registerInfo).subscribe(
