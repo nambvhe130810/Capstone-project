@@ -55,8 +55,8 @@ export class PopupFoodManagementComponent implements OnInit {
       this.data.type = this.form.controls["type"].value;
       this.data.description = this.form.controls["description"].value;
       this.data.image = this.form.controls["image"].value;
-      this.data.calories = this.form.controls["calories"].value;
-      this.data.price = this.form.controls["price"].value;
+      this.data.calories = parseInt(this.form.controls["calories"].value, 10);
+      this.data.price = parseInt(this.form.controls["price"].value, 10);
 
       this.foodService.update(this.data.id, this.data).then(() => {
         this.dialogRef.close(true);
@@ -69,8 +69,8 @@ export class PopupFoodManagementComponent implements OnInit {
       this.data.type = this.form.controls["type"].value;
       this.data.description = this.form.controls["description"].value;
       this.data.image = this.form.controls["image"].value;
-      this.data.calories = this.form.controls["calories"].value;
-      this.data.price = this.form.controls["price"].value;
+      this.data.calories = parseInt(this.form.controls["calories"].value, 10);
+      this.data.price = parseInt(this.form.controls["price"].value, 10);
 
       this.foodService.set(this.data.id, this.data).then(() => {
         this.dialogRef.close(true);

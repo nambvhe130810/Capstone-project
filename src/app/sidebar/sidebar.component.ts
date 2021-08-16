@@ -7,12 +7,11 @@ export interface RouteInfo {
   icon: string;
   class: string;
 }
-
 export const ROUTES: RouteInfo[] = [
   { path: '/question',     title: 'Hỏi đáp',         icon:'far fa-question-circle',       class: '' },
-  { path: '/buffet',         title: 'Buffet',             icon:'fas fa-laptop-code',    class: '' },
-  { path: '/food',          title: 'Thực đơn',              icon:'fas fa-heart',      class: '' },
-  { path: '/user',          title: 'Người dùng',      icon:'fas fa-book-open',  class: '' },
+  { path: '/buffet',         title: 'Buffet',             icon:'fas fa-utensils',    class: '' },
+  { path: '/food',          title: 'Thực đơn',              icon:'fas fa-hamburger',      class: '' },
+  { path: '/user',          title: 'Người dùng',      icon:'fas fa-users',  class: '' },
 ];
 
 @Component({

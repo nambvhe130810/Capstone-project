@@ -30,6 +30,8 @@ export class LoginComponent {
   verificationCode: string;
   user: any;
   isSentOtp = false;
+  listUser = [];
+  currentRole;
   public recaptchaVerifier: firebase.auth.RecaptchaVerifier;
 
   constructor(
@@ -48,22 +50,42 @@ export class LoginComponent {
     this.windowRef = this.win.windowRef
     this.windowRef.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container');
     this.windowRef.recaptchaVerifier.render()
+    this.userService.getAll().valueChanges().subscribe(res => {
+      this.listUser = res;
+    })
   }
 
   sendLoginCode() {
     const appVerifier = this.windowRef.recaptchaVerifier;
     const num = this.phoneNumber.e164;
-    this.userService.checkExistUser(num).subscribe(res => {
-      if (res?.phone) {
-        firebase.auth().signInWithPhoneNumber(num, appVerifier).then(result => {
-          this.windowRef.confirmationResult = result;
-          this.isSentOtp = true;
-        })
-        .catch( error => console.log(error) );
-      } else {
-        this.toastr.error("Số điện thoại không có trên hệ thống");
+    let exist = false;
+    this.listUser.forEach(res => {
+      if (res.phone === num) {
+        exist = true;
+        this.currentRole = res.role;
       }
     })
+
+    if (exist) {
+      firebase.auth().signInWithPhoneNumber(num, appVerifier).then(result => {
+        this.windowRef.confirmationResult = result;
+        this.isSentOtp = true;
+      })
+      .catch( error => console.log(error) );
+    } else {
+      this.toastr.error("Số điện thoại không có trên hệ thống");
+    }
+    // this.userService.checkExistUser(num).subscribe(res => {
+    //   if (res?.phone) {
+    //     firebase.auth().signInWithPhoneNumber(num, appVerifier).then(result => {
+    //       this.windowRef.confirmationResult = result;
+    //       this.isSentOtp = true;
+    //     })
+    //     .catch( error => console.log(error) );
+    //   } else {
+    //     this.toastr.error("Số điện thoại không có trên hệ thống");
+    //   }
+    // })
   }
 
   verifyLoginCode() {
@@ -73,7 +95,9 @@ export class LoginComponent {
         localStorage.setItem("user",this.user?.uid);
         let now = new Date();
         localStorage.setItem('session', this.addMinutes(now, 30).getTime().toString());
-        this.router.navigate(['question']);
+        if (this.currentRole === 'manager') {
+          this.router.navigate(['question']);
+        }
       }
     })
     .catch( error => console.log(error, "Incorrect code entered?"));

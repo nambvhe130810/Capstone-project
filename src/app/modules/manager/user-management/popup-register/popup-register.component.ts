@@ -52,6 +52,7 @@ export class PopupRegisterComponent implements OnInit {
   register() {
     if (this.registerInfo) {
       this.registerInfo.id = uuid.v4();
+      this.registerInfo.status = true;
       this.registerInfo.phone = '+84' + this.registerInfo.phone;
       this.userService.set(this.registerInfo.id, this.registerInfo).then(() => {
         this.dialogRef.close();

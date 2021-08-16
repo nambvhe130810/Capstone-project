@@ -24,6 +24,7 @@ export class BillForCustomerComponent implements OnInit {
   buffet: any;
   orderDetails = []
   foods = []
+  listFood = []
   constructor(public dialogRef: MatDialogRef<BillForCustomerComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private tablesService: TablesService,
@@ -119,6 +120,10 @@ export class BillForCustomerComponent implements OnInit {
     } catch {
       this.toastr.error("Có lỗi khi thanh toán vui lòng thử lại")
     }
+  }
+
+  save() {
+
   }
 
 }

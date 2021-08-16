@@ -107,6 +107,7 @@ export class HomePageComponent implements OnInit {
       console.log("this bill", this.billSelected)
     const dialogRef = this.dialog.open(BillForCustomerComponent, {
       width: '750px',
+      height: '700px',
       data: this.billSelected
     });
 
