@@ -37,4 +37,8 @@ export class SidebarComponent implements OnInit {
     return true
   }
 
+  logout() {
+    localStorage.setItem('common-info', '');
+  }
+
 }

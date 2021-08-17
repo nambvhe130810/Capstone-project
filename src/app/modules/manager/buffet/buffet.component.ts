@@ -57,15 +57,21 @@ export class BuffetComponent implements OnInit {
     });
   }
 
+  active(item) {
+    item.status = true;
+    this.buffetService.update(item.id, item).then(() => {
+      this.getListBuffet();
+    })
+  }
+
   deleteFood(isAdd,item) {
-    let dialogRef = this.dialog.open(ConfirmDeleteComponent, {
-      width: '500px',
-      height: '200px',
-      data: {data: item, type: isAdd}
-    });
-    dialogRef.afterClosed().subscribe(result => {
-        // item.status = false;
-        if (result) {
+    // let dialogRef = this.dialog.open(ConfirmDeleteComponent, {
+    //   width: '500px',
+    //   height: '200px',
+    //   data: {data: item, type: isAdd}
+    // });
+    // dialogRef.afterClosed().subscribe(result => {
+    //     if (result) {
           this.listBuffet.forEach(e => {
             if (e.id == this.chooseId && e.status == true) {
               if (isAdd) {
@@ -78,8 +84,8 @@ export class BuffetComponent implements OnInit {
               })
             }
           })
-        }
-    });
+        // }
+    // });
   }
 
   showDetail(e) {

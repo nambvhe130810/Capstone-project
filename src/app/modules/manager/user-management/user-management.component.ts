@@ -38,9 +38,9 @@ export class UserManagementComponent implements OnInit {
 
     this.userService.getAll().valueChanges().subscribe(res => {
       if (this.searchForm.value.name) {
-        this.listUser = res.filter(item => item.name.toLowerCase().indexOf(this.searchForm.value.name.toLowerCase()) > -1 && item.status);
+        this.listUser = res.filter(item => item.name.toLowerCase().indexOf(this.searchForm.value.name.toLowerCase()) > -1);
       } else {
-        this.listUser = res.filter(item => item.status);
+        this.listUser = res;
       }
     });
     // this.userService.getAllUser(param).subscribe(res => {
@@ -48,6 +48,16 @@ export class UserManagementComponent implements OnInit {
     //     this.listUser = res;
     //   }
     // })
+  }
+
+  active(e) {
+    if (e) {
+      e.status = true;
+      this.userService.update(e?.id, e).then(()=> {
+        this.getUsers();
+        this.toastr.success("Kích hoạt người dùng thành công");
+      })
+    }
   }
 
   delete(e) {

@@ -63,6 +63,7 @@ export class LoginComponent {
       if (res.phone === num) {
         exist = true;
         this.currentRole = res.role;
+        localStorage.setItem('common-info', JSON.stringify(res));
       }
     })
 
@@ -105,7 +106,7 @@ export class LoginComponent {
           this.toastr.success('Đăng nhập thành công');
           return
         }
-        this.toastr.error('Đăng nhập thất bại');
+        this.toastr.error('Đăng nhập thất bại do không có quyền');
       }
     })
     .catch( error => {

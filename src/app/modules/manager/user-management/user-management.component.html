@@ -1,28 +1,28 @@
 <div class="sidebar" data-color="white" data-active-color="primary">
-    <app-sidebar></app-sidebar >
+    <app-sidebar></app-sidebar>
 </div>
 <div class="card  col-md-12">
     <div class="card-body">
         <form class="col-md-12 d-flex justify-content-between align-items-center" [formGroup]="searchForm">
-            <input class="form-control col-md-10" placeholder="Nhập tên người dùng"
-                formControlName="name" style="height: 38px;margin-right: 4px;">
+            <input class="form-control col-md-10" placeholder="Nhập tên người dùng" formControlName="name"
+                style="height: 38px;margin-right: 4px;">
             <button class="btn col-md-2 btn-primary" (click)="getUsers()"><i class="nc-icon nc-zoom-split"></i> Tìm
                 kiếm</button>
         </form>
-       
+
     </div>
 
 </div>
 <div>
     <div class="container-fluid mt-3">
-        <div class="d-flex justify-content-between" >
+        <div class="d-flex justify-content-between">
             <button class="btn btn-primary" (click)="openModalRegister()">Thêm người dùng</button>
             <!-- <div class="d-flex align-items-center">
               <ng-select placeholder="Chọn loại hình" [(ngModel)]="isActive" [items]="listActive" bindLabel="name"
                 bindValue="code" style="width:165px" (change)="searchPost()">
               </ng-select>
             </div> -->
-          </div>
+        </div>
         <div class=" row d-flex justify-content-center mt-3">
             <table class="table table-striped" style="width:90%">
                 <thead>
@@ -44,22 +44,28 @@
                         <td style="text-align: center;">{{item?.role}}</td>
                         <td>
                             <div class="d-flex justify-content-center">
-                                <button title="Chỉnh sửa tài khoản" style="background: transparent; border: none;cursor: pointer;" (click)="openModalRegister(true,item)"><i
-                                        style="font-size: 20px; color: #01904a;"
+                                <button title="Chỉnh sửa tài khoản"
+                                    style="background: transparent; border: none;cursor: pointer;" *ngIf="item?.status"
+                                    (click)="openModalRegister(true,item)"><i style="font-size: 20px; color: #01904a;"
                                         class="fas fa-edit"></i></button>
-                                <button title="Xóa tài khoản" style="background: transparent; border: none;cursor: pointer;" (click)="delete(item)"><i
-                                        style="font-size: 20px; color: #ff0000;"
+                                <button title="Kích hoạt tài khoản" *ngIf="!item?.status"
+                                    style="background: transparent; border: none;cursor: pointer;"
+                                    (click)="active(item)"><i style="font-size: 20px; color: #01904a;"
+                                        class="fas fa-check-circle"></i></button>
+                                <button title="Xóa tài khoản" *ngIf="item?.status"
+                                    style="background: transparent; border: none;cursor: pointer;"
+                                    (click)="delete(item)"><i style="font-size: 20px; color: #ff0000;"
                                         class="fas fa-ban"></i></button>
                             </div>
                         </td>
                     </tr>
-                    
+
                 </tbody>
                 <!-- <div *ngIf="listUser.length <= 0" style="margin-left: auto;margin-right: auto;font-size: 24px;font-weight: 500;margin-bottom: 40px;">
                     Không có dữ liệu
                 </div> -->
             </table>
-            
+
         </div>
         <!-- <div class="d-flex justify-content-center">
             <nav aria-label="Page navigation example">
