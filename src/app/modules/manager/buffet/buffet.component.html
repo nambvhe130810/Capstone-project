@@ -2,6 +2,9 @@
     <app-sidebar></app-sidebar >
 </div>
 <div class="container">
+    <div class="m-3" *ngIf="!isShowDetail">
+        <button class="btn btn-primary" (click)="openPopupBuffet()">Thêm mới</button>
+    </div>
     <div class=" row d-flex justify-content-between" *ngIf="!isShowDetail">
         <div class="col-md-12 pt-3 pl-1 pr-1" *ngFor="let item of listBuffet, let i = index">
             <div class="card" *ngIf="item.status">

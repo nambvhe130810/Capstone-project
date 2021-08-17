@@ -2,8 +2,8 @@ import { Component } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { Router } from '@angular/router';
 import * as firebase from 'firebase';
-import { UserService } from 'src/app/services/user.service';
 import { ToastrService } from 'ngx-toastr';
+import { UserService } from 'src/app/services/user.service';
 
 export class PhoneNumber {
   // country: string;
@@ -97,13 +97,21 @@ export class LoginComponent {
         localStorage.setItem('session', this.addMinutes(now, 30).getTime().toString());
         if (this.currentRole === 'manager') {
           this.router.navigate(['question']);
+          this.toastr.success('Đăng nhập thành công');
+          return
         }
         if (this.currentRole === 'receptionist') {
           this.router.navigate(['list-table']);
+          this.toastr.success('Đăng nhập thành công');
+          return
         }
+        this.toastr.error('Đăng nhập thất bại');
       }
     })
-    .catch( error => console.log(error, "Incorrect code entered?"));
+    .catch( error => {
+      console.log(error, "Incorrect code entered?")
+      this.toastr.error('Xảy ra lỗi: '+ error);
+    });
   }
 
   addMinutes(date, minutes) {

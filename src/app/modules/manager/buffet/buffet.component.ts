@@ -65,23 +65,26 @@ export class BuffetComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe(result => {
         // item.status = false;
-        this.listBuffet.forEach(e => {
-          if (e.id == this.chooseId && e.status == true) {
-            if (isAdd) {
-              e.foods[item.id].status = true;
-            } else {
-              e.foods[item.id].status = false;
+        if (result) {
+          this.listBuffet.forEach(e => {
+            if (e.id == this.chooseId && e.status == true) {
+              if (isAdd) {
+                e.foods[item.id].status = true;
+              } else {
+                e.foods[item.id].status = false;
+              }
+              this.buffetService.update(e.id, e).then(() => {
+                this.getListBuffet();
+              })
             }
-            this.buffetService.update(e.id, e).then(() => {
-              this.getListBuffet();
-            })
-          }
-        })
+          })
+        }
     });
   }
 
   showDetail(e) {
     this.chooseId = e.id;
+    this.listBuffetDetail = [];
     for (var key in e?.foods) {
       this.listBuffetDetail.push(e.foods[key]);
     }
@@ -89,14 +92,26 @@ export class BuffetComponent implements OnInit {
     this.isShowDetail = true;
   }
 
-  openPopupBuffet(status = false,item) {
+  openPopupBuffet(status = false,item?) {
     if (status) {
       let dialogRef = this.dialog.open(PopupBuffetComponent, {
         width: '500px',
         height: '600px',
         data: item
       });
-    } else {}
+    } else {
+      let dialogRef = this.dialog.open(PopupBuffetComponent, {
+        width: '1000px',
+        height: '600px',
+      });
+
+      dialogRef.afterClosed().subscribe(result => {
+        if (result) {
+          this.getListBuffet();
+        }
+      });
+    }
+
   }
 
   openPopupFood(status = false) {
