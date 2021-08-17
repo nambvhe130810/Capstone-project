@@ -127,16 +127,16 @@ export class QuestionManagementComponent implements OnInit {
   handleData(data, type) {
     if (data) {
       if (type == 'chef') {
-        this.listQuestionKitchen = data;
+        this.listQuestionKitchen = data.filter(e => !e.isReply);
       }
       if (type == 'customer') {
-        this.listQuestionCustomer = data;
+        this.listQuestionCustomer = data.filter(e => !e.isReply);
       }
       if (type == 'waiter') {
-        this.listQuestionWaiter = data;
+        this.listQuestionWaiter = data.filter(e => !e.isReply);
       }
       if (type == 'receptionist') {
-        this.listQuestionReceptionist = data;
+        this.listQuestionReceptionist = data.filter(e => !e.isReply);
       }
     }
   }
