@@ -98,6 +98,9 @@ export class LoginComponent {
         if (this.currentRole === 'manager') {
           this.router.navigate(['question']);
         }
+        if (this.currentRole === 'receptionist') {
+          this.router.navigate(['list-table']);
+        }
       }
     })
     .catch( error => console.log(error, "Incorrect code entered?"));

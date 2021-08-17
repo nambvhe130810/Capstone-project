@@ -7,6 +7,7 @@ import { OrderService } from 'src/app/services/order.service';
 import { BuffetService } from 'src/app/services/buffet.service';
 import { OrderDetailService } from 'src/app/services/order-detail.service';
 import { FoodService } from 'src/app/services/food.service';
+import * as moment from 'moment'
 
 import { DatePipe } from '@angular/common';
 
@@ -25,6 +26,7 @@ export class BillForCustomerComponent implements OnInit {
   orderDetails = []
   foods = []
   listFood = []
+  date: any;
   constructor(public dialogRef: MatDialogRef<BillForCustomerComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private tablesService: TablesService,
@@ -37,6 +39,8 @@ export class BillForCustomerComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.date = Date.now()
+    console.log("Date", this.date)
     this.getAllTables();
     this.getOrder();
   }
@@ -53,6 +57,9 @@ export class BillForCustomerComponent implements OnInit {
     ).subscribe(data => {
       this.tables = data;
     });
+  }
+  parstring(dateString) {
+    return moment(dateString, 'YYYYMMDD_HHmm').format('HH:mm');
   }
   getOrder() {
     this.orderService.getAll().snapshotChanges().pipe(
@@ -77,6 +84,8 @@ export class BillForCustomerComponent implements OnInit {
     ).subscribe(data => {
       this.buffet = data.find(item => item.id == this.order.buffetId)
       console.log("buffer", this.buffet)
+      let obj = { name: this.buffet.name, price: this.buffet.price, quantity: this.order.numberOfPeople }
+      this.foods.push(obj)
     });
 
     this.orderDetailService.getAll().snapshotChanges().pipe(
@@ -98,9 +107,9 @@ export class BillForCustomerComponent implements OnInit {
       )
     ).subscribe(data => {
       this.orderDetails.forEach(detail => {
-      let food =data.find(item => item.id == detail.foodId)
-      let obj = {name:food.name,price:food.price,quantity:detail.quantity}
-      this.foods.push(obj)
+        let food = data.find(item => item.id == detail.foodId)
+        let obj = { name: food.name, price: food.price, quantity: detail.quantity }
+        this.foods.push(obj)
 
 
       })
@@ -108,22 +117,20 @@ export class BillForCustomerComponent implements OnInit {
     });
   }
 
-  accept(id) {
+  save() {
     try {
       console.log("ProcessOrder", this.order)
-      let table = this.tables.find(item => item.id == id);
+      let table = this.tables.find(item => item.id == this.data.tableId);
       console.log("table", table)
       table.isReadyToPay = false;
-      this.tablesService.update(id, table)
+      this.tablesService.update(this.data.tableId, table)
+      this.order.status = 'done'
+      this.orderService.update(this.order.id, this.order)
       this.toastr.success("Thanh toán thành công")
       this.dialogRef.close()
     } catch {
       this.toastr.error("Có lỗi khi thanh toán vui lòng thử lại")
     }
-  }
-
-  save() {
-
   }
 
 }

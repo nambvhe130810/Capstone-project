@@ -1,22 +1,18 @@
-<h3 mat-dialog-title>Bàn 5 ...</h3>
+<h3 mat-dialog-title>{{data.tableName}} - Tầng:{{data.floor}}</h3>
 
 <mat-dialog-content style="height: calc(100% - 96px);">
     <div class="row">
         <div class="col-md-6">
-            <label style="font-weight: 600;">Mã: </label>
-            <span>1121</span>
-        </div>
-        <div class="col-md-6">
             <label style="font-weight: 600;">Ngày: </label>
-            <span>7/9/2021</span>
+            <span>{{date|date:'dd/MM/yyyy'}}</span>
         </div>
         <div class="col-md-6">
             <label style="font-weight: 600;">Giờ vào: </label>
-            <span>16:30</span>
+            <span>{{parstring(order?.date)}}</span>
         </div>
         <div class="col-md-6">
             <label style="font-weight: 600;">Giờ in: </label>
-            <span>17:45</span>
+            <span>{{date|date:'HH:mm'}}</span>
         </div>
         <div class="col-md-12">
             <label style="font-weight: 600;">Thu ngân: </label>
@@ -31,57 +27,38 @@
             <span>0915778525</span>
         </div>
     </div>
-    <hr/>
+    <hr />
     <table class="table">
         <thead>
-          <tr>
-            <th scope="col">#</th>
-            <th scope="col">Tên món</th>
-            <th style="text-align: center;" scope="col">Số lượng</th>
-            <th style="text-align: center;" scope="col">Đánh giá</th>
-            <th style="text-align: center;" scope="col">Thành tiền</th>
-          </tr>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Tên món</th>
+                <th style="text-align: center;" scope="col">Số lượng</th>
+                <th style="text-align: center;" scope="col">Đơn giá giá</th>
+                <th style="text-align: center;" scope="col">Thành tiền</th>
+            </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let item of listFood; index as i">
-            <th scope="row">{{i+1}}</th>
-            <td>{{item?.name}}</td>
-            <td style="text-align: center;">{{item?.calories}}</td>
-            <td style="text-align: center;">{{item?.status}}</td>
-            <td style="text-align: center;">{{item?.status}}</td>
-          </tr>
-          <tr>
-            <th scope="row">1</th>
-            <td>abc</td>
-            <td style="text-align: center;">100</td>
-            <td style="text-align: center;">ngon</td>
-            <td style="text-align: center;">500000</td>
-          </tr>
+            <tr *ngFor="let item of foods; index as i">
+                <th scope="row">{{i+1}}</th>
+                <td>{{item?.name}}</td>
+                <td style="text-align: center;">{{item?.quantity}}</td>
+                <td style="text-align: center;">{{item?.price}}.000đ</td>
+                <td style="text-align: center;">{{item?.quantity*item?.price}}.000đ</td>
+            </tr>
         </tbody>
-      </table>
+    </table>
 </mat-dialog-content>
-<hr/>
+<hr />
 <div class="row">
     <div class="col-md-6">
         <label style="font-weight: 600;">Tổng tiền: </label>
     </div>
     <div class="col-md-6" style="text-align: end;">
-        <span>10000000</span>
-    </div> 
+        <span>{{data.totalMoney}}.000đ</span>
+    </div>
 </div>
 <mat-dialog-actions align="end">
-	<button class="btn btn-primary" mat-raised-button color="primary" (click)="save()" tabindex="1">In hóa đơn</button>
-	<button class="btn btn-outline-primary" mat-raised-button mat-dialog-close tabindex="-1">Hủy bỏ</button>
+    <button class="btn btn-primary" mat-raised-button color="primary" (click)="save()" tabindex="1">In hóa đơn</button>
+    <button class="btn btn-outline-primary" mat-raised-button mat-dialog-close tabindex="-1">Hủy bỏ</button>
 </mat-dialog-actions>
-<!-- <div class="container">
-    <div class="col-md-8">
-        <h5>Nhà Hàng SmartOrder</h5>
-        <p style="margin-bottom: 8px;">Tên khách hàng: {{order?.name}}</p>
-        <p style="margin-bottom: 8px;">Tổng tiền: {{data.totalMoney}}</p>
-        <p style="margin-bottom: 8px;">Tổng tiền: {{buffet?.name}}</p>
-    </div>
-    <div class="col-md-4">
-        <button mat-raised-button color="success" class="mr-3" (click)="accept(data.id)">Xác Nhận</button>
-    </div>
-
-</div> -->
