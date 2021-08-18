@@ -96,7 +96,7 @@ export class BillForCustomerComponent implements OnInit {
       )
     ).subscribe(data => {
       console.log("data", data)
-      this.orderDetails = data.filter(item => item.orderId == this.order.id)
+      this.orderDetails = data.filter(item => item.orderId == this.order.id && !item.isInBuffet)
       console.log("buffer", this.orderDetails)
     });
     this.foodService.getAll().snapshotChanges().pipe(

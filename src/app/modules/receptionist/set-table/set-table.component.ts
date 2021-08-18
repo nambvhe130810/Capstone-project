@@ -133,4 +133,7 @@ export class SetTableComponent implements OnInit {
       this.toastr.error('Đặt bàn cho khách không thành công', 'Lỗi');
     }
   }
+  back(){
+    this.router.navigate(["/list-table"])
+  }
 }

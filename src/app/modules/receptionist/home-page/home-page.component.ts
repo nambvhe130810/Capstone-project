@@ -25,6 +25,7 @@ export class HomePageComponent implements OnInit {
   allTable: any;
   allTableByFloor: any;
   floor = "1";
+  user: any;
   constructor(public dialog: MatDialog,
     private tablesService: TablesService,
     private billService: BillsService,
@@ -104,7 +105,7 @@ export class HomePageComponent implements OnInit {
     this.billSelected = this.bills.find(item => item.id == id)
     this.billSelected.tableName = tableName
     this.billSelected.floor = this.floor
-      console.log("this bill", this.billSelected)
+    console.log("this bill", this.billSelected)
     const dialogRef = this.dialog.open(BillForCustomerComponent, {
       width: '750px',
       height: '700px',
