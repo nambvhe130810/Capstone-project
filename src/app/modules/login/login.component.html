@@ -28,15 +28,15 @@
           <label>Số điện thoại</label><br>
           <div class="row">
             <input class = "form-control col-md-3 mr-3 ml-3" type="text" [(ngModel)]="phoneNumber.area" placeholder="Mã vùng" disabled>
-            <input class = "form-control col-md-8" type="number" placeholder="Nhập số điện thoại" [(ngModel)]="phoneNumber.line" [disabled]="isSentOtp">
+            <input class = "form-control col-md-8" minlength="9"  maxlength="10" type="number" placeholder="Nhập số điện thoại" [(ngModel)]="phoneNumber.line" [disabled]="isSentOtp">
           </div>
           <br>
-          <div class="m-3" id="recaptcha-container"></div>
+          <div  class="m-3" id="recaptcha-container" ></div>
           <button class="btn btn-primary col-md-12" (click)="sendLoginCode()" *ngIf="!isSentOtp">Gửi mã OTP</button>
           <div *ngIf="windowRef.confirmationResult && isSentOtp">
             <hr>
             <label class="m-2" for="code">Nhập mã OTP</label><br>
-            <input class = "form-control col-lg-3" class="form-control" type="number" name="code" placeholder="Nhập mã OTP" [(ngModel)]="verificationCode">
+            <input class = "form-control col-lg-3" class="form-control" type="text" name="code" placeholder="Nhập mã OTP" [(ngModel)]="verificationCode">
             <div class="row">
               <button class="btn btn-outline-primary col-md-5 mt-3" (click)="back()">Quay lại</button>
               <button class="btn btn-primary col-md-5 offset-md-2 mt-3" (click)="verifyLoginCode()">Đăng nhập</button>

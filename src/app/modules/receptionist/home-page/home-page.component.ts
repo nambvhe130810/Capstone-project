@@ -8,6 +8,7 @@ import { map } from 'rxjs/operators';
 import { BillsService } from '../../../services/bills.service';
 import { ToastrService } from 'ngx-toastr';
 import { BillForCustomerComponent } from '../bill-for-customer/bill-for-customer.component';
+import { AutofillMonitor } from '@angular/cdk/text-field';
 
 @Component({
   selector: 'app-home-page',
@@ -52,6 +53,8 @@ export class HomePageComponent implements OnInit {
       this.allTableByFloor = this.tables.length
       this.tableFreeByFloor = this.tables.filter(item => item.status).length
       console.log("free table", this.tableFree, this.tableFreeByFloor)
+      this.user = localStorage.getItem("userId")
+      console.log("user",this.user)
     });
   }
   getAllFloor() {
@@ -92,6 +95,7 @@ export class HomePageComponent implements OnInit {
   openBookingRequestList() {
     const dialogRef = this.dialog.open(BookingRequestDialogComponent, {
       width: '750px',
+      maxHeight: '500px',
       data: {}
     });
 

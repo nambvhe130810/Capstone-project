@@ -13,6 +13,7 @@ export class PhoneNumber {
   get e164() {
     // const num = this.country + this.area + this.prefix + this.line
     const num = this.area + this.line
+    console.log(num)
     return `${num}`
   }
 }
@@ -111,7 +112,7 @@ export class LoginComponent {
     })
     .catch( error => {
       console.log(error, "Incorrect code entered?")
-      this.toastr.error('Xảy ra lỗi: '+ error);
+      this.toastr.error('Vui lòng kiểm tra lại OTP');
     });
   }
 

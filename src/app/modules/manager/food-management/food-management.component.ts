@@ -14,6 +14,7 @@ export class FoodManagementComponent implements OnInit {
 
   searchValue;
   listFood = [];
+  listFoodDisable = []
   constructor(
     private foodService: FoodService,
     private buffetService: BuffetService,
@@ -27,13 +28,23 @@ export class FoodManagementComponent implements OnInit {
   getListFood() {
     this.foodService.getAll().valueChanges().subscribe(res => {
       this.listFood = res.filter(e => e.status);
-      console.log(res);
+      this.listFoodDisable = res.filter(e => !e.status);
+      console.log(this.listFoodDisable);
       if (this.listFood.length > 0 && this.searchValue) {
+        this.listFoodDisable = this.listFoodDisable.filter(item => item.name.toLowerCase().indexOf(this.searchValue.toLowerCase()) > -1);   
         this.listFood = this.listFood.filter(item => item.name.toLowerCase().indexOf(this.searchValue.toLowerCase()) > -1);
       }
     })
   }
 
+  active(e) {
+    if (e) {
+      e.status = true;
+      this.foodService.update(e?.id, e).then(()=> {
+        this.getListFood();
+      })
+    }
+  }
   update(item,status) {
     if (status) {
       let dialogRef = this.dialog.open(PopupFoodManagementComponent, {

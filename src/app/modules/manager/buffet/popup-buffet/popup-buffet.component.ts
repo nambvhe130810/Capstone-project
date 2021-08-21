@@ -2,6 +2,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { BuffetService } from 'src/app/services/buffet.service';
 import { FoodService } from 'src/app/services/food.service';
+import { ToastrService } from 'ngx-toastr';
 import * as uuid from 'uuid';
 
 @Component({
@@ -19,9 +20,11 @@ export class PopupBuffetComponent implements OnInit {
   listBuffet = [];
   listChooseFood = []
   constructor(@Inject(MAT_DIALOG_DATA) public data: any,
-  public dialogRef: MatDialogRef<PopupBuffetComponent>,
-  private foodService: FoodService,
-  private buffetService: BuffetService,
+    public dialogRef: MatDialogRef<PopupBuffetComponent>,
+    private foodService: FoodService,
+    private buffetService: BuffetService,
+    private toastr: ToastrService,
+
   ) { }
 
   ngOnInit(): void {
@@ -64,12 +67,27 @@ export class PopupBuffetComponent implements OnInit {
 
   save() {
     // this.myId = uuid.v4();
-
-    let idv4 = uuid.v4()
+    if (this.title?.trim() == '') {
+      this.toastr.error('Vui lòng nhâp tên buffet', 'Lỗi');
+      return
+    }
+    if (this.price?.toString() == '') {
+      this.toastr.error('Vui lòng nhâp giá', 'Lỗi');
+      return
+    }
+    if (this.image?.trim() == '') {
+      this.toastr.error('Vui lòng chọn bàn', 'Lỗi');
+      return
+    }
+    if (this.price <= 0) {
+      this.toastr.error('Vui lòng nhâp giá hợp lệ', 'Lỗi');
+      return
+    }
+    let idv4 = uuid.v4
     let newBuffet = {
       id: idv4,
       description: this.description ?? '',
-      price:  this.price ?? 0,
+      price: this.price ?? 0,
       image: this.image,
       status: true,
       name: this.title ?? '',
@@ -80,7 +98,7 @@ export class PopupBuffetComponent implements OnInit {
       newBuffet.foods[e.id] = e;
     })
 
-    this.buffetService.set(idv4, newBuffet).then( () => {
+    this.buffetService.set(idv4, newBuffet).then(() => {
       this.dialogRef.close(true);
     })
   }

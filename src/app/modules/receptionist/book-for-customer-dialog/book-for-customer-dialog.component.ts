@@ -18,7 +18,7 @@ import { FloorService } from 'src/app/services/floor.service';
 export class BookForCustomerDialogComponent implements OnInit {
   tables = [];
   users = []
-  floors =[]
+  floors = []
   myId = '';
   tableSelected = '';
   floor = "Tầng 1"
@@ -103,23 +103,36 @@ export class BookForCustomerDialogComponent implements OnInit {
   }
   Save() {
     try {
-      let table = this.tables.find(item => item.id == this.tableSelected);
-      table.status = false;
-      this.dialogRef.close(this.data);
-      this.myId = uuid.v4();
-      this.data.tableId = this.tableSelected;
-      this.data.id = this.myId;
-      this.data.status = 'accepted';
-      this.data.note = '';
-      this.data.userId = '';
-      this.data.phone = "+84" + this.data.phone
-      this.data.waiterId = this.waiterId
-      const now = Date.now()
-      this.data.date = this.pipe.transform(now, this.formatdate);
-      this.orderService.set(this.myId, this.data).then(() => {
-        this.tablesService.update(table.id, table);
-        this.toastr.success("Đặt bàn thành công")
-      })
+      let table = this.tables.find(item => item.isChecked);
+      if (this.data?.numberOfPeople > 8 || this.data?.numberOfPeople < 0) {
+        this.toastr.error('Số người không hợp lệ', 'Lỗi');
+      } else if (table == null) {
+        this.toastr.error('Vui lòng chọn bàn', 'Lỗi');
+
+      } else {
+        let waiter = this.users.find(item => item.isChecked == true);
+        if (waiter == null) {
+          this.toastr.error('Vui lòng chọn phục vụ bàn', 'Lỗi')
+        }
+        else {
+          let obj = { floorId: table.floorId, id: table.id, isReadyToPay: table.isReadyToPay, name: table.name, status: false }
+          this.myId = uuid.v4();
+          this.data.tableId = this.tableSelected;
+          this.data.id = this.myId;
+          this.data.status = 'accepted';
+          this.data.note = '';
+          this.data.userId = '';
+          this.data.phone = "+84" + this.data.phone
+          this.data.waiterId = this.waiterId
+          const now = Date.now()
+          this.data.date = this.pipe.transform(now, this.formatdate);
+          this.orderService.set(this.myId, this.data).then(() => {
+            this.tablesService.update(obj.id, obj);
+            this.dialogRef.close(this.data);
+            this.toastr.success("Đặt bàn thành công")
+          })
+        }
+      }
     } catch {
       this.toastr.error("Đặt bàn thất bại")
     }

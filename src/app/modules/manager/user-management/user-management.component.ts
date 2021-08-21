@@ -86,11 +86,6 @@ export class UserManagementComponent implements OnInit {
     }
     dialogRef.afterClosed().subscribe(result => {
       this.getUsers();
-      if (isEdit) {
-        this.toastr.success("Cập nhật người dùng thành công");
-      } else {
-        this.toastr.success("Thêm mới người dùng thành công");
-      }
     });
   }
 

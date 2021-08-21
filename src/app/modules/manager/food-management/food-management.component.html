@@ -1,41 +1,62 @@
 <div class="sidebar" data-color="white" data-active-color="primary">
-  <app-sidebar></app-sidebar >
+  <app-sidebar></app-sidebar>
 </div>
 <div class="container">
-    <div class="d-flex justify-content-between">
-        <button class="btn btn-primary m-3" (click)="openPopupFood()">Thêm món</button>
-    </div>
-    <table class="table">
-        <thead>
-          <tr>
-            <th scope="col">#</th>
-            <th scope="col">Ảnh</th>
-            <th scope="col">Tên món</th>
-            <th style="text-align: center;" scope="col">Calories</th>
-            <th style="text-align: center;" scope="col">Giá tiền</th>
-            <th style="text-align: center;" scope="col">Trạng thái</th>
-            <th style="text-align: center;" scope="col">Thao tác</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let item of listFood; index as i">
-            <th scope="row">{{i+1}}</th>
-            <th scope="row"><img style="width: 80px;max-height:80px;max-width: 100%;" src={{item?.image}}></th>
-            <td>{{item?.name}}</td>
-            <td style="text-align: center;">{{item?.calories}}</td>
-            <td style="text-align: center;">{{item?.price}}</td>
-            <td style="text-align: center;">{{item?.status ? 'Còn' : 'Hết'}}</td>
-            <td>
-                <div class="d-flex justify-content-center">
-                    <button title="Sửa món ăn" style="background: transparent; border: none;cursor: pointer;" *ngIf="item.status" (click)="update(item, true)"><i
-                            style="font-size: 20px; color: #01904a;"
-                            class="fas fa-edit"></i></button>
-                    <button title="Xóa món ăn" style="background: transparent; border: none;cursor: pointer;" *ngIf="item.status" (click)="update(item, false)"><i
-                            style="font-size: 20px; color: #ff0000;"
-                            class="fas fa-ban"></i></button>
-                </div>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+  <div class="d-flex justify-content-between">
+    <button class="btn btn-primary m-3" (click)="openPopupFood()">Thêm món</button>
+  </div>
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Ảnh</th>
+        <th scope="col">Tên món</th>
+        <th style="text-align: center;" scope="col">Calories</th>
+        <th style="text-align: center;" scope="col">Giá tiền</th>
+        <th style="text-align: center;" scope="col">Trạng thái</th>
+        <th style="text-align: center;" scope="col">Thao tác</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of listFood; index as i">
+        <th scope="row">{{i+1}}</th>
+        <th scope="row"><img style="width: 80px;max-height:80px;max-width: 100%;" src={{item?.image}}></th>
+        <td>{{item?.name}}</td>
+        <td style="text-align: center;">{{item?.calories}}</td>
+        <td style="text-align: center;">{{item?.price}}</td>
+        <td style="text-align: center;">{{item?.status ? 'Còn' : 'Hết'}}</td>
+        <td>
+          <div class="d-flex justify-content-center">
+            <button title="Sửa món ăn" style="background: transparent; border: none;cursor: pointer;"
+              *ngIf="item.status" (click)="update(item, true)"><i style="font-size: 20px; color: #01904a;"
+                class="fas fa-edit"></i></button>
+            <button title="Xóa món ăn" style="background: transparent; border: none;cursor: pointer;"
+              *ngIf="item.status" (click)="update(item, false)"><i style="font-size: 20px; color: #ff0000;"
+                class="fas fa-ban"></i></button>
+          </div>
+        </td>
+      </tr>
+      <tr *ngFor="let item of listFoodDisable; index as i">
+        <th scope="row">{{i+1}}</th>
+        <th scope="row"><img style="width: 80px;max-height:80px;max-width: 100%;" src={{item?.image}}></th>
+        <td>{{item?.name}}</td>
+        <td style="text-align: center;">{{item?.calories}}</td>
+        <td style="text-align: center;">{{item?.price}}</td>
+        <td style="text-align: center;">{{item?.status ? 'Còn' : 'Hết'}}</td>
+        <td>
+          <div class="d-flex justify-content-center">
+            <button title="Sửa món ăn" style="background: transparent; border: none;cursor: pointer;"
+              *ngIf="item.status" (click)="update(item, true)"><i style="font-size: 20px; color: #01904a;"
+                class="fas fa-edit"></i></button>
+            <button title="Xóa món ăn" style="background: transparent; border: none;cursor: pointer;"
+              *ngIf="item.status" (click)="update(item, false)"><i style="font-size: 20px; color: #ff0000;"
+                class="fas fa-ban"></i></button>
+            <button title="Kích hoạt tài khoản" *ngIf="!item?.status"
+              style="background: transparent; border: none;cursor: pointer;" (click)="active(item)"><i
+                style="font-size: 20px; color: #01904a;" class="fas fa-check-circle"></i></button>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
 </div>

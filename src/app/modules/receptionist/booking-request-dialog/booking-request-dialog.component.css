@@ -4,3 +4,6 @@
 ::ng-deep .mat-dialog-container {
     padding-bottom: 0;
 }
+.col-md-8{
+    border-bottom: 1px solid;
+}

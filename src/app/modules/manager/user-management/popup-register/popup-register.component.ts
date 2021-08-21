@@ -3,6 +3,8 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { RegisterInfo } from 'src/app/models/registerInfo';
 import { UserService } from 'src/app/services/user.service';
+import { ToastrService } from 'ngx-toastr';
+
 import * as uuid from 'uuid';
 
 @Component({
@@ -32,7 +34,8 @@ export class PopupRegisterComponent implements OnInit {
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     public dialogRef: MatDialogRef<PopupRegisterComponent>,
-    public userService: UserService
+    public userService: UserService,
+    private toastr: ToastrService,
   ) { }
 
   ngOnInit(): void {
@@ -56,6 +59,7 @@ export class PopupRegisterComponent implements OnInit {
       this.registerInfo.phone = '+84' + this.registerInfo.phone;
       this.userService.set(this.registerInfo.id, this.registerInfo).then(() => {
         this.dialogRef.close();
+        this.toastr.success("Thêm dùng thành công");
       });
         // this.userService.registerUser(this.registerInfo).subscribe(
         //   res => {
@@ -73,6 +77,7 @@ export class PopupRegisterComponent implements OnInit {
       this.registerInfo.phone = this.registerInfo.phone;
       this.userService.update(this.registerInfo.id, this.registerInfo).then(() => {
         this.dialogRef.close();
+        this.toastr.success("Cập nhật người dùng thành công");
       });
     }
   }

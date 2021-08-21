@@ -81,16 +81,16 @@ export class SetTableComponent implements OnInit {
   toggle(table) {
     table.isChecked = !table.isChecked;
     this.tables = this.tables.map(item => {
-      if(item.id != table.id) {
+      if (item.id != table.id) {
         item.isChecked = false;
       }
       return item;
     })
     this.tableSelected = table.id;
   }
-  
-  parstring(dateString){
-    return moment(dateString,'YYYYMMDD_HHmm').format('HH:mm DD/MM/YYYY');
+
+  parstring(dateString) {
+    return moment(dateString, 'YYYYMMDD_HHmm').format('HH:mm DD/MM/YYYY');
   }
 
   getAllWaiters() {
@@ -101,15 +101,15 @@ export class SetTableComponent implements OnInit {
         )
       )
     ).subscribe(data => {
-      this.users = data.map(item => {item.isChecked = false ; return item;});
+      this.users = data.map(item => { item.isChecked = false; return item; });
     });
     console.log("this user", this.users)
   }
   toggleWaiter(waiter) {
-    console.log("waiter",waiter)
+    console.log("waiter", waiter)
     waiter.isChecked = !waiter.isChecked;
     this.users = this.users.map(item => {
-      if(item.id != waiter.id) {
+      if (item.id != waiter.id) {
         item.isChecked = false;
       }
       return item;
@@ -118,13 +118,28 @@ export class SetTableComponent implements OnInit {
   }
   bookOrder() {
     try {
-      let table = this.tables.find(item => item.id == this.tableSelected);
-      table.status = false;
+      let table = this.tables.find(item => item.isChecked == true);
+      console.log("number", this.processOrderDetail.numberOfPeople)
+      if(this.processOrderDetail.numberOfPeople > 8 || this.processOrderDetail.numberOfPeople<0){
+        this.toastr.error('Số người không hợp lệ', 'Lỗi');
+        return 
+      }
+      if(table==null){
+        this.toastr.error('Vui lòng chọn bàn', 'Lỗi');
+        return
+      }
+      let waiter = this.users.find(item => item.isChecked == true);
+      if(waiter == null){
+        this.toastr.error('Vui lòng bồi bàn', 'Lỗi');
+        return 
+      }
+       
+      let obj = { floorId: table.floorId, id: table.id, isReadyToPay: table.isReadyToPay, name: table.name, status: false }
       this.processOrderDetail.tableId = this.tableSelected;
       this.processOrderDetail.status = 'accepted';
       console.log("waiterId", this.waiterId)
       this.processOrderDetail.waiterId = this.waiterId;
-      this.tablesService.update(table.id, table);
+      this.tablesService.update(obj.id, obj);
       this.orderService.update(this.processOrderDetail.id, this.processOrderDetail);
       this.toastr.success('Đặt bàn cho khách thành công', 'Thông báo');
       this.router.navigate(['list-table']);
@@ -133,7 +148,7 @@ export class SetTableComponent implements OnInit {
       this.toastr.error('Đặt bàn cho khách không thành công', 'Lỗi');
     }
   }
-  back(){
+  back() {
     this.router.navigate(["/list-table"])
   }
 }

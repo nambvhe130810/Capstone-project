@@ -25,7 +25,7 @@ export class BillForCustomerComponent implements OnInit {
   buffet: any;
   orderDetails = []
   foods = []
-  listFood = []
+  map = new Map()
   date: any;
   constructor(public dialogRef: MatDialogRef<BillForCustomerComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -107,11 +107,21 @@ export class BillForCustomerComponent implements OnInit {
       )
     ).subscribe(data => {
       this.orderDetails.forEach(detail => {
+        let isExist = false;
         let food = data.find(item => item.id == detail.foodId)
-        let obj = { name: food.name, price: food.price, quantity: detail.quantity }
-        this.foods.push(obj)
-
-
+         this.foods.map(item => {
+          if (item.name == food.name) {
+            console.log("item",item)
+            item.quantity += detail.quantity
+            isExist = true
+          }
+          console.log("item",item)
+          return item
+        })
+        if (!isExist) {
+          let obj = { name: food.name, price: food.price, quantity: detail.quantity }
+          this.foods.push(obj)
+        }
       })
       console.log("foods", this.foods)
     });
@@ -121,9 +131,8 @@ export class BillForCustomerComponent implements OnInit {
     try {
       console.log("ProcessOrder", this.order)
       let table = this.tables.find(item => item.id == this.data.tableId);
-      console.log("table", table)
-      table.isReadyToPay = false;
-      this.tablesService.update(this.data.tableId, table)
+      let obj = { floorId: table.floorId, id: table.id, isReadyToPay: false, name: table.name, status: table.status }
+      this.tablesService.update(obj.id, obj)
       this.order.status = 'done'
       this.orderService.update(this.order.id, this.order)
       this.toastr.success("Thanh toán thành công")

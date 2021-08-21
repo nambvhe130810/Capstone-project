@@ -1,59 +1,59 @@
 <h1 mat-dialog-title>Chỉnh sửa buffet</h1>
 <mat-dialog-content style="height: 60vh;">
-    <div>
-        <div class="form-group">
-            <label>Tên Buffet</label>
-            <input class="form-control" [(ngModel)]="title"/>
-        </div>
-        <div class="form-group">
-            <label>Giá</label>
-            <input type="number" class="form-control" [(ngModel)]="price"/>
-        </div>
-        <div class="form-group">
-            <label>Link ảnh</label>
-            <input class="form-control" [(ngModel)]="image"/>
-        </div>
-        <div class="form-group">
-            <label>Mô tả</label>
-            <input class="form-control" [(ngModel)]="description"/>
-        </div>
+  <div>
+    <div class="form-group">
+      <label>Tên Buffet</label>
+      <input class="form-control" [(ngModel)]="title" required />
     </div>
-    <table class="table">
-        <thead>
-          <tr>
-            <th scope="col">#</th>
-            <th scope="col">Ảnh</th>
-            <th scope="col">Tên món</th>
-            <th style="text-align: center;" scope="col">Calories</th>
-            <!-- <th style="text-align: center;" scope="col">Trạng thái</th> -->
+    <div class="form-group">
+      <label>Giá</label>
+      <input type="number" class="form-control" [(ngModel)]="price" required />
+    </div>
+    <div class="form-group">
+      <label>Link ảnh</label>
+      <input class="form-control" [(ngModel)]="image" required/>
+    </div>
+    <div class="form-group">
+      <label>Mô tả</label>
+      <input class="form-control" [(ngModel)]="description" />
+    </div>
+  </div>
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Ảnh</th>
+        <th scope="col">Tên món</th>
+        <th style="text-align: center;" scope="col">Calories</th>
+        <!-- <th style="text-align: center;" scope="col">Trạng thái</th> -->
 
-            <th style="text-align: center;" scope="col">Mô tả</th>
-            <th style="text-align: center;" scope="col">Thao tác</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let item of listFood; index as i">
-            <th scope="row">{{i+1}}</th>
-            <th scope="row"><img style="width: 80px;max-height:80px;max-width: 100%;" src={{item?.image}}></th>
-            <td>{{item?.name}}</td>
-            <td style="text-align: center;">{{item?.calories}}</td>
-            <td style="text-align: center;">{{item?.description}}</td>
-            <!-- <td style="text-align: center;">{{item?.status ? 'Còn' : 'Hết'}}</td> -->
-            <td>
-                <div class="d-flex justify-content-center">
-                    <button title="Thêm món ăn" style="background: transparent; border: none;cursor: pointer;" *ngIf="!checkExist(item)" (click)="update(item, true)"><i
-                            style="font-size: 20px; color: #01904a;"
-                            class="fas fa-plus-square"></i></button>
-                    <button title="Xóa món ăn" style="background: transparent; border: none;cursor: pointer;" *ngIf="checkExist(item)" (click)="update(item, false)"><i
-                            style="font-size: 20px; color: #ff0000;"
-                            class="fas fa-ban"></i></button>
-                </div>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+        <th style="text-align: center;" scope="col">Mô tả</th>
+        <th style="text-align: center;" scope="col">Thao tác</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of listFood; index as i">
+        <th scope="row">{{i+1}}</th>
+        <th scope="row"><img style="width: 80px;max-height:80px;max-width: 100%;" src={{item?.image}}></th>
+        <td>{{item?.name}}</td>
+        <td style="text-align: center;">{{item?.calories}}</td>
+        <td style="text-align: center;">{{item?.description}}</td>
+        <!-- <td style="text-align: center;">{{item?.status ? 'Còn' : 'Hết'}}</td> -->
+        <td>
+          <div class="d-flex justify-content-center">
+            <button title="Thêm món ăn" style="background: transparent; border: none;cursor: pointer;"
+              *ngIf="!checkExist(item)" (click)="update(item, true)"><i style="font-size: 20px; color: #01904a;"
+                class="fas fa-plus-square"></i></button>
+            <button title="Xóa món ăn" style="background: transparent; border: none;cursor: pointer;"
+              *ngIf="checkExist(item)" (click)="update(item, false)"><i style="font-size: 20px; color: #ff0000;"
+                class="fas fa-ban"></i></button>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
 </mat-dialog-content>
 <mat-dialog-actions align="end">
-	<button mat-raised-button color="primary" (click)="save()" tabindex="1">Xác nhận</button>
-	<!-- <button mat-raised-button mat-dialog-close tabindex="-1">Hủy bỏ</button> -->
+  <button mat-raised-button color="primary" (click)="save()" tabindex="1">Xác nhận</button>
+  <!-- <button mat-raised-button mat-dialog-close tabindex="-1">Hủy bỏ</button> -->
 </mat-dialog-actions>
