@@ -27,6 +27,8 @@ export class HomePageComponent implements OnInit {
   allTableByFloor: any;
   floor = "1";
   user: any;
+  public companyName : string;
+  company: any;
   constructor(public dialog: MatDialog,
     private tablesService: TablesService,
     private billService: BillsService,
@@ -38,6 +40,8 @@ export class HomePageComponent implements OnInit {
     this.getAllTablesByFloorId("c6e2aa41-ad46-45f5-889a-dc71ade4bd26");
     this.getAllBill();
     this.getAllFloor();
+    this.company = localStorage.getItem("common-info");
+    this.companyName =  JSON.parse(this.company).name;
   }
   getAllTablesByFloorId(floorId) {
     this.tablesService.getAll().snapshotChanges().pipe(
@@ -120,5 +124,9 @@ export class HomePageComponent implements OnInit {
   onSelectedFloor(floor) {
     this.floor = this.floors.find(item => item.id == floor).name
     this.getAllTablesByFloorId(floor);
+  }
+
+  logout() {
+    localStorage.setItem('common-info', '');
   }
 }

@@ -11,7 +11,7 @@
         <label>Địa chỉ</label><br>
         <input class="form-control" placeholder="Nhập địa chỉ" [(ngModel)]="registerInfo.address"><br>
         <label>Số điện thoại</label><br>
-        <input class="form-control w-100" disabled placeholder="Nhập số điện thoại" [(ngModel)]="registerInfo.phone">
+        <input class="form-control w-100" [disabled]="isEdit" placeholder="Nhập số điện thoại" [(ngModel)]="registerInfo.phone">
         <br>
         <div>
             <label for="">Vai trò</label>

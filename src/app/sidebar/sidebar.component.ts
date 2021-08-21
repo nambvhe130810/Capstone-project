@@ -23,11 +23,16 @@ export class SidebarComponent implements OnInit {
 
   public menuItems: any[];
   isShowMenu = true;
+  public companyName : string;
+  company: any;
+
   constructor(public router: Router) {}
   ngOnInit() {
       console.log(this.router.url);
-      this.menuItems = ROUTES.filter(menuItem => menuItem);
       // this.isLogin()
+      this.menuItems = ROUTES.filter(menuItem => menuItem);
+      this.company = localStorage.getItem("common-info");
+      this.companyName =  JSON.parse(this.company).name;
   }
 
   isLogin() {
