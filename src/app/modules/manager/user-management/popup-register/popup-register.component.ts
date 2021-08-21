@@ -73,7 +73,7 @@ export class PopupRegisterComponent implements OnInit {
           this.toastr.success("Thêm dùng thành công");
         });
       } else {
-        this.toastr.error("Số điện thoajiddax tồn tại");
+        this.toastr.error("Số điện thoại đã tồn tại");
 
       }
       // this.userService.registerUser(this.registerInfo).subscribe(
