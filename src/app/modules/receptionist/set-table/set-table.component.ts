@@ -22,6 +22,8 @@ export class SetTableComponent implements OnInit {
   users = [];
   floors = []
   waiterId: any;
+  public userLocal: any;
+  jsonUser: any;
   constructor(private activatedRoute: ActivatedRoute,
     private orderService: OrderService,
     private tablesService: TablesService,
@@ -32,123 +34,136 @@ export class SetTableComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.getProcessOrderDetail();
-    this.getAllTablesByFloorId("c6e2aa41-ad46-45f5-889a-dc71ade4bd26");
-    this.getAllWaiters()
-    this.getAllFloor();
-  }
-  getProcessOrderDetail() {
-    this.orderService.getAll().snapshotChanges().pipe(
-      map(changes =>
-        changes.map(c =>
-          ({ key: c.payload.key, ...c.payload.val() })
-        )
-      )
-    ).subscribe(data => {
-      this.processOrders = data;
-      this.activatedRoute.queryParams.subscribe(params => {
-        this.processOrderDetail = this.processOrders.find(item => item.id == params.id);
-        this.processOrderDetail.tableId = '';
-      });
-    });
-  }
-
-  getAllTablesByFloorId(floorId) {
-    this.tablesService.getAll().snapshotChanges().pipe(
-      map(changes =>
-        changes.map(c =>
-          ({ key: c.payload.key, ...c.payload.val() })
-        )
-      )
-    ).subscribe(data => {
-      this.tables = data.filter(item => item.floorId == floorId);
-    });
-  }
-  getAllFloor() {
-    this.floorService.getAll().snapshotChanges().pipe(
-      map(changes =>
-        changes.map(c =>
-          ({ key: c.payload.key, ...c.payload.val() })
-        )
-      )
-    ).subscribe(data => {
-      this.floors = data;
-    });
-  }
-  onSelectedFloor(floor) {
-    this.getAllTablesByFloorId(floor);
-  }
-  toggle(table) {
-    table.isChecked = !table.isChecked;
-    this.tables = this.tables.map(item => {
-      if (item.id != table.id) {
-        item.isChecked = false;
+    this.jsonUser = localStorage.getItem("common-info");
+    console.log(this.jsonUser)
+    if (this.jsonUser == '') {
+      this.router.navigate(['/login'])
+      return
+    } else {
+      this.userLocal = JSON.parse(this.jsonUser);
+      console.log(this.userLocal.role)
+      if (this.userLocal.role != "rececptionist") {
+        this.router.navigate(['/denied'])
+      } else {
+        this.getProcessOrderDetail();
+        this.getAllTablesByFloorId("c6e2aa41-ad46-45f5-889a-dc71ade4bd26");
+        this.getAllWaiters()
+        this.getAllFloor();
       }
-      return item;
-    })
-    this.tableSelected = table.id;
-  }
-
-  parstring(dateString) {
-    return moment(dateString, 'YYYYMMDD_HHmm').format('HH:mm DD/MM/YYYY');
-  }
-
-  getAllWaiters() {
-    this.userService.getAll().snapshotChanges().pipe(
-      map(changes =>
-        changes.map(c =>
-          ({ key: c.payload.key, ...c.payload.val() })
-        )
-      )
-    ).subscribe(data => {
-      this.users = data.map(item => { item.isChecked = false; return item; });
-    });
-    console.log("this user", this.users)
-  }
-  toggleWaiter(waiter) {
-    console.log("waiter", waiter)
-    waiter.isChecked = !waiter.isChecked;
-    this.users = this.users.map(item => {
-      if (item.id != waiter.id) {
-        item.isChecked = false;
-      }
-      return item;
-    })
-    this.waiterId = waiter.id;
-  }
-  bookOrder() {
-    try {
-      let table = this.tables.find(item => item.isChecked == true);
-      console.log("number", this.processOrderDetail.numberOfPeople)
-      if(this.processOrderDetail.numberOfPeople > 8 || this.processOrderDetail.numberOfPeople<0){
-        this.toastr.error('Số người không hợp lệ', 'Lỗi');
-        return 
-      }
-      if(table==null){
-        this.toastr.error('Vui lòng chọn bàn', 'Lỗi');
-        return
-      }
-      let waiter = this.users.find(item => item.isChecked == true);
-      if(waiter == null){
-        this.toastr.error('Vui lòng bồi bàn', 'Lỗi');
-        return 
-      }
-       
-      let obj = { floorId: table.floorId, id: table.id, isReadyToPay: table.isReadyToPay, name: table.name, status: false }
-      this.processOrderDetail.tableId = this.tableSelected;
-      this.processOrderDetail.status = 'accepted';
-      console.log("waiterId", this.waiterId)
-      this.processOrderDetail.waiterId = this.waiterId;
-      this.tablesService.update(obj.id, obj);
-      this.orderService.update(this.processOrderDetail.id, this.processOrderDetail);
-      this.toastr.success('Đặt bàn cho khách thành công', 'Thông báo');
-      this.router.navigate(['list-table']);
-
-    } catch (err) {
-      this.toastr.error('Đặt bàn cho khách không thành công', 'Lỗi');
     }
   }
-  back() {
-    this.router.navigate(["/list-table"])
+    getProcessOrderDetail() {
+      this.orderService.getAll().snapshotChanges().pipe(
+        map(changes =>
+          changes.map(c =>
+            ({ key: c.payload.key, ...c.payload.val() })
+          )
+        )
+      ).subscribe(data => {
+        this.processOrders = data;
+        this.activatedRoute.queryParams.subscribe(params => {
+          this.processOrderDetail = this.processOrders.find(item => item.id == params.id);
+          this.processOrderDetail.tableId = '';
+        });
+      });
+    }
+
+    getAllTablesByFloorId(floorId) {
+      this.tablesService.getAll().snapshotChanges().pipe(
+        map(changes =>
+          changes.map(c =>
+            ({ key: c.payload.key, ...c.payload.val() })
+          )
+        )
+      ).subscribe(data => {
+        this.tables = data.filter(item => item.floorId == floorId);
+      });
+    }
+    getAllFloor() {
+      this.floorService.getAll().snapshotChanges().pipe(
+        map(changes =>
+          changes.map(c =>
+            ({ key: c.payload.key, ...c.payload.val() })
+          )
+        )
+      ).subscribe(data => {
+        this.floors = data;
+      });
+    }
+    onSelectedFloor(floor) {
+      this.getAllTablesByFloorId(floor);
+    }
+    toggle(table) {
+      table.isChecked = !table.isChecked;
+      this.tables = this.tables.map(item => {
+        if (item.id != table.id) {
+          item.isChecked = false;
+        }
+        return item;
+      })
+      this.tableSelected = table.id;
+    }
+
+    parstring(dateString) {
+      return moment(dateString, 'YYYYMMDD_HHmm').format('HH:mm DD/MM/YYYY');
+    }
+
+    getAllWaiters() {
+      this.userService.getAll().snapshotChanges().pipe(
+        map(changes =>
+          changes.map(c =>
+            ({ key: c.payload.key, ...c.payload.val() })
+          )
+        )
+      ).subscribe(data => {
+        this.users = data.map(item => { item.isChecked = false; return item; });
+      });
+      console.log("this user", this.users)
+    }
+    toggleWaiter(waiter) {
+      console.log("waiter", waiter)
+      waiter.isChecked = !waiter.isChecked;
+      this.users = this.users.map(item => {
+        if (item.id != waiter.id) {
+          item.isChecked = false;
+        }
+        return item;
+      })
+      this.waiterId = waiter.id;
+    }
+    bookOrder() {
+      try {
+        let table = this.tables.find(item => item.isChecked == true);
+        console.log("number", this.processOrderDetail.numberOfPeople)
+        if (this.processOrderDetail.numberOfPeople > 8 || this.processOrderDetail.numberOfPeople < 0) {
+          this.toastr.error('Số người không hợp lệ', 'Lỗi');
+          return
+        }
+        if (table == null) {
+          this.toastr.error('Vui lòng chọn bàn', 'Lỗi');
+          return
+        }
+        let waiter = this.users.find(item => item.isChecked == true);
+        if (waiter == null) {
+          this.toastr.error('Vui lòng bồi bàn', 'Lỗi');
+          return
+        }
+
+        let obj = { floorId: table.floorId, id: table.id, isReadyToPay: table.isReadyToPay, name: table.name, status: false }
+        this.processOrderDetail.tableId = this.tableSelected;
+        this.processOrderDetail.status = 'accepted';
+        console.log("waiterId", this.waiterId)
+        this.processOrderDetail.waiterId = this.waiterId;
+        this.tablesService.update(obj.id, obj);
+        this.orderService.update(this.processOrderDetail.id, this.processOrderDetail);
+        this.toastr.success('Đặt bàn cho khách thành công', 'Thông báo');
+        this.router.navigate(['list-table']);
+
+      } catch (err) {
+        this.toastr.error('Đặt bàn cho khách không thành công', 'Lỗi');
+      }
+    }
+    back() {
+      this.router.navigate(["/list-table"])
+    }
   }
-}

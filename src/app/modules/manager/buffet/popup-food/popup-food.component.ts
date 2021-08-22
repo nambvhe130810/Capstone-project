@@ -76,8 +76,8 @@ export class PopupFoodComponent implements OnInit {
           // e.foods.push(item);
           e.foods[item.id] = item;
           this.data.data.push(item);
+          this.buffetService.update(this.data.id, e)
         }
-        this.buffetService.update(this.data.id, e)
       });
     }
 

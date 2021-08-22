@@ -61,7 +61,8 @@ export class LoginComponent {
       this.toastr.error("Vui lòng nhập số điện thoại")
       return
     }
-    if(this.phoneNumber.line.length!=10){
+    if(this.phoneNumber.line.toString().length!=9){
+      console.log(this.phoneNumber.line.length)
       this.toastr.error("Vui lòng nhập số điện thoại đủ 10 số")
       return
     }
@@ -115,10 +116,12 @@ export class LoginComponent {
           this.toastr.success('Đăng nhập thành công');
           return
         }
+        localStorage.setItem('common-info', '');
         this.toastr.error('Đăng nhập thất bại do không có quyền');
       }
     })
     .catch( error => {
+      localStorage.setItem('common-info', '');
       console.log(error, "Incorrect code entered?")
       this.toastr.error('Vui lòng kiểm tra lại OTP');
     });

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { CommunicationsService } from 'src/app/services/communications.service';
-
+import { Router } from '@angular/router';
 import { PopupReplyComponent } from './popup-reply/popup-reply.component';
 
 @Component({
@@ -97,21 +97,37 @@ export class QuestionManagementComponent implements OnInit {
       "userId": "1"
     },
   ];
+  public userLocal: any;
+  jsonUser: any;
   constructor(
     private dialog: MatDialog,
-    private communicationService: CommunicationsService
+    private communicationService: CommunicationsService,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
-    this. getListQuestion('chef');
-    this. getListQuestion('customer');
-    this. getListQuestion('receptionist');
-    this. getListQuestion('waiter');
+    this.jsonUser = localStorage.getItem("common-info");
+    console.log(this.jsonUser)
+    if (this.jsonUser == '') {
+      this.router.navigate(['/login'])
+      return
+    } else {
+      this.userLocal = JSON.parse(this.jsonUser);
+      console.log(this.userLocal.role)
+      if (this.userLocal.role != "manager") {
+        this.router.navigate(['/denied'])
+      } else {
+        this.getListQuestion('chef');
+        this.getListQuestion('customer');
+        this.getListQuestion('receptionist');
+        this.getListQuestion('waiter');
+      }
+    }
   }
 
   getListQuestion(type) {
     let isHaveData = false;
-    this.communicationService.getBySource('/'+type).subscribe(res => {
+    this.communicationService.getBySource('/' + type).subscribe(res => {
       isHaveData = true;
       this.handleData(res, type);
     });
@@ -141,7 +157,7 @@ export class QuestionManagementComponent implements OnInit {
     }
   }
 
-  openModalReply(item,type) {
+  openModalReply(item, type) {
     item.type = type;
     let dialogRef = this.dialog.open(PopupReplyComponent, {
       width: '1000px',
@@ -149,10 +165,10 @@ export class QuestionManagementComponent implements OnInit {
       data: item
     });
     dialogRef.afterClosed().subscribe(result => {
-      this. getListQuestion('chef');
-      this. getListQuestion('customer');
-      this. getListQuestion('receptionist');
-      this. getListQuestion('waiter');
+      this.getListQuestion('chef');
+      this.getListQuestion('customer');
+      this.getListQuestion('receptionist');
+      this.getListQuestion('waiter');
     });
   }
 }

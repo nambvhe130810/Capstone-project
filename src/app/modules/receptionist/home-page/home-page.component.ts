@@ -9,6 +9,8 @@ import { BillsService } from '../../../services/bills.service';
 import { ToastrService } from 'ngx-toastr';
 import { BillForCustomerComponent } from '../bill-for-customer/bill-for-customer.component';
 import { AutofillMonitor } from '@angular/cdk/text-field';
+import { ActivatedRoute, Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-home-page',
@@ -27,21 +29,34 @@ export class HomePageComponent implements OnInit {
   allTableByFloor: any;
   floor = "1";
   user: any;
-  public companyName : string;
-  company: any;
+  public userLocal: any;
+  jsonUser: any;
   constructor(public dialog: MatDialog,
     private tablesService: TablesService,
     private billService: BillsService,
     private toastr: ToastrService,
-    private floorService: FloorService
+    private floorService: FloorService,
+    private router: Router,
   ) { }
 
   ngOnInit(): void {
-    this.getAllTablesByFloorId("c6e2aa41-ad46-45f5-889a-dc71ade4bd26");
-    this.getAllBill();
-    this.getAllFloor();
-    this.company = localStorage.getItem("common-info");
-    this.companyName =  JSON.parse(this.company).name;
+    this.jsonUser = localStorage.getItem("common-info");
+    console.log(this.jsonUser)
+    if (this.jsonUser == '') {
+      this.router.navigate(['/login'])
+      return
+    } else {
+      this.userLocal = JSON.parse(this.jsonUser);
+      console.log(this.userLocal.role)
+      if (this.userLocal.role != "rececptionist") {
+        this.router.navigate(['/denied'])
+      } else {
+        this.getAllTablesByFloorId("c6e2aa41-ad46-45f5-889a-dc71ade4bd26");
+        this.getAllBill();
+        this.getAllFloor();
+      }
+    }
+
   }
   getAllTablesByFloorId(floorId) {
     this.tablesService.getAll().snapshotChanges().pipe(
@@ -58,7 +73,7 @@ export class HomePageComponent implements OnInit {
       this.tableFreeByFloor = this.tables.filter(item => item.status).length
       console.log("free table", this.tableFree, this.tableFreeByFloor)
       this.user = localStorage.getItem("userId")
-      console.log("user",this.user)
+      console.log("user", this.user)
     });
   }
   getAllFloor() {

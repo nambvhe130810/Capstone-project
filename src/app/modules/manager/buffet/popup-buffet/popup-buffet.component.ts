@@ -83,7 +83,7 @@ export class PopupBuffetComponent implements OnInit {
       this.toastr.error('Vui lòng nhâp giá hợp lệ');
       return
     }
-    let idv4 = uuid.v4
+    let idv4 = uuid.v4()
     let newBuffet = {
       id: idv4,
       description: this.description ?? '',

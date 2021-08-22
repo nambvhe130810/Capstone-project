@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { BuffetService } from 'src/app/services/buffet.service';
+import { Router } from '@angular/router';
 
 import { ConfirmDeleteComponent } from './confirm-delete/confirm-delete.component';
 import { PopupBuffetComponent } from './popup-buffet/popup-buffet.component';
@@ -17,13 +18,29 @@ export class BuffetComponent implements OnInit {
   listBuffetDetail = [];
   isShowDetail = false;
   chooseId;
+  public userLocal: any;
+  jsonUser: any;
   constructor(
     private buffetService: BuffetService,
     private dialog: MatDialog,
+    private router:Router
   ) { }
 
   ngOnInit(): void {
-    this.getListBuffet()
+    this.jsonUser = localStorage.getItem("common-info");
+    console.log(this.jsonUser)
+    if (this.jsonUser == '') {
+      this.router.navigate(['/login'])
+      return
+    } else {
+      this.userLocal = JSON.parse(this.jsonUser);
+      console.log(this.userLocal.role)
+      if (this.userLocal.role != "manager") {
+        this.router.navigate(['/denied'])
+      } else {
+        this.getListBuffet()
+      }
+    }
   }
 
   getListBuffet() {
@@ -64,7 +81,7 @@ export class BuffetComponent implements OnInit {
     })
   }
 
-  deleteFood(isAdd,item) {
+  deleteFood(isAdd, item) {
     // let dialogRef = this.dialog.open(ConfirmDeleteComponent, {
     //   width: '500px',
     //   height: '200px',
@@ -72,19 +89,19 @@ export class BuffetComponent implements OnInit {
     // });
     // dialogRef.afterClosed().subscribe(result => {
     //     if (result) {
-          this.listBuffet.forEach(e => {
-            if (e.id == this.chooseId && e.status == true) {
-              if (isAdd) {
-                e.foods[item.id].status = true;
-              } else {
-                e.foods[item.id].status = false;
-              }
-              this.buffetService.update(e.id, e).then(() => {
-                this.getListBuffet();
-              })
-            }
-          })
-        // }
+    this.listBuffet.forEach(e => {
+      if (e.id == this.chooseId && e.status == true) {
+        if (isAdd) {
+          e.foods[item.id].status = true;
+        } else {
+          e.foods[item.id].status = false;
+        }
+        this.buffetService.update(e.id, e).then(() => {
+          this.getListBuffet();
+        })
+      }
+    })
+    // }
     // });
   }
 
@@ -98,7 +115,7 @@ export class BuffetComponent implements OnInit {
     this.isShowDetail = true;
   }
 
-  openPopupBuffet(status = false,item?) {
+  openPopupBuffet(status = false, item?) {
     if (status) {
       let dialogRef = this.dialog.open(PopupBuffetComponent, {
         width: '500px',
@@ -121,15 +138,15 @@ export class BuffetComponent implements OnInit {
   }
 
   openPopupFood(status = false) {
-      let dialogRef = this.dialog.open(PopupFoodComponent, {
-        width: '1000px',
-        height: '600px',
-        data: {data: this.listBuffetDetail, id: this.chooseId}
-      });
+    let dialogRef = this.dialog.open(PopupFoodComponent, {
+      width: '1000px',
+      height: '600px',
+      data: { data: this.listBuffetDetail, id: this.chooseId }
+    });
 
-      dialogRef.afterClosed().subscribe(result => {
-        this.getListBuffet();
-      });
+    dialogRef.afterClosed().subscribe(result => {
+      this.getListBuffet();
+    });
   }
 
   back() {

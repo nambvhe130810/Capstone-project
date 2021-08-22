@@ -9,6 +9,8 @@ import { QuestionManagementComponent } from './modules/manager/question-manageme
 import { UserManagementComponent } from './modules/manager/user-management/user-management.component';
 import { HomePageComponent } from './modules/receptionist/home-page/home-page.component';
 import { SetTableComponent } from './modules/receptionist/set-table/set-table.component';
+import { DeniedComponent } from './modules/denied/denied.component';
+
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full'},
@@ -24,6 +26,8 @@ const routes: Routes = [
       { path: 'buffet', component: BuffetComponent },
       { path: 'food', component: FoodManagementComponent },
       { path: 'login', component: LoginComponent },
+      { path: 'denied', component: DeniedComponent },
+
 
     ]
   },
