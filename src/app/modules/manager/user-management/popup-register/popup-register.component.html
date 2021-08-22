@@ -1,5 +1,6 @@
 <div>
-    <h5 class="mb-0">Thêm mới người dùng</h5>
+    <h5 class="mb-0" *ngIf="!isEdit">Thêm mới người dùng</h5>
+    <h5 class="mb-0" *ngIf="isEdit">Sửa thông tin người dùng</h5>
     <hr>
 </div>
 <div>
@@ -11,7 +12,7 @@
         <label>Địa chỉ</label><br>
         <input class="form-control" placeholder="Nhập địa chỉ" [(ngModel)]="registerInfo.address"><br>
         <label>Số điện thoại</label><br>
-        <input class="form-control w-100" [disabled]="isEdit" placeholder="Nhập số điện thoại" [(ngModel)]="registerInfo.phone">
+        <input class="form-control w-100" [disabled]="isEdit" type="number" placeholder="Nhập số điện thoại" [(ngModel)]="registerInfo.phone">
         <br>
         <div>
             <label for="">Vai trò</label>

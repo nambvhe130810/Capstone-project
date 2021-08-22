@@ -57,6 +57,19 @@ export class PopupRegisterComponent implements OnInit {
     })
   }
   register() {
+    console.log("name",this.registerInfo.name)
+    if(this.registerInfo.name ==null ||this.registerInfo.name.trim()==''){
+      this.toastr.error("Vui lòng nhập tên người dùng");
+      return
+    }
+    if(this.registerInfo.phone ==null ||this.registerInfo.phone==''){
+      this.toastr.error("Vui lòng nhập số điện thoại");
+      return
+    }
+    if(this.registerInfo.phone.length!=10){
+      this.toastr.error("Vui lòng nhập số điện thoại đủ 10 số")
+      return
+    }
     if (this.registerInfo) {
       let exist = false;
       this.listUser.forEach(res => {

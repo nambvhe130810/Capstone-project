@@ -38,9 +38,9 @@ export class UserManagementComponent implements OnInit {
 
     this.userService.getAll().valueChanges().subscribe(res => {
       if (this.searchForm.value.name) {
-        this.listUser = res.filter(item => item.name.toLowerCase().indexOf(this.searchForm.value.name.toLowerCase()) > -1);
+        this.listUser = res.filter(item => item.name.toLowerCase().indexOf(this.searchForm.value.name.toLowerCase()) > -1 && item.role!='customer');
       } else {
-        this.listUser = res;
+        this.listUser = res.filter(item => item.role!='customer');
       }
     });
     // this.userService.getAllUser(param).subscribe(res => {

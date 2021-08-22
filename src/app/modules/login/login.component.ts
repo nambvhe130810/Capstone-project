@@ -57,6 +57,14 @@ export class LoginComponent {
   }
 
   sendLoginCode() {
+    if(this.phoneNumber.line==null||this.phoneNumber.line==''){
+      this.toastr.error("Vui lòng nhập số điện thoại")
+      return
+    }
+    if(this.phoneNumber.line.length!=10){
+      this.toastr.error("Vui lòng nhập số điện thoại đủ 10 số")
+      return
+    }
     const appVerifier = this.windowRef.recaptchaVerifier;
     const num = this.phoneNumber.e164;
     let exist = false;

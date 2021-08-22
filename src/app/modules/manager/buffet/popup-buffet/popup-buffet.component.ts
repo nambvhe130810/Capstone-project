@@ -67,20 +67,20 @@ export class PopupBuffetComponent implements OnInit {
 
   save() {
     // this.myId = uuid.v4();
-    if (this.title?.trim() == '') {
-      this.toastr.error('Vui lòng nhâp tên buffet', 'Lỗi');
+    if (this.title ==null||this.title?.trim() == '') {
+      this.toastr.error('Vui lòng nhâp tên buffet');
       return
     }
-    if (this.price?.toString() == '') {
-      this.toastr.error('Vui lòng nhâp giá', 'Lỗi');
+    if (this.price == null) {
+      this.toastr.error('Vui lòng nhâp giá');
       return
     }
-    if (this.image?.trim() == '') {
-      this.toastr.error('Vui lòng chọn bàn', 'Lỗi');
+    if (this.image ==null||this.image?.trim() == '') {
+      this.toastr.error('Vui lòng thêm đường link ảnh');
       return
     }
     if (this.price <= 0) {
-      this.toastr.error('Vui lòng nhâp giá hợp lệ', 'Lỗi');
+      this.toastr.error('Vui lòng nhâp giá hợp lệ');
       return
     }
     let idv4 = uuid.v4
