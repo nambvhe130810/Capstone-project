@@ -15,21 +15,10 @@ export class DeniedComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.jsonUser = localStorage.getItem("common-info");
-    if (this.jsonUser == '') {
-      this.router.navigate(['/login'])
-    } else {
-      this.userLocal = JSON.parse(this.jsonUser);
-    }
+   
   }
 
-  back() {
-
-    console.log(this.userLocal.role)
-    if (this.userLocal.role == "manager") {
-      this.router.navigate(['/food'])
-    } else {
-      this.router.navigate(['/list-table'])
-    }
+  logout() {
+    localStorage.setItem('common-info', '');
   }
 }

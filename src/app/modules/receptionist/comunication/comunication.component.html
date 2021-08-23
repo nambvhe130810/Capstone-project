@@ -1,0 +1,23 @@
+<div>
+    <h5 class="mb-0">Liên hệ quản lí</h5>
+    <hr>
+</div>
+<div class="col-md-12 mt-2">
+    <div>
+        <label style="font-weight: bold; margin-top: 30px;">Nội dung</label><br>
+        <textarea class="form-control w-100" placeholder="Nhập tin nhắn" [(ngModel)]="answer"></textarea>
+    </div>
+</div>
+<div class="content">
+    <div class="reason"> Chọn một trong những tin nhắn sau</div>
+    <div class="form-group row required" *ngFor="let data of dataFake">
+
+        <mat-checkbox class="example-margin" [checked]="data.isChecked" (change)="toggle(data)" name="status">
+            {{data.content}}</mat-checkbox>
+    </div>
+</div>
+<mat-dialog-actions align="end" class="p-0 mt-3">
+    <button class="btn btn-primary mr-2" type="submit" style="height: 42px;" [disabled]="!answer" (click)="reply()">Trả
+        lời</button>
+    <button mat-button [mat-dialog-close]="true" class="btn btn-danger-primary" style="height: 42px;">Hủy</button>
+</mat-dialog-actions>

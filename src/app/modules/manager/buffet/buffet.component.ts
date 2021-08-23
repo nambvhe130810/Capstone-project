@@ -16,6 +16,8 @@ export class BuffetComponent implements OnInit {
 
   listBuffet = [];
   listBuffetDetail = [];
+  listFoodEnable = []
+  listFoodDisable = []
   isShowDetail = false;
   chooseId;
   public userLocal: any;
@@ -23,14 +25,14 @@ export class BuffetComponent implements OnInit {
   constructor(
     private buffetService: BuffetService,
     private dialog: MatDialog,
-    private router:Router
+    private router: Router
   ) { }
 
   ngOnInit(): void {
     this.jsonUser = localStorage.getItem("common-info");
     console.log(this.jsonUser)
     if (this.jsonUser == '') {
-      this.router.navigate(['/login'])
+      this.router.navigate(['/denied'])
       return
     } else {
       this.userLocal = JSON.parse(this.jsonUser);
@@ -55,6 +57,9 @@ export class BuffetComponent implements OnInit {
         }
       })
       console.log(res);
+      this.listFoodEnable = this.listBuffetDetail.filter(e => e.status)
+      this.listFoodDisable = this.listBuffetDetail.filter(e => !e.status)
+
     })
   }
 
@@ -112,6 +117,9 @@ export class BuffetComponent implements OnInit {
       this.listBuffetDetail.push(e.foods[key]);
     }
     // this.listBuffetDetail = e?.foods;
+    this.listFoodEnable = this.listBuffetDetail.filter(e => e.status)
+    this.listFoodDisable = this.listBuffetDetail.filter(e => !e.status)
+
     this.isShowDetail = true;
   }
 

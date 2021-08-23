@@ -38,7 +38,8 @@ export class PopupReplyComponent implements OnInit {
 
     body.isReply = true;
     body.messageReply = this.answer;
-
+    console.log(body)
+    console.log(this.data)
     this.communicationService.setBySource(this.data.id, body, '/' + this.data.type).then(() => {
       this.dialogRef.close();
     });

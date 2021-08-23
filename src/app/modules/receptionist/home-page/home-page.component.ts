@@ -10,6 +10,7 @@ import { ToastrService } from 'ngx-toastr';
 import { BillForCustomerComponent } from '../bill-for-customer/bill-for-customer.component';
 import { AutofillMonitor } from '@angular/cdk/text-field';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ComunicationComponent } from '../comunication/comunication.component';
 
 
 @Component({
@@ -43,12 +44,12 @@ export class HomePageComponent implements OnInit {
     this.jsonUser = localStorage.getItem("common-info");
     console.log(this.jsonUser)
     if (this.jsonUser == '') {
-      this.router.navigate(['/login'])
+      this.router.navigate(['/denied'])
       return
     } else {
       this.userLocal = JSON.parse(this.jsonUser);
       console.log(this.userLocal.role)
-      if (this.userLocal.role != "rececptionist") {
+      if (this.userLocal.role != "receptionist") {
         this.router.navigate(['/denied'])
       } else {
         this.getAllTablesByFloorId("c6e2aa41-ad46-45f5-889a-dc71ade4bd26");
@@ -143,5 +144,14 @@ export class HomePageComponent implements OnInit {
 
   logout() {
     localStorage.setItem('common-info', '');
+  }
+  comunication() {
+    
+    const dialogRef = this.dialog.open(ComunicationComponent, {
+      width: '750px',
+      height: '500px',
+      data:{id: this.userLocal.id}
+    });
+
   }
 }

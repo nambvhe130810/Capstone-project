@@ -31,6 +31,7 @@ import { PopupFoodManagementComponent } from './modules/manager/food-management/
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { BillForCustomerComponent } from './modules/receptionist/bill-for-customer/bill-for-customer.component';
 import { DeniedComponent } from './modules/denied/denied.component';
+import { ComunicationComponent } from './modules/receptionist/comunication/comunication.component';
 
 @NgModule({
   declarations: [
@@ -49,7 +50,8 @@ import { DeniedComponent } from './modules/denied/denied.component';
     PopupFoodManagementComponent,
     SidebarComponent,
     BillForCustomerComponent,
-    DeniedComponent
+    DeniedComponent,
+    ComunicationComponent
     // AuthComponent,
   ],
   imports: [

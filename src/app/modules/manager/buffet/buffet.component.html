@@ -37,7 +37,7 @@
                         <!-- <button class="btn btn-primary mt-2 ml-2" style="width: 100px" (click)="openPopupBuffet(true,item)">Chỉnh sửa</button><br/> -->
                         <button class="btn btn-primary mt-2 ml-2" style="width: 100px" (click)="showDetail(item)" *ngIf="item?.status">Chỉnh sửa</button><br/>
                         <button class="btn btn-primary mt-2 ml-2" style="width: 100px" (click)="active(item)" *ngIf="!item?.status">Kích hoạt</button><br/>
-                        <button class="btn btn-outline-danger mt-2 ml-2" style="width: 100px" (click)="deleteRow(item)" *ngIf="item?.status">Xóa</button>
+                        <button class="btn btn-outline-danger mt-2 ml-2" style="width: 100px" (click)="deleteRow(item)" *ngIf="item?.status">Vô hiệu hoá</button>
                     </div>
                 </div>
             </div>
@@ -61,7 +61,7 @@
               </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let item of listBuffetDetail; index as i">
+              <tr *ngFor="let item of listFoodEnable; index as i">
                 <th scope="row">{{i+1}}</th>
                 <th scope="row"><img style="width: 80px;max-height:80px;max-width: 100%;" src={{item?.image}}></th>
                 <td>{{item?.name}}</td>
@@ -69,10 +69,27 @@
                 <td style="text-align: center;">{{item?.status ? 'Còn' : 'Hết'}}</td>
                 <td>
                     <div class="d-flex justify-content-center">
-                        <button title="Thêm món ăn" style="background: transparent; border: none;cursor: pointer;" *ngIf="!item?.status" (click)="deleteFood(true,item)"><i
+                        <button title="Kích hoạt" style="background: transparent; border: none;cursor: pointer;" *ngIf="!item?.status" (click)="deleteFood(true,item)"><i
                                 style="font-size: 20px; color: #01904a;"
                                 class="fas fa-check-circle"></i></button>
-                        <button title="Xóa món ăn" style="background: transparent; border: none;cursor: pointer;" *ngIf="item?.status" (click)="deleteFood(false,item)"><i
+                        <button title="Vô hiệu hoá" style="background: transparent; border: none;cursor: pointer;" *ngIf="item?.status" (click)="deleteFood(false,item)"><i
+                                style="font-size: 20px; color: #ff0000;"
+                                class="fas fa-ban"></i></button>
+                    </div>
+                </td>
+              </tr>
+              <tr *ngFor="let item of listFoodDisable; index as i">
+                <th scope="row">{{i+1}}</th>
+                <th scope="row"><img style="width: 80px;max-height:80px;max-width: 100%;" src={{item?.image}}></th>
+                <td>{{item?.name}}</td>
+                <td style="text-align: center;">{{item?.calories}}</td>
+                <td style="text-align: center;">{{item?.status ? 'Còn' : 'Hết'}}</td>
+                <td>
+                    <div class="d-flex justify-content-center">
+                        <button title="Kích hoạt" style="background: transparent; border: none;cursor: pointer;" *ngIf="!item?.status" (click)="deleteFood(true,item)"><i
+                                style="font-size: 20px; color: #01904a;"
+                                class="fas fa-check-circle"></i></button>
+                        <button title="Vô hiệu hoá" style="background: transparent; border: none;cursor: pointer;" *ngIf="item?.status" (click)="deleteFood(false,item)"><i
                                 style="font-size: 20px; color: #ff0000;"
                                 class="fas fa-ban"></i></button>
                     </div>

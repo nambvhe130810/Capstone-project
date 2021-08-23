@@ -37,12 +37,12 @@ export class SetTableComponent implements OnInit {
     this.jsonUser = localStorage.getItem("common-info");
     console.log(this.jsonUser)
     if (this.jsonUser == '') {
-      this.router.navigate(['/login'])
+      this.router.navigate(['/denied'])
       return
     } else {
       this.userLocal = JSON.parse(this.jsonUser);
       console.log(this.userLocal.role)
-      if (this.userLocal.role != "rececptionist") {
+      if (this.userLocal.role != "receptionist") {
         this.router.navigate(['/denied'])
       } else {
         this.getProcessOrderDetail();

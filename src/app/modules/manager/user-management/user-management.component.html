@@ -36,7 +36,7 @@
                     </tr>
                 </thead>
                 <tbody *ngIf="listUser.length > 0">
-                    <tr *ngFor="let item of listUser; index as i">
+                    <tr *ngFor="let item of listUserEnable; index as i">
                         <td style="text-align: center;" scope="row">{{i+1}}</td>
                         <td style="text-align: center;">{{item?.name}}</td>
                         <td style="text-align: center;">{{item?.address}}</td>
@@ -59,7 +59,29 @@
                             </div>
                         </td>
                     </tr>
-
+                    <tr *ngFor="let item of listUserDisable; index as i">
+                        <td style="text-align: center;" scope="row">{{i+1}}</td>
+                        <td style="text-align: center;">{{item?.name}}</td>
+                        <td style="text-align: center;">{{item?.address}}</td>
+                        <td style="text-align: center;">{{item?.phone}}</td>
+                        <td style="text-align: center;">{{item?.role}}</td>
+                        <td>
+                            <div class="d-flex justify-content-center">
+                                <button title="Chỉnh sửa tài khoản"
+                                    style="background: transparent; border: none;cursor: pointer;" *ngIf="item?.status"
+                                    (click)="openModalRegister(true,item)"><i style="font-size: 20px; color: #01904a;"
+                                        class="fas fa-edit"></i></button>
+                                <button title="Kích hoạt tài khoản" *ngIf="!item?.status"
+                                    style="background: transparent; border: none;cursor: pointer;"
+                                    (click)="active(item)"><i style="font-size: 20px; color: #01904a;"
+                                        class="fas fa-check-circle"></i></button>
+                                <button title="Xóa tài khoản" *ngIf="item?.status"
+                                    style="background: transparent; border: none;cursor: pointer;"
+                                    (click)="delete(item)"><i style="font-size: 20px; color: #ff0000;"
+                                        class="fas fa-ban"></i></button>
+                            </div>
+                        </td>
+                    </tr>
                 </tbody>
                 <!-- <div *ngIf="listUser.length <= 0" style="margin-left: auto;margin-right: auto;font-size: 24px;font-weight: 500;margin-bottom: 40px;">
                     Không có dữ liệu

@@ -14,7 +14,9 @@ import { PopupRegisterComponent } from './popup-register/popup-register.componen
 })
 export class UserManagementComponent implements OnInit {
   user: any;
-  listUser: Array<any> = [];
+  listUser = [];
+  listUserEnable = []
+  listUserDisable = []
   searchForm: any;
   isHost = false;
   public userLocal: any;
@@ -30,7 +32,7 @@ export class UserManagementComponent implements OnInit {
     this.jsonUser = localStorage.getItem("common-info");
     console.log(this.jsonUser)
     if (this.jsonUser == '') {
-      this.router.navigate(['/login'])
+      this.router.navigate(['/denied'])
       return
     } else {
       this.userLocal = JSON.parse(this.jsonUser);
@@ -56,6 +58,11 @@ export class UserManagementComponent implements OnInit {
         this.listUser = res.filter(item => item.name.toLowerCase().indexOf(this.searchForm.value.name.toLowerCase()) > -1 && item.role != 'customer');
       } else {
         this.listUser = res.filter(item => item.role != 'customer');
+        this.listUserEnable = this.listUser.filter(item => item.status);
+        this.listUserDisable = this.listUser.filter(item => !item.status);
+        console.log(this.listUserEnable)
+        console.log(this.listUserDisable  )
+
       }
     });
     // this.userService.getAllUser(param).subscribe(res => {

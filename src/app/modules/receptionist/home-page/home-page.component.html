@@ -1,17 +1,30 @@
-<div class="container">
+<div class="container" *ngIf='userLocal'>
     <div class="header">
         Số bàn trống nhà hàng: Trống {{tableFree}}/{{allTable}}
-         bàn &gt;  Tầng {{floor}}:Trống {{tableFreeByFloor}}/{{allTableByFloor}} bàn
-         <div class="table1"></div>Bàn trống  <div class="table2"></div>Bàn đang phục vụ 
-         <div class="table3"></div>Bàn sẵn sàng thanh toán
-         <i class="fas fa-user-alt icon_user"></i> {{userLocal.name}}
-         <a routerLink="/login" (click)="logout()" style="cursor: pointer;">Đăng xuất</a>
+        bàn &gt; Tầng {{floor}}:Trống {{tableFreeByFloor}}/{{allTableByFloor}} bàn
+        <div class="table1"></div>Bàn trống <div class="table2"></div>Bàn đang phục vụ
+        <div class="table3"></div>Bàn sẵn sàng thanh toán
+        <div class="logout">
+            <a routerLink="/login" (click)="logout()">
+                <i class="fas fa-sign-out-alt"></i>
+                Đăng xuất
+            </a>
+        </div>
+        <div class="user">
+            <i class="fas fa-user-alt icon_user"></i> {{userLocal.name}}
+        </div>
+        <!-- <a routerLink="/login" (click)="logout()" style="cursor: pointer;">Đăng xuất</a> -->
     </div>
-    <div class="row mt-2">      
-        <div class="col-md-6 text-left">
+    <div class="row mt-2">
+        <div class="col-md-2 text-left">
             <button mat-stroked-button color="primary" class="book-btn" (click)="bookTableForCustomer()">Đặt bàn cho
                 khách</button>
         </div>
+        <div class="col-md-4 text-left">
+            <button mat-stroked-button color="primary" class="book-btn" (click)="comunication()">Liên hệ quản lí
+            </button>
+        </div>
+
         <div class="col-md-6 text-right">
             <mat-icon style="font-size: 30px; cursor: pointer;" (click)="openBookingRequestList()">
                 notification_important</mat-icon>
@@ -19,14 +32,16 @@
     </div>
     <div>
         <select class="browser-default custom-select" (change)="onSelectedFloor($event.target.value)">
-            <option *ngFor ="let floor of floors" [value]="floor.id">Tầng: {{floor.name}}</option>
-          </select>
-    </div>  
+            <option *ngFor="let floor of floors" [value]="floor.id">Tầng: {{floor.name}}</option>
+        </select>
+    </div>
     <div class="row mt-5">
         <div class="col-md-4 my-3" *ngFor="let table of tables">
-            <button mat-raised-button color="primary" *ngIf="table.status && !table.isReadyToPay">{{table.name}}</button>
+            <button mat-raised-button color="primary"
+                *ngIf="table.status && !table.isReadyToPay">{{table.name}}</button>
             <button mat-raised-button color="warn" *ngIf="!table.status && !table.isReadyToPay">{{table.name}}</button>
-            <button mat-raised-button color="accent" *ngIf="table.isReadyToPay" (click) ="openBill(table.currentBillId,table.name)">{{table.name}}</button>
+            <button mat-raised-button color="accent" *ngIf="table.isReadyToPay"
+                (click)="openBill(table.currentBillId,table.name)">{{table.name}}</button>
         </div>
     </div>
 </div>

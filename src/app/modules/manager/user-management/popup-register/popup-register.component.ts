@@ -66,7 +66,7 @@ export class PopupRegisterComponent implements OnInit {
       this.toastr.error("Vui lòng nhập số điện thoại");
       return
     }
-    if(this.registerInfo.phone.length!=10){
+    if(this.registerInfo.phone.toString().length!=9){
       this.toastr.error("Vui lòng nhập số điện thoại đủ 10 số")
       return
     }
