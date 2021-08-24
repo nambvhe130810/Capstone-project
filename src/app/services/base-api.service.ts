@@ -35,7 +35,7 @@ export abstract class BaseApiService {
   delete(item):Promise<any> {
     return this.db.list(`${this.collectionName()}`).remove(item);
   }
-  getBySource(source): Observable<any> {
+  getBySource(source) {
     return this.db.list(`${this.collectionName()}/${source}`).valueChanges();
   }
   setBySource(key, value, source):Promise<any> {
