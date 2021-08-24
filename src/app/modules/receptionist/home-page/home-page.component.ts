@@ -29,7 +29,6 @@ export class HomePageComponent implements OnInit {
   allTable: any;
   allTableByFloor: any;
   floor = "1";
-  user: any;
   public userLocal: any;
   jsonUser: any;
   constructor(public dialog: MatDialog,
@@ -72,9 +71,6 @@ export class HomePageComponent implements OnInit {
       this.tables = data.filter(item => item.floorId == floorId);
       this.allTableByFloor = this.tables.length
       this.tableFreeByFloor = this.tables.filter(item => item.status).length
-      console.log("free table", this.tableFree, this.tableFreeByFloor)
-      this.user = localStorage.getItem("userId")
-      console.log("user", this.user)
     });
   }
   getAllFloor() {

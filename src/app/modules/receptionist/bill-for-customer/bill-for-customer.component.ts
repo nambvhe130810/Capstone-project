@@ -8,6 +8,7 @@ import { BuffetService } from 'src/app/services/buffet.service';
 import { OrderDetailService } from 'src/app/services/order-detail.service';
 import { FoodService } from 'src/app/services/food.service';
 import * as moment from 'moment'
+import { Router } from '@angular/router';
 
 import { DatePipe } from '@angular/common';
 
@@ -27,6 +28,8 @@ export class BillForCustomerComponent implements OnInit {
   foods = []
   map = new Map()
   date: any;
+  public userLocal: any;
+  jsonUser: any;
   constructor(public dialogRef: MatDialogRef<BillForCustomerComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private tablesService: TablesService,
@@ -35,14 +38,28 @@ export class BillForCustomerComponent implements OnInit {
     private orderDetailService: OrderDetailService,
     private buffetService: BuffetService,
     private foodService: FoodService,
+    private router: Router
 
   ) { }
 
   ngOnInit(): void {
-    this.date = Date.now()
-    console.log("Date", this.date)
-    this.getAllTables();
-    this.getOrder();
+    this.jsonUser = localStorage.getItem("common-info");
+    console.log(this.jsonUser)
+    if (this.jsonUser == '') {
+      this.router.navigate(['/denied'])
+      return
+    } else {
+      this.userLocal = JSON.parse(this.jsonUser);
+      console.log(this.userLocal.role)
+      if (this.userLocal.role != "receptionist") {
+        this.router.navigate(['/denied'])
+      } else {
+        this.date = Date.now()
+        console.log("Date", this.date)
+        this.getAllTables();
+        this.getOrder();
+      }
+    }
   }
   onNoClick(): void {
     this.dialogRef.close();
@@ -96,7 +113,7 @@ export class BillForCustomerComponent implements OnInit {
       )
     ).subscribe(data => {
       console.log("data", data)
-      this.orderDetails = data.filter(item => item.orderId == this.order.id && !item.isInBuffet)
+      this.orderDetails = data.filter(item => item.orderId == this.order.id && !item.isInBuffet && item.status == 'delivered')
       console.log("buffer", this.orderDetails)
     });
     this.foodService.getAll().snapshotChanges().pipe(
@@ -109,13 +126,13 @@ export class BillForCustomerComponent implements OnInit {
       this.orderDetails.forEach(detail => {
         let isExist = false;
         let food = data.find(item => item.id == detail.foodId)
-         this.foods.map(item => {
+        this.foods.map(item => {
           if (item.name == food.name) {
-            console.log("item",item)
+            console.log("item", item)
             item.quantity += detail.quantity
             isExist = true
           }
-          console.log("item",item)
+          console.log("item", item)
           return item
         })
         if (!isExist) {

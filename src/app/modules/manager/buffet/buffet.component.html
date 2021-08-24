@@ -69,10 +69,7 @@
                 <td style="text-align: center;">{{item?.status ? 'Còn' : 'Hết'}}</td>
                 <td>
                     <div class="d-flex justify-content-center">
-                        <button title="Kích hoạt" style="background: transparent; border: none;cursor: pointer;" *ngIf="!item?.status" (click)="deleteFood(true,item)"><i
-                                style="font-size: 20px; color: #01904a;"
-                                class="fas fa-check-circle"></i></button>
-                        <button title="Vô hiệu hoá" style="background: transparent; border: none;cursor: pointer;" *ngIf="item?.status" (click)="deleteFood(false,item)"><i
+                        <button title="Xoá món" style="background: transparent; border: none;cursor: pointer;" (click)="deleteFood(false,item)"><i
                                 style="font-size: 20px; color: #ff0000;"
                                 class="fas fa-ban"></i></button>
                     </div>
@@ -86,10 +83,7 @@
                 <td style="text-align: center;">{{item?.status ? 'Còn' : 'Hết'}}</td>
                 <td>
                     <div class="d-flex justify-content-center">
-                        <button title="Kích hoạt" style="background: transparent; border: none;cursor: pointer;" *ngIf="!item?.status" (click)="deleteFood(true,item)"><i
-                                style="font-size: 20px; color: #01904a;"
-                                class="fas fa-check-circle"></i></button>
-                        <button title="Vô hiệu hoá" style="background: transparent; border: none;cursor: pointer;" *ngIf="item?.status" (click)="deleteFood(false,item)"><i
+                        <button title="Xoá món" style="background: transparent; border: none;cursor: pointer;" (click)="deleteFood(false,item)"><i
                                 style="font-size: 20px; color: #ff0000;"
                                 class="fas fa-ban"></i></button>
                     </div>

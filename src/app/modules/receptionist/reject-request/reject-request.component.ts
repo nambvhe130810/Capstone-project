@@ -12,7 +12,7 @@ export class RejectRequestComponent implements OnInit {
 
   dataFake = [
     {
-      "content": "Xin lỗi quý khách,nhà hàng đã đến giờ đóng của",
+      "content": "Xin lỗi quý khách,nhà hàng đã đến giờ đóng cửa",
       "isChecked": false,
     },
     {

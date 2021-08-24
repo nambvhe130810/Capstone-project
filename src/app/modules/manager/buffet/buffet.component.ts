@@ -96,11 +96,7 @@ export class BuffetComponent implements OnInit {
     //     if (result) {
     this.listBuffet.forEach(e => {
       if (e.id == this.chooseId && e.status == true) {
-        if (isAdd) {
-          e.foods[item.id].status = true;
-        } else {
-          e.foods[item.id].status = false;
-        }
+          e.foods[item.id] = null;   
         this.buffetService.update(e.id, e).then(() => {
           this.getListBuffet();
         })
