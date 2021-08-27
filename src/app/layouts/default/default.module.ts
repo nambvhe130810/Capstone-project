@@ -41,9 +41,9 @@ import { MatTooltipModule } from '@angular/material/tooltip'
 import { MatTreeModule } from '@angular/material/tree'
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
-import { BookForCustomerDialogComponent } from 'src/app/modules/receptionist/book-for-customer-dialog/book-for-customer-dialog.component';
+import { BookForCustomerDialogComponent } from 'src/app/modules/receptionist/book-table-for-customer-dialog/book-for-customer-dialog.component';
 import { BookingRequestDialogComponent } from 'src/app/modules/receptionist/booking-request-dialog/booking-request-dialog.component';
-import { SetTableComponent } from 'src/app/modules/receptionist/set-table/set-table.component';
+import { SetTableComponent } from 'src/app/modules/receptionist/accept-request/set-table.component';
 import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({

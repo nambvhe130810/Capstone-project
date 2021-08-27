@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { BookForCustomerDialogComponent } from '../book-for-customer-dialog/book-for-customer-dialog.component';
+import { BookForCustomerDialogComponent } from '../book-table-for-customer-dialog/book-for-customer-dialog.component';
 import { BookingRequestDialogComponent } from '../booking-request-dialog/booking-request-dialog.component';
 import { TablesService } from '../../../services/tables.service';
 import { FloorService } from '../../../services/floor.service';

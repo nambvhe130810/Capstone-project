@@ -8,7 +8,7 @@ import { FoodManagementComponent } from './modules/manager/food-management/food-
 import { QuestionManagementComponent } from './modules/manager/question-management/question-management.component';
 import { UserManagementComponent } from './modules/manager/user-management/user-management.component';
 import { HomePageComponent } from './modules/receptionist/home-page/home-page.component';
-import { SetTableComponent } from './modules/receptionist/set-table/set-table.component';
+import { SetTableComponent } from './modules/receptionist/accept-request/set-table.component';
 import { DeniedComponent } from './modules/denied/denied.component';
 
 
