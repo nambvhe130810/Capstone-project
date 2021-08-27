@@ -8,8 +8,7 @@ import { map } from 'rxjs/operators';
 import { BillsService } from '../../../services/bills.service';
 import { ToastrService } from 'ngx-toastr';
 import { BillForCustomerComponent } from '../bill-for-customer/bill-for-customer.component';
-import { AutofillMonitor } from '@angular/cdk/text-field';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { ComunicationComponent } from '../comunication/comunication.component';
 
 
@@ -142,11 +141,11 @@ export class HomePageComponent implements OnInit {
     localStorage.setItem('common-info', '');
   }
   comunication() {
-    
+
     const dialogRef = this.dialog.open(ComunicationComponent, {
       width: '750px',
       height: '500px',
-      data:{id: this.userLocal.id}
+      data: { id: this.userLocal.id }
     });
 
   }
