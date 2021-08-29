@@ -70,7 +70,7 @@ export class LoginComponent {
     const num = this.phoneNumber.e164;
     let exist = false;
     this.listUser.forEach(res => {
-      if (res.phone === num) {
+      if (res.phone === num && res.status) {
         exist = true;
         this.currentRole = res.role;
         console.log('currentrole',res.role)
