@@ -66,21 +66,21 @@ export class PopupRegisterComponent implements OnInit {
       this.toastr.error("Vui lòng nhập số điện thoại");
       return
     }
-    if(this.registerInfo.phone.toString().length!=9){
+    if(this.registerInfo.phone.toString().length!=10){
       this.toastr.error("Vui lòng nhập số điện thoại đủ 10 số")
       return
     }
     if (this.registerInfo) {
       let exist = false;
       this.listUser.forEach(res => {
-        if (res.phone === '+84' + this.registerInfo.phone) {
+        if (res.phone === '+84' + this.registerInfo.phone.toString().substr(1)) {
           exist = true;
         }
       })
       if (!exist) {
         this.registerInfo.id = uuid.v4();
         this.registerInfo.status = true;
-        this.registerInfo.phone = '+84' + this.registerInfo.phone;
+        this.registerInfo.phone = '+84' + this.registerInfo.phone.toString().substr(1);
         this.userService.set(this.registerInfo.id, this.registerInfo).then(() => {
           this.dialogRef.close();
           this.toastr.success("Thêm dùng thành công");

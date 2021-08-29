@@ -12,7 +12,7 @@ export class PhoneNumber {
   line: string;
   get e164() {
     // const num = this.country + this.area + this.prefix + this.line
-    const num = this.area + this.line
+    const num = this.area + this.line.toString().substr(1)
     console.log(num)
     return `${num}`
   }
@@ -61,7 +61,7 @@ export class LoginComponent {
       this.toastr.error("Vui lòng nhập số điện thoại")
       return
     }
-    if(this.phoneNumber.line.toString().length!=9){
+    if(this.phoneNumber.line.toString().length!=10){
       console.log(this.phoneNumber.line.length)
       this.toastr.error("Vui lòng nhập số điện thoại đủ 10 số")
       return
