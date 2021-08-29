@@ -41,7 +41,7 @@ export class HomePageComponent implements OnInit {
   ngOnInit(): void {
     this.jsonUser = localStorage.getItem("common-info");
     console.log(this.jsonUser)
-    if (this.jsonUser == '') {
+    if (this.jsonUser == '' || this.jsonUser == null) {
       this.router.navigate(['/denied'])
       return
     } else {
